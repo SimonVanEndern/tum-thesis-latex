@@ -1,3 +1,9 @@
 \chapter{Related Work}\label{chapter:related-work}
 
 \parencite{location-privacy} introduces the concept of mix-nodes already known from privacy research on a network level (TODO: "copy" related work part of paper "time-to-confusion"). They propose a framework in which privacy is protected through frequently changing pseudonyms. Furthermore they find that similarly to the problem of identifying consecutive samples in \parencite{time-to-confusion}, the change of pseudonyms has also to be obfuscated in order to provide complete privacy. In contrast, this paper focuses mostly on solving the problem that location aware services that e.g. notify you when you are close to a venue of interest, do not need to have access to your location data at anytime but can register to events with a mix-node. Thus they register for the venues of interested and only get notified when the mix-node, which is trusted and has complete access to location data, detects a match. One sees straight away, that this again depends on trust of the users on the mix-node. Nevertheless, the proposed solution of mix-nodes and mix-zones analyzed on a sample shows that even using this framework, privacy cannot be provided, especially as here again the entropy provided by the history of the released or somehow collected data-set makes it too hard to obfuscate the consecutiveness of different pseudonyms.
+
+TODO: Cite middleware usage approach by \parencite{gruteser2003anonymous}
+TODO: Cite approach of disclosure algorithms by \parencite{gruteser2005anonymity}
+TODO: Cite confusion approach similar to \parencite{time-to-confusion} by \parencite{hoh2005protecting}
+TODO: Cite querying an anonymization by \parencite{mokbel2006new}
+TODO: Read \parencite{tang2006putting}
