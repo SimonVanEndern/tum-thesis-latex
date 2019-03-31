@@ -1,4 +1,15 @@
+% !TeX root = ../main.tex
+% Add the above to each chapter to make compiling the PDF easier in some editors.
 \chapter{Related Work}\label{chapter:related-work}
+
+
+\parencite{cellphone} finds that even when personal data is anonymized thus that names and addresses, etc. are removed, sensitive information can be inferred from the data.
+In this study it was shown that from call-records in the US the home address and also often the work address of a person could be inferred.
+They highlight that while adhering to the k-anomymity model proposed by ~\parencite{k-anonymity} it is practically not possible to publish datasets that are still of any significant use.
+\\
+
+Also \parencite{privacy-home-work-pairs} highlights the thread that home and work locations can be inferred from anonymized datasets and can in combination with other sources yield even more information about a user. To reduce this risk, they propose "to collect the minimum amount of information needed". In contrary, we want to investigate another approach, so that rich data can still be used and be published in an aggregated manner to let people profit from the data but still preserve privacy.
+
 
 Another problem that arises is that anonymization algorithms applied to datasets prior to publishing them might yield good results if the location data is in a densily populated area but might perform poorly if the population is only sparse \parencite{time-to-confusion}.
 

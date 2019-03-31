@@ -2,45 +2,43 @@
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 
 \chapter{Introduction}\label{chapter:introduction}
+\section{Motivation}
+\subsection{General motivation} \label{general-motivation}
 
-The introduction is meant to motivate the subject area (why is this important?),
-define the problem you are interested in (what are you doing?), and limit the
-scope (where do you stop?). It also gives an outline of the thesis (which chapters
-will explain what?) and explains how you are going the approach your subject.
-\\
-\subsection{Motivation}
-\subsubsection{General motivation}
-“Data is the new oil” is an often quoted stigma and means that everytime more businesses are
-based not on specific production capacities but on data. The success and monopoly of
-companies like Google or Facebook can at least to some extent be attributed to data that is only
-available to these companies.
+“Data is the new oil” is an often quoted stigma and means that more and more businesses are
+based not on specific production capacities but on data, the ability to process it and the exclusive owenership over it. The success and monopoly of
+companies like Google or Facebook can at least to some extent be attributed to this exclusive ownership.
+
 According to commonly accepted economic theories, monopolies hinder innovation and
 progress. This implies that the unavailability of huge amounts of data to the public is an
 impediment of innovation and increased growth.
-Thus publishing the respective raw data would solve this problem, though it would violate the
-privacy of any citizens about whom data is published. A more sophisticated solution is needed
-to grant the public access to as much data as possible while not violating privacy.
 
-With the advent of the internet and large-scale applications, the question of privacy has drawn increasing attention.
-Especially with services like Twitter, Facebook, Google \& Co. there are problems and privacy infringements when user data is realeased.
+Some governments and other institutions therefore already publish some of their datasets after anonymizing them. 
+Nevertheless, the applied anonymization is often not sufficient or at least critical. Research shows that inferences can be drawn from the published datasets that violate the respecitve users' privacy.
+But also privacy concerns of users have increased due to leakages where their data was not well protected at e.g. facebook and stolen and published.
 
-\subsubsection{Examples of direct and indirect privacy breaches}
+So, we identify two issues compromising data privacy. 
+\begin{enumerate}
+  \item The availability of huge datasets at central servers imposes a risk stemming from the computer science area of security. 
+  \item Publication of entire datasets can even after applying anonymization techniques not guarantee privacy preservation.
+\end{enumerate}
 
-One example is that the location data of Twitter tweets was published without asking the user for permission. Furthermore this data is only available through the API,
-so that the user is not aware of this infringement. Using this data, ~\parencite{twitter} has shown that this data can be used to infer a users home address and often also the work address, even if the user itself is privacy-aware, thus does not publish his / her name, etc.
+\subsection{Examples of direct and indirect privacy breaches}
+An example for the first issue is the facebook data scandal representative for many data breaches over the last years. TODO: [Find and cite].
 
+An example for the second issue is that the location data of Twitter tweets was published without asking the user for permission. Furthermore this data is only available through the API, so that the user is not aware of this infringement. Using this data, ~\parencite{twitter} has shown that this data can be used to infer a users home address and often also the work address, even if the user itself is privacy-aware, thus does not publish his / her name, etc.
 
-Also ~\parencite{privacy-home-work-pairs} highlights the thread that home and work locations can be inferred from anonymized datasets and can in combination with other sources yield even more information about a user. To reduce this risk, they propose "to collect the minimum amount of information needed". In contrary, we want to investigate another approach, so that rich data can still be used and be published in an aggregated manner to let people profit from the data but still preserve privacy.
+\subsection{Classification of location data and apps that use it}
+In order to review existing approaches and research, classify location aware services by the acceptable delay of the location information being available:
+\begin{itemize}
+  \item Almost no delation tolerance: e.g. an application showing a pop-up about a nearby venue e.g. a coffe shop when a pedestrian passes
+  \item Some delay e.g. one minute is acceptable: An application e.g. google maps derives the information of congested traffic from devices reporting their GPS data which show lower than usual speed. As congestions worth reporting last longer than one minute, some delay in the device's information reaching the server is acceptable.
+  \item Significant delay of hours, days or even weeks is acceptable for historical and statistical use of location data e.g. to find out about popular visiting times
+\end{itemize}
 
+\subsection{What has been achieved so far}
 
-\subsubsection{Classification of location data and apps that use it}
-
-
-TODO: Classification of location based services: real time vs. historical. Tracking vs. providing push-notifications of nearby venues. 
-
-\subsubsection{What has been achieved so far}
-
-\section{Existing approaches}
+Most existing approaches focus on publishing location data where a huge delay is acceptable as can be seen in the following table: TODO [create table].
 
 \begin{itemize}
   \item Collect less data \parencite{privacy-home-work-pairs}
@@ -50,27 +48,26 @@ TODO: Classification of location based services: real time vs. historical. Track
   \item Remove not only identifiers from the data-set but also apply algorithms, that remove samples, that can be (due to few samples in this area) identified \parencite{time-to-confusion}
 \end{itemize}
 
-\subsubsection{Problems that still arise}
-
-~\parencite{cellphone} finds that even when personal data is anonymized thus that names and addresses, etc. are removed, sensitive information can be inferred from the data.
-In this study it was shown that from call-records in the US the home address and also often the work address of a person could be inferred.
-They highlight that while adhering to the k-anomymity model proposed by ~\parencite{k-anonymity} it is practically not possible to publish datasets that are still of any significant use.
-\\
+\subsection{Problems that still arise}
 
 Still this privacy is only limited if only this one dataset is taken into account. If e.g. multiple of those data-sets from different data collectors are combined, or information about an individual like home and work adress is provided, privacy breaches are still highly likely.
+Furthermore, those algorithms always depend on a trusted server to collect the data from all users and then publish the results of any analysis applying privacy-preserving algorithms beforehand. So while all those different approaches to preserving privacy while publishing data-sets manage to achieve ever better results, they always depend on a trusted server for creating the full data-set beforehand. This still imposes a high privacy risk to every user, as trust can either be misued by the trusted server itself or by 
+other parties exploiting eventual security loopwholes in the trusted server. 
 
-They further find that those algorithms always depend on a trusted server to collect the data from all users and then publish the results of any analysis applying privacy-preserving algorithms beforehand. So while all those different approaches to preserving privacy while publishing data-sets manage to achieve ever better results, they always depend on a trusted server for creating the full data-set beforehand. This still imposes a high privacy risk to every user, as trust can either be misued by the trusted server itself or by other parties exploiting eventual security loopwholes in the trusted server. 
+\section{Research Question}
+Thus the two problems stated in \ref{general-motivation} are still widely unresolved and have not been tackled in common so far. We investigate the possibility of storing location data only decentralized on the devices where they it is collected as well as querying this data in a decentralized manner using P2P technology in order to inhibit any instance from accessing raw data.
+
+\section{Contributions}
+
 Thus our approach takes the opposite direction. We do not first collect the whole data-set and then reduce it to a data-set meeting privacy-constraints but we start from the bottom up - first by performing analysis in a decentralized manner so that there never is an overal data-set imposing a security risk on all the entries' users, and second by proposing a framework that only releases aggregated data where no interference of any user information is possible. This data will then be available to everybody. This gives us maximum possible feedback on eventual privacy problems, creates trust through transparency and supports the process of not randomly collecting data and afterwards researching on metrics that are actually needed but first on evaluating which metrices are needed and then retrieving them if possible without raising privacy concerns.
-
-
-\subsection{Research Question}
-
-This research shows that publishing raw data is critical, even when the data is anonymized.
-As still this data could be useful for many stakeholders, we will investigate how on the one hand aggregated datacan be published without imposing any privacy risk to the owners of the data and on the other hand develop a prototype of a mobile application through which this location data is aggregated in a decentralized manner so that the raw user data never leaves the users' device.
-
-\subsection{Contributions}
 
 We will use the definition of location privacy as defined by ~\parencite{location-privacy}: " the ability to prevent other parties from learning
 one’s current or past location". They further propose a different approach to preserve privacy. TODO!!!
 
-\subsection{Outine}
+We develop a framework ... 
+
+Beyond the scope of this research is ...
+
+\section{Outine}
+
+The rest of this research is organized as follows ...
