@@ -3,6 +3,18 @@
 \chapter{Related Work}\label{chapter:related-work}
 \section{Inferring data from already published datasets}
 
+\parencite{krumm} is one of the first investigating privacy issue in location data. For inferring the home location of a set of car travelling traces of their research subjects, they identify taking the last destination of the car before 3 pm as the most successful among 4 algorithms / heuristics to determine a persons home location. They where able to identify 12.8\% of the users home coordinates. Furthermore by looking up those home coordinates on a free online tool, they are able to retrieve the correct name for about 5\% of the subjects. Nevertheless, those results could be improved by far, as they show that the used data source / white pages are outdated.
+In order to protect anonymity, they mainly identify the following different countermeasures:
+\begin{itemize}
+	\item Pseudonymity: Stripping original IDs from the dataset (by many shown not to be sufficient)
+	\item Spatial Cloaking: Application of k-anonymity by hiding all data points in a circle with the center placed randomly around the actual home address
+	\item Noise: Adding Gaussian noise to each data point
+	\item Rounding: Placing a grid on the location data and mapping each data point to the closest intersection
+	\item Dropped Samples: Completely dropping samples in order to reduce the frequency of the data points.
+\end{itemize}
+Of the application of these countermeasures, only spatial cloaking can preserve data quality, while a Noise with a standard deviation of 5km and a grid for rounding with 5km distances is needed, which render the data useless for many applications.
+On the contrary, they showed how easy it is, to make the final step from home location to actual identity. Furthermore, there analyzis is only based on data covering two weeks.
+
 
 \parencite{cellphone} finds that even when personal data is anonymized thus that names and addresses, etc. are removed, sensitive information can be inferred from the data.
 In this study it was shown that from call-records in the US the home address and also often the work address of a person could be inferred.
