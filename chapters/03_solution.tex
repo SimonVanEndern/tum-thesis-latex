@@ -21,3 +21,12 @@ What kind of spatial cloaking to apply? City, region, country? Or purely geometr
 Important: If spatial cloaking request for aggregating data is not successful, it has to be discarded and then retried with a coarser area, but no two overlapping results must be published.
 
 Address the problem of fake users (submitting fake data).
+
+It also seems possible to do the following: 
+\begin{itemize}
+	\item Store the whole set of venues, etc. of the users home area on the device (in a coarse level). This way the users local data does not have to be revealed at all (and storage space on modern (!!!) phones is sufficient.) It can also be limited / rule based e.g. max. 1 GB data.
+	\item install software that directly cloaks the GPS location of the smartphone on the device (and labels it as cloaked). This way services accepting cloaking can respond to this and set a list instead of a single result, services not adhering to this policy will cease to work properly.
+	\item Only allow our application to collect (centralized location data).
+	\item Limit every applications sending capabilities to a standardized format for authentication (and also for max x times per hour in order to prevent misuse of this template for still exporting data). Most applications do not even require an account to work properly and those who do, can use this template. (e.g. to send emails. For registration purposes an exception has to be implemented). If the application depends on location data, it has to use (and also improve, thus the motivation is there) the publicly available data set.
+\end{itemize}
+This way we can ensure that either any service only gets a data set of cloaked regions or no data set at all and provide 100\% data privacy. Especially this approach empowers the user, thus the decision to stay private is not anymore based on the goodwill of the service provider but put into the hands of the user itself.
