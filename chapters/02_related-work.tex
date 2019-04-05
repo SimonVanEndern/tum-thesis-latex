@@ -1,6 +1,19 @@
 % !TeX root = ../main.tex
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 \chapter{Related Work}\label{chapter:related-work}
+
+\subsection{Classification of location data and apps that use it}
+In order to review existing approaches and research, classify location aware services by the acceptable delay of the location information being available:
+\begin{itemize}
+  \item Almost no delation tolerance: e.g. an application showing a pop-up about a nearby venue e.g. a coffe shop when a pedestrian passes
+  \item Some delay e.g. one minute is acceptable: An application e.g. google maps derives the information of congested traffic from devices reporting their GPS data which show lower than usual speed. As congestions worth reporting last longer than one minute, some delay in the device's information reaching the server is acceptable.
+  \item Significant delay of hours, days or even weeks is acceptable for historical and statistical use of location data e.g. to find out about popular visiting times
+\end{itemize}
+
+\subsection{What has been achieved so far}
+
+Most existing approaches focus on publishing location data where a huge delay is acceptable as can be seen in the following table: TODO [create table].
+
 \section{Inferring data from already published datasets}
 \begin{itemize}
 	\item privacy issues
@@ -41,6 +54,8 @@
 \end{itemize}
 
 TODO: Relate to \parencite{k-anonymity}
+
+\includegraphics[width=\textwidth]{data/research-overview.jpg}
 
 \section{Summaries of papers}
 

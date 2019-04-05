@@ -3,74 +3,86 @@
 
 \chapter{Introduction}\label{chapter:introduction}
 \section{Motivation}
-\subsection{General motivation} \label{general-motivation}
+\subsection{General motivation: We want to open-source data} \label{general-motivation}
 
 “Data is the new oil” is an often quoted stigma and means that more and more businesses are
 based not on specific production capacities but on data, the ability to process it and the exclusive owenership over it. The success and monopoly of
-companies like Google or Facebook can at least to some extent be attributed to this exclusive ownership.
+companies like Google or Facebook can be attributed to this exclusive ownership to a significant extend.
 
-According to commonly accepted economic theories, monopolies hinder innovation and
+According to commonly accepted economic theories [TODO: quote / reference exactly], monopolies hinder innovation and
 progress. This implies that the unavailability of huge amounts of data to the public is an
 impediment of innovation and increased growth.
+Nevertheless, the publication of raw data sets is impossible because it severly intrudes the privacy of the owners of the data.
 
-Some governments and other institutions therefore already publish some of their datasets after anonymizing them and there are crowdsourcing and open source approaches to make
+\subsection{Main problem: Conflict between privacy and publishing user data}
+Thus we see a conflict between preserving user privacy and publishing user data.
+\subsection{Existing privacy problem: The availability of central data sets}
+Nevertheless, user privacy is already compromised even if without publication of user data.
+
+Already the mere existence of central data sets pose a privacy risk to users, because security issues might allow for theft and unwanted publication of these data.
+An example is the facebook data scandal representative for many data breaches over the last years. TODO: [Find and cite].
+
+\subsection{Relaxed privacy problems: The limited but not eliminated risk through a modified central data set}
+
+Some governments and other institutions already publish some of their data sets after anonymizing them e.g. through cloaking of data so that it achieves k-anonymity and there are crowdsourcing and open source approaches to make
 data available to everybody. 
-Nevertheless, the applied anonymization is often not sufficient or at least critical. Research shows that inferences can be drawn from the published datasets that violate the respecitve users' privacy.
-But also privacy concerns of users have increased due to leakages where their data was not well protected at e.g. facebook and stolen and published.
+Nevertheless, the applied anonymization is often not sufficient or at least critical if the resulting data set should still be useful. Research shows that inferences can be drawn from the published data sets that violate the respecitve users' privacy. So, in addition to the main risk of a central data set, publishing anonymized data poses another risk to users privacy.
+% can only be reduced but not removed by those approaches.
 
-So, we identify two issues compromising data privacy. 
-\begin{enumerate}
-  \item The availability of huge datasets at central servers imposes a risk stemming from the computer science area of security. 
-  \item Publication of entire datasets can even after applying anonymization techniques not guarantee privacy preservation.
-\end{enumerate}
+\subsection{New problem in case of modified central data set: Trust to the server is needed}
 
-\subsection{Examples of direct and indirect privacy breaches}
-An example for the first issue is the facebook data scandal representative for many data breaches over the last years. TODO: [Find and cite].
+Furthermore, besides the remaining risk of inference attacks in published anonymized data sets, the anonymization through those algorithms always depend on a trusted server to collect the data from all users and then publish the results of any analysis applying privacy-preserving algorithms beforehand. So even if the data is only stored anonymized on the server, besides the remaining risk of inference attacks, this still imposes a high privacy risk to every user, as trust can be misued by the trusted server itself.
 
-An example for the second issue is that the location data of Twitter tweets was published without asking the user for permission. Furthermore this data is only available through the API, so that the user is not aware of this infringement. Using this data, ~\parencite{twitter} has shown that this data can be used to infer a users home address and often also the work address, even if the user itself is privacy-aware, thus does not publish his / her name, etc.
-
-\subsection{Classification of location data and apps that use it}
-In order to review existing approaches and research, classify location aware services by the acceptable delay of the location information being available:
-\begin{itemize}
-  \item Almost no delation tolerance: e.g. an application showing a pop-up about a nearby venue e.g. a coffe shop when a pedestrian passes
-  \item Some delay e.g. one minute is acceptable: An application e.g. google maps derives the information of congested traffic from devices reporting their GPS data which show lower than usual speed. As congestions worth reporting last longer than one minute, some delay in the device's information reaching the server is acceptable.
-  \item Significant delay of hours, days or even weeks is acceptable for historical and statistical use of location data e.g. to find out about popular visiting times
-\end{itemize}
-
-\subsection{What has been achieved so far}
-
-Most existing approaches focus on publishing location data where a huge delay is acceptable as can be seen in the following table: TODO [create table].
-
-\begin{itemize}
-  \item Collect less data \parencite{privacy-home-work-pairs}
-  \item Mixing approach \parencite{location-privacy}
-  \item Anonymize data to meet the kriteria of k-anonymity \parencite{k-anonymity} and \parencite{cellphone}
-  \item spatial cloaking \parencite{krumm}
-  \item Remove not only identifiers from the data-set but also apply algorithms, that remove samples, that can be (due to few samples in this area) identified \parencite{time-to-confusion}
-\end{itemize}
-
-\subsection{Problems that still arise}
-
-Still this privacy is only limited if only this one dataset is taken into account. If e.g. multiple of those data-sets from different data collectors are combined, or information about an individual like home and work adress is provided, privacy breaches are still highly likely.
-Furthermore, those algorithms always depend on a trusted server to collect the data from all users and then publish the results of any analysis applying privacy-preserving algorithms beforehand. So while all those different approaches to preserving privacy while publishing data-sets manage to achieve ever better results, they always depend on a trusted server for creating the full data-set beforehand. This still imposes a high privacy risk to every user, as trust can either be misued by the trusted server itself or by 
-other parties exploiting eventual security loopwholes in the trusted server. 
-
-\section{Research Question}
-Thus the two problems stated in \ref{general-motivation} are still widely unresolved and have not been tackled in common so far. We investigate the possibility of storing location data only decentralized on the devices where they it is collected as well as querying this data in a decentralized manner using P2P technology in order to inhibit any instance from accessing raw data.
+\section{Research Question: No central raw data set but only aggregated data}
+Clearly, in order to overcome the conflicit between privacy intrusion and (public) data availability, a solution is needed that gets along without storing raw data in a central data set.
+This solution should 1. eliminate the risk of leaking raw user data through theft from a centralized database and 2. eliminate the remaining risk of inference attacks on published believed-to anonymized raw data. So far, we have not seen an approach to fully solve this problem.
 
 \section{Contributions}
+For our solution, we will focus on the sub-area of location data and location privacy.
+We investigate the possibility of storing raw location data only decentralized on the collecting devices. On a central server available to the public, only aggregated data is stored, thus the main problem of privacy risk by a central database containing the overall raw data set is solved. Furthermore, the issue of trust is removed, as the aggregation process happens decentrally, thus the central server will never hold any other data than aggregated data. It will never know about the individual raw data.
 
-Thus our approach takes the opposite direction. We do not first collect the whole data-set and then reduce it to a data-set meeting privacy-constraints but we start from the bottom up - first by performing analysis in a decentralized manner so that there never is an overal data-set imposing a security risk on all the entries' users, and second by proposing a framework that only releases aggregated data where no interference of any user information is possible. This data will then be available to everybody. This gives us maximum possible feedback on eventual privacy problems, creates trust through transparency and supports the process of not randomly collecting data and afterwards researching on metrics that are actually needed but first on evaluating which metrices are needed and then retrieving them if possible without raising privacy concerns.
+In summary, our approach takes the opposite direction as todays standard. We do not first collect the whole data set and then reduce it to a data set meeting privacy-constraints but we start from the bottom up - first by performing analysis in a decentralized manner so that there never is an overal data set imposing a security risk on all the entries' users, and second by proposing a framework that only releases aggregated data where no interference of any user information is possible. This data will then be available to the public. This gives us maximum possible feedback on eventual privacy problems, creates trust through transparency and fosters innovation through availability of data to everyone.
 
-We will use the definition of location privacy as defined by ~\parencite{location-privacy}: " the ability to prevent other parties from learning
-one’s current or past location". They further propose a different approach to preserve privacy. TODO!!!
-
-We develop a framework ... 
-
-Beyond the scope of this research is ...
+%and supports the process of not randomly collecting data and afterwards researching on metrics that are actually needed but first on evaluating which metrices are needed and then retrieving them if possible without raising privacy concerns.
 
 \section{Outine}
+The structure of our research is organized as follows: First we re-
+view related work in the areas of location privacy and anonymisation techniques. In
+section \ref{chapter:solution} we describe our approach of decentralized data analysis to get along without a central database.
+Section XXX describes the setup in detail. Section XXX analysis the result from field-testing our application.
+Section XXX incorporates the results into our proposal of a possibility to achieve 100\% privacy through all applications.
+Section XXX summarizes our work and points out further research possibilities.
 
-The rest of this research is organized as follows ... [See \parencite{gruteser2003anonymous} for a good beginning of an introduction?!].
+%The rest of this research is organized as f
 
-TODO: cite openStreetMap project as open source, open sourcing data.
+%But also privacy concerns of users have increased due to leakages where their data was not well protected at e.g. facebook and stolen and published.
+
+
+
+%So, we identify two related issues compromising data privacy. 
+%\begin{enumerate}
+%  \item The availability of huge data sets at central servers imposes a risk stemming from the computer science area of security. (main risk)
+%  \item Publication of entire data sets can even after applying anonymization techniques not guarantee privacy preservation. (reduced risk)
+%\end{enumerate}
+
+%\subsection{Examples of direct and indirect privacy breaches}
+
+
+%An example for the second issue is that the location data of Twitter tweets was published without asking the user for permission. Furthermore this data is only available through the API, so that the user is not aware of this infringement. Using this data, ~\parencite{twitter} has shown that this data can be used to infer a users home address and often also the work address, even if the user itself is privacy-aware, thus does not publish his / her name, etc.
+
+
+
+%\begin{itemize}
+%  \item Collect less data \parencite{privacy-home-work-pairs}
+%  \item Mixing approach \parencite{location-privacy}
+%  \item Anonymize data to meet the kriteria of k-anonymity \parencite{k-anonymity} and \parencite{cellphone}
+%  \item spatial cloaking \parencite{krumm}
+%  \item Remove not only identifiers from the data set but also apply algorithms, that remove samples, that can be (due to few samples in this area) identified \parencite{time-to-confusion}
+%\end{itemize}
+
+%\subsection{Problems that still arise}
+
+%Still this privacy is only limited if only this one data set is taken into account. If e.g. multiple of those data sets from different data collectors are combined, or information about an individual like home and work adress is provided, privacy breaches are still highly likely.
+
+
+
