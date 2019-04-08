@@ -16,9 +16,12 @@ The Android Application needs the following:
 	\item Create a public/private key pair
 	\item Automatically collect Location Raw Data for the scheme {Timestamp, Location} --> TODO: Implement database in Android Application
 	\item Create activities from the location raw data for the scheme {From, To, Duration, type, ...}
-	\item For each day? week?, ... compute the areas where the user was active.
-	\item Stage 2: (or even stage 1?): After each day, send anonymously, thus over several nodes, in which area the device has been active! (that is a breach of our privacy!!! find solution) in order for the server to know to whom send requests regarding locations.
-	\item Send registration request to server application
+	\item Algorithm to infer home and work location (or ask for home / work location (rough specification)).
+	\item For each day? week?, ... compute the areas where the user was active. (This can be done as an aggregation request as well)
+	\item Stage 2: (or even stage 1?): After each day, send anonymously, thus over several nodes, in which area the device has been active! \sout{(that is a breach of our privacy!!! find solution) in order for the server to know to whom send requests regarding locations.} \textcolor{red}{The most possible fine level of user location will be stored alongsied the id}
+	\item Send registration request to server application (including most coarse location). If successful, less coarse location will be send until unscuccessful. The server will store the request for the least coarse location area and count the following requests. Once a threshold is met, it will "unlock" this location.
+	\item Mobile might send (privacy?!?!?!) most coarse location after one week etc. again. TODO: Think about least coarse area useful. (city, department, ... level)
+	The location can be more coarse than needed for the aggregation request. This will create network overhead, thus a balance has to be found.
 	\item receive Aggregation request from server application
 	\item calculate response to aggregation request
 	\item Apply logic when to abort aggregation request e.g when incoming n is 0 and next device ID is empty.
@@ -32,7 +35,8 @@ In stage two, the App will also be able to send e.g. traffic alerts to the serve
 \subsection{Server application}
 The server application needs the following:
 \begin{enumerate}
-	\item A database listing all registered devices following the scheme {public device key, Google Cloud messaging key (for reaching the device)}.
+	\item A database containing counters for each level of reported active location to "unlock them".
+	\item A database listing all registered devices following the scheme {public device key, Google Cloud messaging key (for reaching the device), most accurate possible last location}.
 	\item A database containing all possible aggregation requests
 	\item A scheduler to start / send out aggregation requests
 	\item A handler for an ongoing aggregation request (forward it to the next one, until done or aborted).
@@ -105,6 +109,7 @@ This requires implementing locally the calculation of a users work and home plac
 \subsubsection{Average time at work}
 \subsubsection{How much time to people usually spend searching for a parking spot}
 \subsubsection{Identify roads, where (maybe even including the current traffic light sequence) one would be faster with a bike (thus average speed of 20, 22, ...)}
+\subsubsection{Identify routes that are faster by bike than by car}
 
 
 
