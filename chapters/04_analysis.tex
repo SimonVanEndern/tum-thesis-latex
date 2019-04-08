@@ -1,3 +1,53 @@
+% !TeX root = ../main.tex
+% Add the above to each chapter to make compiling the PDF easier in some editors.
 \chapter{Design}\label{chapter:analysis}
 
 \section{Android}
+Our architecture comprises the following:
+\begin{enumerate}
+	\item An Android Application
+	\item A server application
+	\item A public database (with a visializing website)
+\end{enumerate}
+
+\subsection{Android Application}
+The Android Application needs the following:
+\begin{enumerate}
+	\item Create a public/private key pair
+	\item Automatically collect Location Raw Data for the scheme {Timestamp, Location} --> TODO: Implement database in Android Application
+	\item Create activities from the location raw data for the scheme {From, To, Duration, type, ...}
+	\item Send registration request to server application
+	\item receive Aggregation request from server application
+	\item calculate response to aggregation request
+	\item Apply logic when to abort aggregation request e.g when incoming n is 0 and next device ID is empty.
+	\item send aggregation response
+\end{enumerate}
+In stage two, the App will also be able to send e.g. traffic alerts to the server.
+
+\subsection{Server application}
+The server application needs the following:
+\begin{enumerate}
+	\item A database listing all registered devices following the scheme {public device key, Google Cloud messaging key (for reaching the device)}.
+	\item A database containing all possible aggregation requests
+	\item A scheduler to start / send out aggregation requests
+	\item A handler for an ongoing aggregation request (forward it to the next one, until done or aborted).
+	\item Store a requests result in the public database
+\end{enumerate}
+In stage 2, the server also processes data send by the client on its own behalf.
+The server aggregation task does the following
+\begin{itemize}
+	\item \sout{Randomly select a fake-start-n (out of the range of lets say 1-5) in order } \textcolor{red}{With encryption not necessary}
+	\item \sout{Select fake-start-value} \textcolor{red}{Not necessary with encryption}
+	\item Devices list for the aggregation request (Will be made dynamic in stage 2).
+\end{itemize}
+
+\subsection{Public database}
+The public database comprises the following schemes for aggregation requests.
+Furthermore, it handles incoming data e.g. traffic alerts.
+The aggregation schemes will all contain at least the following fields:
+\begin{itemize}
+	\item Current n
+	\item Current mean / value
+	\item ID ?? (necessary?)
+	\item Next device's public key for encryption of the data (and n?)
+\end{itemize}
