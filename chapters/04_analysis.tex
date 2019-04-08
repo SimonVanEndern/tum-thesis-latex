@@ -7,7 +7,7 @@ Our architecture comprises the following:
 \begin{enumerate}
 	\item An Android Application
 	\item A server application
-	\item A public database (with a visializing website)
+	\item A public database (with a visualizing website)
 \end{enumerate}
 
 \subsection{Android Application}
@@ -16,6 +16,8 @@ The Android Application needs the following:
 	\item Create a public/private key pair
 	\item Automatically collect Location Raw Data for the scheme {Timestamp, Location} --> TODO: Implement database in Android Application
 	\item Create activities from the location raw data for the scheme {From, To, Duration, type, ...}
+	\item For each day? week?, ... compute the areas where the user was active.
+	\item Stage 2: (or even stage 1?): After each day, send anonymously, thus over several nodes, in which area the device has been active! (that is a breach of our privacy!!! find solution) in order for the server to know to whom send requests regarding locations.
 	\item Send registration request to server application
 	\item receive Aggregation request from server application
 	\item calculate response to aggregation request
@@ -73,3 +75,39 @@ Our user is called Hans
 	\item Hans updates the application and thus installs all the fixes we have done in the meantime.
 	\item After the end of the testing period, the application automatically deletes all data. Hans gets shown a push notification informing about this and is asked to deinstall the application. A thank you is displayed as well.
 \end{enumerate}
+
+\subsection{Data aggregation schemes}
+We will in stage one ask all devices and only in stage 2 allow for limiting to specific areas. The minimum n is always 5 (choosen out of "Bauchgefühl").
+TODO: evaluate which n values are necessary.
+When computing average and median, n is at least 10 (Bauchgefühl).
+When reporting a full box-plot, n is at least 20 (Bauchgefühl). 
+For reporting skewness and standard deviation as well, 50 is the minimum for n (Bauchgefühl).
+
+We definitely need a strict approach for overlapping, etc. to also take care of cases we have not thought about.
+
+TODO: From overlapping, ... it will be possible, to compute "There is somebody, generylly not walking, but biking, in this area, ... ". Check, whether part of this can somehow be used as a quasi identifier.
+\subsubsection{Average walking, driving, ... time}
+For each of the activities [walking, biking, driving a car, driving public transport] a request is emitted to compute average data.
+The request can further for each activity exclude or include 0-value-computation. Other solution: the 0-values are counted and the average / median of the other data (only in case).
+\subsubsection{How many people go to work by car, ...}
+Need sophisticated methods to determine work time, ... 
+\subsubsection{How many people combine bike with public transport}
+select everybody where activity biking and activity public transport are close to each other.
+\subsubsection{Create a road map}
+Aggregate all trajectories of the users longer than xx meter, cap the ends and the start for 50 meter, put similar trajectory coordinates together and publish the whole map.
+A users data is only included, if in a radius of xx there are xx more --> k-anonymity.
+Create a car / bike / walking map or color-code the map.
+\subsubsection{Compute the average speed (talking daytime into account) for roads}
+This can e.g. be used to identify roads where zone 30 will reduce noise and co2 exhaustion a lot, if one can compute, that cars accelerate and then typically rest again, so that an average of 30 would have the same timing result. [TODO: Cite cities, ... where 30 is the limit in citycenter, ...]
+\subsubsection{Time to work}
+Compute, how much time on average a user needs to go to work.
+This requires implementing locally the calculation of a users work and home place from the data (or we could also ask for the data and state that it will be locally only) or combine the two approaches.
+\subsubsection{Average time at work}
+\subsubsection{How much time to people usually spend searching for a parking spot}
+\subsubsection{Identify roads, where (maybe even including the current traffic light sequence) one would be faster with a bike (thus average speed of 20, 22, ...)}
+
+
+
+\subsubsection{Stage 2: When moving on a specific road, report bad traffic}
+We will fake this in a way that when somebody is driving (recognized activity), we will randomly trigger the application to send an alert.
+This way we do not have to implement downloading the standard speeds for a road map, recognizing a user being on this road and then checking for less than usual speed.
