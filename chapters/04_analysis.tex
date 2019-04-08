@@ -2,7 +2,7 @@
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 \chapter{Design}\label{chapter:analysis}
 
-\section{Android}
+\section{Overall Design}
 Our architecture comprises the following:
 \begin{enumerate}
 	\item An Android Application
@@ -21,6 +21,9 @@ The Android Application needs the following:
 	\item calculate response to aggregation request
 	\item Apply logic when to abort aggregation request e.g when incoming n is 0 and next device ID is empty.
 	\item send aggregation response
+	\item At least one screen displaying some text / information about the application
+	\item Automatic hard-coded push notification to check for an update at date xxx
+	\item Automatic hard-coded deletion of all data after test-phase including a push notification to ask for the deinstallation of the app.
 \end{enumerate}
 In stage two, the App will also be able to send e.g. traffic alerts to the server.
 
@@ -47,7 +50,26 @@ Furthermore, it handles incoming data e.g. traffic alerts.
 The aggregation schemes will all contain at least the following fields:
 \begin{itemize}
 	\item Current n
-	\item Current mean / value
+	\item Current mean / value \textbf{Use json (or xml) for value passing}
 	\item ID ?? (necessary?)
 	\item Next device's public key for encryption of the data (and n?)
 \end{itemize}
+
+\section{Specific designs}
+\subsection{Standard user story}
+Our user is called Hans
+\begin{enumerate}
+	\item Hans somehow gets motivated to go to the playstore and install our appliation
+	\item In the playstore, Hans sees some photos and information about the application
+	\item Hans clicks on the install button in the playstore to install our application. The installation process starts.
+	\item Hans is curious about the application and opens the application.
+	\item Hans sees the first and only screen of the application that tells hime what the application does. It also contains a link to view the results stored in the public database.
+	\item (In stage 2, maybe Hans can even see his data and what has been send, ...)
+	\item Hans leaves the application (the application must still go on in the background).
+	\item Hans uses his task manager to quit the application (the application must still go on collecting data in the background).
+	\item After some days, without Hans being involved, an aggregation request is started and send to the appliation running in the background.
+	\item The application receives and processes the request and sends the results to the server without Hans noticing anything.
+	\item One week after the installation, tha application creates a push notification and asks hans to update the application. It also says that the update is less than 1MB and asks him to install it right now, as it is so few data and in order not to forget to do it later
+	\item Hans updates the application and thus installs all the fixes we have done in the meantime.
+	\item After the end of the testing period, the application automatically deletes all data. Hans gets shown a push notification informing about this and is asked to deinstall the application. A thank you is displayed as well.
+\end{enumerate}
