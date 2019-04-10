@@ -2,36 +2,31 @@
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 
 \chapter{Introduction}\label{chapter:introduction}
-\section{Motivation}
-\subsection{General motivation: We want to open-source data} \label{general-motivation}
+\section{Why we need an open-source location data approach}\label{chapter:introduction:section:motivation}
 
-“Data is the new oil” is an often quoted stigma and means that more and more businesses are
+%\subsection{General motivation: We want to open-source data} \label{general-motivation}
+“Data is the new oil” is a quote many people agree with. It means that more and more businesses are
 based not on specific production capacities but on data, the ability to process it and the exclusive owenership over it. The success and monopoly of
-companies like Google or Facebook can be attributed to this exclusive ownership to a significant extend.
+companies like Google, Facebook and Amazon can be attributed to this exclusive ownership to a significant extend.
 
-According to commonly accepted economic theories [TODO: quote / reference exactly], monopolies hinder innovation and
-progress. This implies that the unavailability of huge amounts of data to the public is an
-impediment of innovation and increased growth.
-Nevertheless, the publication of raw data sets is impossible because it severly intrudes the privacy of the owners of the data.
+While patents that used to power companies' success provide a balance through granting exclusive rights while having to make the knowledge public, many companies e.g. Coca cola have decided successfully not to go for a patent and thus not reveal their knowledge. If that approach is not compromised, it guarantees both - non-disclosure and also exclusive rights. Similarly, the non-disclosure of huge data sets collected by Facebook, Google and Amazon circumvent the balance intended by patents. The unavailability of huge amounts of data to the public is an impediment of innovation and increased growth.
+Nevertheless, the publication of raw data sets is impossible because it severly intrudes the privacy of the owners of the data.\\
 
-\subsection{Main problem: Conflict between privacy and publishing user data}
-Thus we see a conflict between preserving user privacy and publishing user data.
-\subsection{Existing privacy problem: The availability of central data sets}
-Nevertheless, user privacy is already compromised even if without publication of user data.
+%\subsection{Main problem: Conflict between privacy and publishing user data}
+So, even if companies would agree on a publication, a problem arises.
+There is a conflict between preserving user privacy and publishing user data.\\
 
+%\subsection{Existing privacy problem: The availability of central data sets}
+Nevertheless, user privacy is already compromised even without publication of user data.
 Already the mere existence of central data sets pose a privacy risk to users, because security issues might allow for theft and unwanted publication of these data.
-An example is the facebook data scandal representative for many data breaches over the last years. TODO: [Find and cite].
+An example is the theft of 14 million user data from facebook \parencite{facebook}.\\
 
-\subsection{Relaxed privacy problems: The limited but not eliminated risk through a modified central data set}
+%\subsection{Relaxed privacy problems: The limited but not eliminated risk through a modified central data set}
+Some governments and other institutions already publish some of their data sets after anonymizing them e.g. through cloaking of data so that it achieves k-anonymity and there are crowdsourcing and open source approaches to make data available to everybody. 
+Nevertheless, the applied anonymization is often not sufficient or at least critical if the resulting data set should still be useful. Research shows that inferences can be drawn from the published data sets that violate the respecitve users' privacy. So, in addition to the main risk of a central data set, publishing anonymized data poses another risk to users privacy.\\
 
-Some governments and other institutions already publish some of their data sets after anonymizing them e.g. through cloaking of data so that it achieves k-anonymity and there are crowdsourcing and open source approaches to make
-data available to everybody. 
-Nevertheless, the applied anonymization is often not sufficient or at least critical if the resulting data set should still be useful. Research shows that inferences can be drawn from the published data sets that violate the respecitve users' privacy. So, in addition to the main risk of a central data set, publishing anonymized data poses another risk to users privacy.
-% can only be reduced but not removed by those approaches.
-
-\subsection{New problem in case of modified central data set: Trust to the server is needed}
-
-Furthermore, besides the remaining risk of inference attacks in published anonymized data sets, the anonymization through those algorithms always depend on a trusted server to collect the data from all users and then publish the results of any analysis applying privacy-preserving algorithms beforehand. So even if the data is only stored anonymized on the server, besides the remaining risk of inference attacks, this still imposes a high privacy risk to every user, as trust can be misued by the trusted server itself.
+%\subsection{New problem in case of modified central data set: Trust to the server is needed}
+Furthermore, besides the remaining risk of inference attacks in published anonymized data sets, the anonymization through those algorithms always depend on a trusted server to collect the data from all users and then publish the results of any analysis applying privacy-preserving algorithms beforehand. So even if the data is only stored anonymized on the server, besides the remaining risk of inference attacks, this still imposes a high privacy risk to every user, as trust can be misued by the trusted server itself.\\
 
 \section{Research Question: No central raw data set but only aggregated data}
 RQ 1: What features does such a system require?
@@ -40,7 +35,7 @@ Nach dem Stil.
 
 
 Clearly, in order to overcome the conflicit between privacy intrusion and (public) data availability, a solution is needed that gets along without storing raw data in a central data set.
-This solution should 1. eliminate the risk of leaking raw user data through theft from a centralized database and 2. eliminate the remaining risk of inference attacks on published believed-to anonymized raw data. So far, we have not seen an approach to fully solve this problem.
+This solution should 1. eliminate the risk of leaking raw user data through theft from a centralized database and 2. eliminate the remaining risk of inference attacks on published believed-to anonymized raw data. So far, we have not seen an approach to fully solve this problem.\\
 
 \section{Contributions}
 For our solution, we will focus on the sub-area of location data and location privacy.
