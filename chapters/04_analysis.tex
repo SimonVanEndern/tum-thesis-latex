@@ -94,12 +94,15 @@ We definitely need a strict approach for overlapping, etc. to also take care of 
 
 TODO: From overlapping, ... it will be possible, to compute "There is somebody, generally not walking, but biking, in this area, ... ". Check, whether part of this can somehow be used as a quasi identifier.
 \subsubsection{Resulting aggregators}
+Pending question: Is the aggregation of the whole aggregational dataset unproblematic? At least the last node must randomise the database entry order.
+Important is that aggregational datasets do not share information so that linking could be done.
+How can a device validate that the public key obtained is actually a public key of another device and not created by the server itself???
 \begin{itemize}
 	\item Average data collection
 	\item Average data collection excluding 0 values
 	\item Counting types (e.g. driving to work, walking to work, biking to work)
 	\item Listing pairs of each (longitude, latitude) and the activity (driving, biking, walking) and speed
-	\item TODO: MEDIAN, ...
+	\item Median (in combination with average request. Fake values must be consistent): Collect the samples themselves and at the last stage compute median , .25 and .75 percentile, skewness, standard deviation. ATTENTION: This makes the collective dataset visible! Is this a problem?
 \end{itemize}
 
 \subsubsection{\textcolor{green}{Average step count}}
