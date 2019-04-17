@@ -13,8 +13,9 @@ Our architecture comprises the following:
 \subsection{Android Application}
 The Android Application needs the following:
 \begin{enumerate}
-	\item Create a public/private key pair
-	\item Automatically collect Location Raw Data for the scheme {Timestamp, Location} --> TODO: Implement database in Android Application
+	\item \textcolor{green}[Create a public/private key pair}
+	\item \textcolor{green}{Automatically collect Location Raw Data for the scheme {Timestamp, Location} --> TODO: Implement database in Android Application}
+	\item Ensure that even when the app is not running, data is collected.
 	\item Create activities from the location raw data for the scheme {From, To, Duration, type, ...}
 	\item Algorithm to infer home and work location (or ask for home / work location (rough specification)).
 	\item For each day? week?, ... compute the areas where the user was active. (This can be done as an aggregation request as well)
@@ -26,7 +27,7 @@ The Android Application needs the following:
 	\item calculate response to aggregation request
 	\item Apply logic when to abort aggregation request e.g when incoming n is 0 and next device ID is empty.
 	\item send aggregation response
-	\item At least one screen displaying some text / information about the application
+	\item At least one screen displaying some text / information about the application and hinting to turn off battery saving mode
 	\item Automatic hard-coded push notification to check for an update at date xxx
 	\item Automatic hard-coded deletion of all data after test-phase including a push notification to ask for the deinstallation of the app.
 \end{enumerate}
@@ -118,3 +119,7 @@ This requires implementing locally the calculation of a users work and home plac
 \subsubsection{Stage 2: When moving on a specific road, report bad traffic}
 We will fake this in a way that when somebody is driving (recognized activity), we will randomly trigger the application to send an alert.
 This way we do not have to implement downloading the standard speeds for a road map, recognizing a user being on this road and then checking for less than usual speed.
+
+\section{Implementation}
+\subsection{Android Application}
+We will base our implementation on \cite{gpsLogger}. [TODO: quit battery efficient] They provide the open-source code of an application logging a devices location at regular intervals to a file. We will adapt the logging to use json format and adhere to the standards of schema.org. We will furhter use reverse-geo-coding to determine the postal-code, city, region and country of GPS coordinates. The format used will adhere to the standard of \cite{schemaOrg}. For reverse-geo-coding we will use the google-api: \cite{googleApiReverseGeo}. The rsa public private key encryption will follow the example of \cite{rsa}. The raw data on the mobile device will either be stored using sqLite or using googles room: https://developer.android.com/training/data-storage/room. https://bitbucket.org/tiitha/backgroundserviceexample/src/605ab7c73352ce57dfdde32d9e8ac97dfb661daf/app/src/main/java/com/geoape/backgroundlocationexample/BackgroundService.java?at=master&fileviewer=file-view-default Provides an example of how to let an applicataion run in the background.
