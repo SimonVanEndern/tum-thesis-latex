@@ -97,6 +97,9 @@ TODO: From overlapping, ... it will be possible, to compute "There is somebody, 
 \begin{itemize}
 	\item Average data collection
 	\item Average data collection excluding 0 values
+	\item Counting types (e.g. driving to work, walking to work, biking to work)
+	\item Listing pairs of each (longitude, latitude) and the activity (driving, biking, walking) and speed
+	\item TODO: MEDIAN, ...
 \end{itemize}
 
 \subsubsection{\textcolor{green}{Average step count}}
@@ -115,19 +118,28 @@ Each trajectory home-> work or work-> home is treated as one entry for counting.
 Need sophisticated methods to determine work time, ... 
 \includegraphics[width=\textwidth]{data/data-aggregation-transport-work-home.jpg}
 
-\subsubsection{How many people combine bike with public transport}
+\subsubsection{\textcolor{green}{How many people combine bike with public transport}}
 select everybody where activity biking and activity public transport are close to each other.
-\subsubsection{Create a road map}
+As we cannot map public transport, we will use the driving activity in general.
+
+\subsubsection{\textcolor{green}{Create a road map}}
+The Request Object consists of a list of 2 location pairs associated with an activity. Only pairs with a spatial difference of less than XX meters are taken into account.
 Aggregate all trajectories of the users longer than xx meter, cap the ends and the start for 50 meter, put similar trajectory coordinates together and publish the whole map.
 A users data is only included, if in a radius of xx there are xx more --> k-anonymity.
 Create a car / bike / walking map or color-code the map.
-\subsubsection{Compute the average speed (talking daytime into account) for roads}
+
+\subsubsection{\textcolor{green}{Compute the average speed (taking daytime into account) for roads}}
+Filter for gps points that happen during driving or biking. Determine the speed 1. by the speed sensor measurement and 2. by the subsequent gps points.
 This can e.g. be used to identify roads where zone 30 will reduce noise and co2 exhaustion a lot, if one can compute, that cars accelerate and then typically rest again, so that an average of 30 would have the same timing result. [TODO: Cite cities, ... where 30 is the limit in citycenter, ...]
-\subsubsection{Time to work}
+
+\subsubsection{\textcolor{green}{Time to work}}
 Compute, how much time on average a user needs to go to work.
 This requires implementing locally the calculation of a users work and home place from the data (or we could also ask for the data and state that it will be locally only) or combine the two approaches.
-\subsubsection{Average time at work}
-\subsubsection{How much time to people usually spend searching for a parking spot}
+
+\subsubsection{\textcolor{green}{Average time at work}}
+
+\subsubsection{How much time do people usually spend searching for a parking spot}
+Select activity driving while the trajectory circles around the same spot
 \subsubsection{Identify roads, where (maybe even including the current traffic light sequence) one would be faster with a bike (thus average speed of 20, 22, ...)}
 \subsubsection{Identify routes that are faster by bike than by car}
 
