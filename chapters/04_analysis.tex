@@ -92,12 +92,29 @@ For reporting skewness and standard deviation as well, 50 is the minimum for n (
 
 We definitely need a strict approach for overlapping, etc. to also take care of cases we have not thought about.
 
-TODO: From overlapping, ... it will be possible, to compute "There is somebody, generylly not walking, but biking, in this area, ... ". Check, whether part of this can somehow be used as a quasi identifier.
-\subsubsection{Average walking, driving, ... time}
+TODO: From overlapping, ... it will be possible, to compute "There is somebody, generally not walking, but biking, in this area, ... ". Check, whether part of this can somehow be used as a quasi identifier.
+\subsubsection{Resulting aggregators}
+\begin{itemize}
+	\item Average data collection
+	\item Average data collection excluding 0 values
+\end{itemize}
+
+\subsubsection{\textcolor{green}{Average step count}}
+\includegraphics[width=\textwidth]{data/data-aggregation-average-step.jpg}
+
+\subsubsection{\textcolor{green}{Average walking, driving, ... time}}
+\includegraphics[width=\textwidth]{data/data-aggregation-average-walking.jpg}
 For each of the activities [walking, biking, driving a car, driving public transport] a request is emitted to compute average data.
 The request can further for each activity exclude or include 0-value-computation. Other solution: the 0-values are counted and the average / median of the other data (only in case).
-\subsubsection{How many people go to work by car, ...}
+
+\subsubsection{\textcolor{green}{How many people go to work by car, ...}}
+Search trajectory database for trajectories starting at the home location and ending at the work location and infer activity from other sensor data.
+If there are trajectories matching home and work location, each trajectory is treated as a car trajectory, if there was only car and walk activities within the trajectory.
+As bike trajectory, if there was only bike and walk activities and walk if there was only walk.
+Each trajectory home-> work or work-> home is treated as one entry for counting. If none of the former matches, the trajectory is counted as not\_clear.
 Need sophisticated methods to determine work time, ... 
+\includegraphics[width=\textwidth]{data/data-aggregation-transport-work-home.jpg}
+
 \subsubsection{How many people combine bike with public transport}
 select everybody where activity biking and activity public transport are close to each other.
 \subsubsection{Create a road map}
@@ -119,6 +136,53 @@ This requires implementing locally the calculation of a users work and home plac
 \subsubsection{Stage 2: When moving on a specific road, report bad traffic}
 We will fake this in a way that when somebody is driving (recognized activity), we will randomly trigger the application to send an alert.
 This way we do not have to implement downloading the standard speeds for a road map, recognizing a user being on this road and then checking for less than usual speed.
+
+\subsection{Data Models}
+\includegraphics[width=\textwidth]{data/data-model.jpg}
+
+\begin{itemize}
+	\item \begin{verbatim}
+	CREATE TABLE steps (
+	day TEXT,
+	steps INT
+	);
+	\end{verbatim}
+	\item \begin{verbatim}
+	CREATE TABLE activities (
+	day TEXT,
+	activity INT,
+	start TEXT,
+	duration INT,
+	FOREIGN KEY (activity) REFERENCES activity_type (id)
+	);
+	\end{verbatim}
+	\item \begin{verbatim}
+	CREATE TABLE location (
+	longitude REAL,
+	lattitude REAL,
+	speed REAL
+	);
+	\end{verbatim}
+	\item \begin{verbatim}
+	CREATE TABLE gps_data (
+	location INT
+	timestamp TEXT,
+	FOREIGN KEY (location) REFERENCES location (id)
+	);
+	\end{verbatim}
+	\item \begin{verbatim}
+	CREATE TABLE trajectories (
+	start INT,
+	end INT,
+	time_start TEXT,
+	time_end TEXT,
+	activity INT,
+	FOREIGN KEY (activity) REFERENCES activity_type(id)
+	FOREIGN KEY (start) REFERENCES location (id)
+	FOREIGN KEY (end) REFERENCES location (id)
+	);
+	\end{verbatim}
+\end{itemize}
 
 \section{Implementation}
 \subsection{Android Application}
