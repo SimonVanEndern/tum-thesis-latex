@@ -13,7 +13,7 @@ Our architecture comprises the following:
 \subsection{Android Application}
 The Android Application needs the following:
 \begin{enumerate}
-	\item \textcolor{green}[Create a public/private key pair}
+	\item \textcolor{green}{Create a public/private key pair}
 	\item \textcolor{green}{Automatically collect Location Raw Data for the scheme {Timestamp, Location} --> TODO: Implement database in Android Application}
 	\item Ensure that even when the app is not running, data is collected.
 	\item Create activities from the location raw data for the scheme {From, To, Duration, type, ...}
@@ -122,4 +122,4 @@ This way we do not have to implement downloading the standard speeds for a road 
 
 \section{Implementation}
 \subsection{Android Application}
-We will base our implementation on \cite{gpsLogger}. [TODO: quit battery efficient] They provide the open-source code of an application logging a devices location at regular intervals to a file. We will adapt the logging to use json format and adhere to the standards of schema.org. We will furhter use reverse-geo-coding to determine the postal-code, city, region and country of GPS coordinates. The format used will adhere to the standard of \cite{schemaOrg}. For reverse-geo-coding we will use the google-api: \cite{googleApiReverseGeo}. The rsa public private key encryption will follow the example of \cite{rsa}. The raw data on the mobile device will either be stored using sqLite or using googles room: https://developer.android.com/training/data-storage/room. https://bitbucket.org/tiitha/backgroundserviceexample/src/605ab7c73352ce57dfdde32d9e8ac97dfb661daf/app/src/main/java/com/geoape/backgroundlocationexample/BackgroundService.java?at=master&fileviewer=file-view-default Provides an example of how to let an applicataion run in the background.
+We will base our implementation on \cite{gpsLogger}. [TODO: quit battery efficient] They provide the open-source code of an application logging a devices location at regular intervals to a file. We will adapt the logging to use json format and adhere to the standards of schema.org. We will furhter use reverse-geo-coding to determine the postal-code, city, region and country of GPS coordinates. The format used will adhere to the standard of \cite{schemaOrg}. For reverse-geo-coding we will use the google-api: \cite{googleApiReverseGeo}. The rsa public private key encryption will follow the example of \cite{rsa}. The raw data on the mobile device will either be stored using sqLite or using googles room: %https://developer.android.com/training/data-storage/room. https://bitbucket.org/tiitha/backgroundserviceexample/src/605ab7c73352ce57dfdde32d9e8ac97dfb661daf/app/src/main/java/com/geoape/backgroundlocationexample/BackgroundService.java?at=master&fileviewer=file-view-default Provides an example of how to let an applicataion run in the background.
