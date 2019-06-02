@@ -1,0 +1,10 @@
+% !TeX root = ../main.tex
+% Add the above to each chapter to make compiling the PDF easier in some editors.
+\chapter{Design and Implementation}\label{chapter:design}
+
+\section{Technology Stack}
+In order to implement the architecture proposed in chapter \ref{chapter:design} we chose Android as end user device platform. Android has the highest market share among mobile devices and offers a healthy ecosystem of frameworks and libraries that simplify development.
+
+As server side technology we chose node.js in conjunction with a mongoDB object store database. A NoSQL database like mongoDB provides flexibility and easy adaption of data schemes without much overhead and thus perfectly fits our prototyping purpose. We chose node.js out of the same reasons. In contrast to a statically typed language, javascript provides more flexibility and ease of change. Furthermore node.js is often used in combination with mongoDB and probably provides the best integration of it.
+
+The results can be made available to the public either via a dedicated route of the server or directly through granting right access to the respective collection of the database.
