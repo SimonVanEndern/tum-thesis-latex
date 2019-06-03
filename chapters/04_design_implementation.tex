@@ -3,8 +3,28 @@
 \chapter{Design and Implementation}\label{chapter:design}
 
 \section{Technology Stack}
-In order to implement the architecture proposed in chapter \ref{chapter:design} we chose Android as end user device platform. Android has the highest market share among mobile devices and offers a healthy ecosystem of frameworks and libraries that simplify development.
+In order to implement the architecture proposed in chapter \ref{chapter:design} we chose Android as end user device platform. Android has the highest market share among mobile devices and offers a healthy ecosystem of frameworks and libraries that simplify development. Furthermore we opted for an implementation in Kotlin to reduce boilerplate code and improve readability.
 
 As server side technology we chose node.js in conjunction with a mongoDB object store database. A NoSQL database like mongoDB provides flexibility and easy adaption of data schemes without much overhead and thus perfectly fits our prototyping purpose. We chose node.js out of the same reasons. In contrast to a statically typed language, javascript provides more flexibility and ease of change. Furthermore node.js is often used in combination with mongoDB and probably provides the best integration of it.
 
 The results can be made available to the public either via a dedicated route of the server or directly through granting right access to the respective collection of the database.
+
+\section{Android Application}
+The android application can be grouped into three main parts:
+\begin{itemize}
+	\item A module responsible for collecting location data
+	\item A module responsible for locally aggregating the raw data
+	\item A module responsible for handling aggregation requests
+\end{itemize}
+The application is programmed with API level XX as target level and a minimum Android API level of XX. Approximately XX\% of devices support this minimum API level which allows our application to be installed on almost any Android device.
+Furthermore, the application leverages google services. Without google play services, the application will not work. In order to ease future adaptability, we chose to use the Dagger2 framework for dependency injection. Further use of frameworks and libraries will be explained in the following respective sections. 
+
+\subsection{Separation of concerns regarding location data}
+We chose to separate the aggregation and collection of location data in order to decouple the modules and provide the possibility to extend the model of aggregated data in the future without the need to chose the raw data model. Vice versa the data collection process can be modified without impacting the aggregation process.
+
+\subsection{Overall Android Architecture}
+The application has only one Main Activity in order to ask the user to grant location access. Apart from that the only Activity does not serve any specific purpose. It displays the 10 most recent database entries for some tables, used during the development and testing process.
+The application itself is structured into loosely coupled modules taking care of retrieving and saving the raw data, locally aggregating the data and communicating with the server.
+The local aggregation as well as the polling of new requests from the server happens on a 15 minute interval. The Android Workmanager controls this periodic work.
+For the App in order to have maximum possibilities collecting esspecially GPS data and preventing the Android operating system from shutting down when not interacted with by the user (which is usually never the case), a non-dismissible status notification is displayed at all time. (Compare to the non-dismissible status notification displayed by Google Maps when the navigation system is active).
+Furthermore, the application, respectively each module is heavily unit tested in norder to guarantee functionality and facilitate further development by other research teams. Unit tests are based on JUnnit 4 for Android and expresso.
