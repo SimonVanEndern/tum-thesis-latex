@@ -69,3 +69,30 @@ Example of algorithm:
 We use the retrofit2 framework based on OKHTTP to handle communication with our REST server. An HTTP Interceptor is used to modify incoming and outgoing requests. In the former case, the interceptor decrypts the requests body using the private key of the installation before the body is parsed into Java Objects. The latter is used to add authentication to outgoing requests.
 The app polls for new aggregation requests on a regular basis. New aggregation requests are first saved locally to the database, then processed and again stored locally and finally send back to the server. This separation of concerns is useful especially in case of an interrupted communication during processing the aggregation request. //TODO: Image with repository.
 The aggregation itself takes the type parameter to specify which actions to take on the three fields (nn:int, value:Float, valueList: List<Float>) shared across all aggregation request types. In case of the tyes "steps" and "activity\_X" the field value contains the mean and the field n is the number of participants so far. In case of "stepsListing" only the field "valueList" is used and filled with the mean value of each user. In case of "trajectories", only the field "valueList" is used. Four subsequent elements of the list always represent one trajectory as of latitude of start, longitude of start, latitude of end and longitude of end.
+
+\subsection{API}
+The API is designed as a pure JSON API.
+The API consists of the following endpoints:
+\begin{itemize}
+	\item POST /user - for creating a new user
+	\item GET /requests - for retrieving aggregation requests for a user
+	\item POST /forward - for sending a processed aggregation request back to the server
+	\item GET /aggregations - for retrieving all completed aggregation results
+	\item POST /admin/sampleRequest - for starting a new aggregation request.
+\end{itemize}
+
+The routes used for interaction with the application (except the one for creating a new user) are secured and can only be used if the users can successfully be authenticated. The routes for starting new aggregation requests and retrieving all results require administration authentication. The route for the results was designed to be available to the public without authentication but restricted in our setting to avoid privacy issues that might evolve due to the experimental request.
+Figure XX depicts an example usage of each of those endpoints. There are some other routes that are only used for debugging purposes. 
+
+\section{Data aggregation design}
+All aggregation requests have in common that the underlying data is specified through start day and end day. Thus the minimum timespan for an aggregation is 24 hours. All other timespans are multiples of 24 hours.
+The following aggregation requests were implemented:
+\begin{enumerate}
+	\item Computing the average number of steps walked.
+	\item Computing the average time spent walking, in a vehicle or on a bicycle. \footnote{https://developers.google.com/android/reference/com/google/android/gms/location/DetectedActivity}
+	\item Aggregating a list of the average number of steps walked during the timespan of each user.
+	\item Aggregating a list of all trajectories registered by the users phone.
+\end{enumerate}
+
+We had no doubt that aggregation 1 and 2 do not pose any privacy risk to the users participating in the aggregation. Aggregation 3 was implemented to test whether this type of aggregation, which allows for more advances statistical computations as median values and distribution properties, still completely preserves privacy.
+Aggregation 4 imposes a privacy risk discussed in XX on the user and was implemented in order to get an overview of the data quality of our setup and validate the feasability of the other aggregation requests proposed in XX.
