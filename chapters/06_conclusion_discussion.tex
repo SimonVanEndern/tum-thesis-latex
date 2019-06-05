@@ -2,3 +2,16 @@
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 \chapter{Conclusion and Discussion}\label{chapter:conclusion}
 We have shown that our hypothesis holds but only for aggregated data. This is fine because except in one experimental setting as with trajectories, there is no need for (anonymized) raw data. Also the experimental setting could be replaced by directly implementing the aggregations and testing with a greater user base. In theory, the anonymity and preserved privacy that hold for the tested aggregations hohlds also for the other proposed aggregations and aggregations we have not evaluated here. In order to follow with this research, we provide the setup to easily implement and test those and further aggregations in future research in order to further support our hypothesis.
+
+\section{Limitations}
+\begin{itemize}
+	\item As mentioned in XX, our system is based on trust. In case of user data being compromised, this significantly impacts some of the results. Nevertheless, collecting the list of mean values is far less error prone as the outlier could also be identified.
+\end{itemize}
+
+\section{Future Work}
+\begin{itemize}
+	\item While XX has found that inference attacks can be based on the same dataset being published two times with different anonymization techniques applied and XX shows that anonymized datasets that overlap poses a risk, it still has to be investigated whether overlapping aggregated data as in our case can pose a risk.
+	\item Some of the techniques identified as useful, such as spatial cloaking, ... should be applied in our setting.
+	\item Our framework would also allow to pre-populate (simulated) smartphones with artificially generated or otherhow collected data in order to test and verify the functionality.
+	\item Another use of our framework is the area of decentralized computation. Problems might be solved locally and collected by the server afterwards and the pieces put together still with anonymity for the users.
+\end{itemize}
