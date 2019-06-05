@@ -14,4 +14,14 @@ We have shown that our hypothesis holds but only for aggregated data. This is fi
 	\item Some of the techniques identified as useful, such as spatial cloaking, ... should be applied in our setting.
 	\item Our framework would also allow to pre-populate (simulated) smartphones with artificially generated or otherhow collected data in order to test and verify the functionality.
 	\item Another use of our framework is the area of decentralized computation. Problems might be solved locally and collected by the server afterwards and the pieces put together still with anonymity for the users.
+	\item Ask the user for his / her home and work location or infer it from the data in order to process aggregation requests as mentioned in section XX.
+	\item Store the users location on the server (granularity level approach) in order to allow for aggregation requests targeted at specific areas and not the overall user base. (levels and level database and unlocked levels collection necessary)
+	\item Android: Only send a final aggregation back to the server when criteria like minimum n, ... are met.
+	\item Server: Apply that the request has a counter how many times it was actually retrieved, so that after e.g. 10 times it was retrieved but never answered, the request is rolled back because apparently the user somehow cannot process the request.
+	\item Have a nice activity informing the user / displaying some information to the user.
+	\item (Put somewhere else!! TODO) The app can send traffic alerts to the server if it is on a route where usually traffic is far faster. (This also via other nodes in order to not letting the server know who is on this route.)
+	\item a scheduler which automatically creates aggregation requests on a regular basis so that not as now Postman has to be used to start requests. The Postman collections used during field testing can be found here : XXX
+	\item Generate userList of aggregation request dynamically.
+	\item Pre-populate (raw)aggregation requests so that the first users cannot infer data from the users before them with high probabilities. Upon receiving the final result, the server can look up the used initialization values from the rawAggregationRequest and calculate the actual correct result and insert it into the database.
 \end{itemize}
+We suggest to do especially two things in any further research project: Implement error logging and sending those errors to the server in order to find and remove bugs. Secondly bring the application to the playstore so that updates are possible (even without user interaction in case of automatic updates) and be able to activate a broader user base while still working on the final version to be tested.

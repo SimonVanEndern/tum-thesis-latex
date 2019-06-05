@@ -10,6 +10,7 @@ As server side technology we chose node.js in conjunction with a mongoDB object 
 The results can be made available to the public either via a dedicated route of the server or directly through granting right access to the respective collection of the database.
 
 \section{Android Application}
+The Android application is aimed to collect gps and other location data in the background without any user interaction needed and serve aggregation requests also without any user interaction needed.
 The android application can be grouped into three main parts:
 \begin{itemize}
 	\item A module responsible for collecting location data
@@ -26,7 +27,7 @@ We chose to separate the aggregation and collection of location data in order to
 The application has only one Main Activity in order to ask the user to grant location access. Apart from that the only Activity does not serve any specific purpose. It displays the 10 most recent database entries for some tables, used during the development and testing process.
 The application itself is structured into loosely coupled modules taking care of retrieving and saving the raw data, locally aggregating the data and communicating with the server.
 The local aggregation as well as the polling of new requests from the server happens on a 15 minute interval. The Android Workmanager controls this periodic work.
-For the App in order to have maximum possibilities collecting esspecially GPS data and preventing the Android operating system from shutting down when not interacted with by the user (which is usually never the case), a non-dismissible status notification is displayed at all time. (Compare to the non-dismissible status notification displayed by Google Maps when the navigation system is active).
+For the App in order to have maximum possibilities collecting esspecially GPS data and preventing the Android operating system from shutting down when not interacted with by the user (which is usually never the case), a non-dismissible status notification is displayed at all time. (Compare to the non-dismissible status notification displayed by Google Maps when the navigation system is active). Also the application is registered to be automatically restarted upon boot\footnote{From Android XX on, all apps are automatically managed by the battery manager which restricts background launches. The user has to switch this option to manually manage in order to allow the app to function in the way it was designed.} so that once installed, no further user interaction is necessary.
 Furthermore, the application, respectively each module is heavily unit tested in norder to guarantee functionality and facilitate further development by other research teams. Unit tests are based on JUnnit 4 for Android and expresso.
 
 \subsection {Data collection}
