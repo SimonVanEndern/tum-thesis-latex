@@ -23,5 +23,14 @@ We have shown that our hypothesis holds but only for aggregated data. This is fi
 	\item a scheduler which automatically creates aggregation requests on a regular basis so that not as now Postman has to be used to start requests. The Postman collections used during field testing can be found here : XXX
 	\item Generate userList of aggregation request dynamically.
 	\item Pre-populate (raw)aggregation requests so that the first users cannot infer data from the users before them with high probabilities. Upon receiving the final result, the server can look up the used initialization values from the rawAggregationRequest and calculate the actual correct result and insert it into the database.
+	\item Generate some use for the user of the application e.g. through showing locally aggregated data and comparing it to aggregated data publicly available e.g. in order to show how many percent walked more this day than the respective user. This is also an approach to motivate app installations in case of a broader user base necessary.
+	\item delete local data after some time.
+	\item Evaluate how many people have to participate in an aggreation request to be representative / how to chose users participating in it in order to not be biased (e.g. when taking always the most recent active users, the users only online a few times are day are discriminated against)
+	\item Investigate overlapping
+	\item When returning list data to the server, the list order should be randomised by the user before sending.
+	\item Verify public key e.g. through telephone number passing and verifying this way and then building a network of verifications.
+	\item Adhere to standards of schema.org
 \end{itemize}
 We suggest to do especially two things in any further research project: Implement error logging and sending those errors to the server in order to find and remove bugs. Secondly bring the application to the playstore so that updates are possible (even without user interaction in case of automatic updates) and be able to activate a broader user base while still working on the final version to be tested.
+
+Also, the approach could easily integrated into existing projects like open maps or be build modular in order to allow using it as a library with other applications.
