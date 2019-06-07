@@ -11,7 +11,7 @@ The results can be made available to the public either via a dedicated route of 
 
 The following sections describe the implementation of the Android application and the server and explain design decisions. We start with an outline of the API shared by the application and the server.
 
-\section{API}
+\section{API}\label{api}
 The API is designed as a pure REST API based on JSON.
 The API consists of the following endpoints:
 \begin{itemize}
@@ -28,7 +28,7 @@ Figure XX depicts an example usage of each of those endpoints.
 The encryptedRequest as of figure XX contains the encrypted version of the request described in the following subsection.
 
 //TODO: Integrate this section somewhere else (in methodology)
-\subsection{Data aggregation design}
+\subsection{Data Aggregation Design}
 All aggregation requests have a start day and an end day in common. Days' time is always treated as 00:00 o'clock. Thus, the timespan for an aggregation is always a multiple of 24 hours.
 The following aggregation requests were implemented:
 \begin{enumerate}
@@ -60,10 +60,10 @@ The local aggregation as well as the polling of new requests from the server hap
 For the App in order to have maximum possibilities collecting esspecially GPS data and preventing the Android operating system from shutting down when not interacted with by the user (which is usually never the case), a non-dismissible status notification is displayed at all time. (Compare to the non-dismissible status notification displayed by Google Maps when the navigation system is active). Also the application is registered to be automatically restarted upon boot\footnote{From Android 6.0 on (API level 23), restricts apps' behaviour in order to reduce battery consumption. E.g. all apps are automatically managed by the battery manager which restricts background launches. The user has to switch this option to manual management in order to allow the app to function in the way it was designed. See https://developer.android.com/guide/background/ and also https://developer.android.com/training/monitoring-device-state/doze-standby} and also when the application is closed by the user (e.g. via the task manager) so that once installed, no further user interaction is necessary.
 Furthermore, the application, respectively each module is heavily unit tested in norder to guarantee functionality and facilitate further development by other research teams. Unit and integration tests are based on AndroidJUnit4 and the expresso\footnote{https://developer.android.com/training/testing/espresso} framework.
 
-\subsection{Separation of concerns regarding data collection and aggregation}
+\subsection{Separation of concerns regarding Data Collection and Aggregation}
 We choose to separate the aggregation and collection of location data in order to decouple the modules and provide the possibility to extend the model of aggregated data in the future without the need to change the raw data model. Vice versa the data collection process can be modified without impacting the aggregation process.
 
-\subsection {Data collection}
+\subsection {Data Collection}
 We use the Android Room Persistence library\footnote{https://developer.android.com/topic/libraries/architecture/room} to locally store data. The library provides a layer over the standard LiteSQL database commonly used in many Android applications. We collect three types of data:
 \begin{itemize}
 	\item Steps: If available, the phone's internal step sensor provides updates on a regular basis. The step sensor always informs about the total number of steps since the last reboot. Upon each time we receive data from the step sensor, this data is stored directly in the \textit{step\_counter\_table}.
@@ -71,7 +71,7 @@ We use the Android Room Persistence library\footnote{https://developer.android.c
 	\item GPS positions: GPS data is retrieved through the \textit{FusedLocationProviderClient} which leverages cellphone-tower and WIFI data apart from GPS to determine the position. In order to limit battery consumption, GPS data is only requested every minute if the device's detected activity is \textit{still}\footnote{Neertheless, if other applications request a GPS position, our application also receives this data, even if it occurs on a faster interval}. If the current detected activity is \textit{walking}, the interval is set to 5 seconds and in any other state, the interval is set to every second. The data is stored in the linked tables \textit{gps\_data\_table} and \textit{gps\_location\_table}. We choosse to separate the GPS point itself from the timestamp having in mind that future aggregations might need or leverage the separation of spatial data and time and more than one event might be attached to the same GPS point.
 \end{itemize}
 
-\subsection{Local data aggregation}
+\subsection{Local Data Aggregation}
 From the received values of the step counter since last reboot saved in \textit{step\_counter\_table} the daily steps are computed and stored in \textit{steps\_table}. The exit and enter events received via the activity recognition framework and stored in the \textit{activity\_transition\_table} are matched in order to compute activities with start and duration. Those activities are then saved in the \textit{activity\_table}.
 GPS data is used to compute trajectories through the following algorithm:
 \begin{enumerate}
@@ -99,7 +99,7 @@ Example of algorithm (TODO):
 }
 \end{verbatim}
 
-\subsection{Serving aggregation requests}
+\subsection{Serving Aggregation Requests}
 We use the retrofit2 framework\footnote{https://square.github.io/retrofit/} based on OKHTTP\footnote{https://square.github.io/okhttp/} to handle communication with our REST server dexribed in \ref{server}. An HTTP Interceptor is used to modify incoming and outgoing requests. The interceptor decrypts the request body of incoming messages using the private key of the installation before the body is parsed into Java Objects. On outgoing messages the inteerceptor adds authentication before sending them to the server.
 The app polls for new aggregation requests every 15 minutes. New aggregation requests are first stored locally in the database. Those requests are then processed and the results are again stored locally as pending outgoing requests until they are finally send to the server. Figure XX illustrates this process. This separation of concerns is useful especially in case of an interrupted communication during processing the aggregation request. When the results cannnot be send to the server, the app automatically retries the next time that the communication module is invoked.
 The aggregation itself takes the type parameter of the request to specify which actions to take on the three fields (n:int, value:Float, valueList: List<Float>) shared across all aggregation requests. In case of the tyes "steps" and "activity\_X" the field value contains the current mean of the data and the field n is the number of participants so far. In case of "stepsListing" only the field "valueList" is used. Each user's mean value is added to the list. In case of "trajectories", only the field "valueList" is used. Four subsequent elements of the list always represent one trajectory as of latitude of start, longitude of start, latitude of end and longitude of end.
@@ -108,9 +108,9 @@ In case that the aggregation should be changed to actually work over P2P e.g. us
 %In case of edge-computing, ... only this module has to be adapted to receive the requets from and send them to the respective endpoints and the system works fine.
 
 \section{Server Design and Implementation}\label{server}
-The server is build using the event-driven node.js verion 10.15.3 leveraging the express\footnote{https://expressjs.com/} web-server framework and using the mocha\footnote{https://mochajs.org/} testing framework in combination with the chai\footnote{https://www.chaijs.com/} assertion library for unit and integration testing. The layered architecture starts with the server - server.js handling authentication and updating the respective users lastSeen property. Afterwards routes.js connects each API endpoint to the respective function in requests.js which contains the overall logic of the endpoint. The repository module than handles those requests according to the underlying datamodels and persists data in a mongoDB object store. server.js also invokes a scheduled task which re-routes stale requests where the user has not proceeded with the pending request either due to being offline or due to a problem handling the request. When new aggregation requests are started, the lastSeen timestamp of users is taken into account to exclude users that have not connected for a certain time. Furthermore, the list of users who are selected to serve the new request is ordered by the time the user was last seen.
+The server is build using the event-driven node.js verion 10.15.3 leveraging the express\footnote{https://expressjs.com/} web-server framework and using the mocha\footnote{https://mochajs.org/} testing framework in combination with the chai\footnote{https://www.chaijs.com/} assertion library for unit and integration testing. The server is designed using a layered architecture as described in figure XX. On the lowest level are the data models which define and verify the data schemes defined in subsection \ref{server-data-model}. The \textit{commonRepository} and the \textit{userRepository} are build on top of those models and persists data in a mongoDB object store. They also handle e.g. transactions where several objects are modified depending on the result of the previous modification (TODO: implement transactions?). The third level provides the logic to be executed for each endpoint defined in \textit{routs.js} while \textit{server.js} on the top level starts the server on the port specified in TODO.environment.json-TODO. It also registers the routes described in section \ref{api}, adds authentication and interacts directly with the \textit{userRepository} in order to update the respective users lastSeen property. Furthermore, it starts a scheduled repeating task to keep the request chain running. This process is described in subsection \ref{request-chain}
 
-\subsection{Data Model}
+\subsection{Data Model}\label{server-data-model}
 We organize the data in four collections. The user collection stores the user data which is the public key, the hashed password and "lastSeen" - the timestamp of the last interaction of the user with the server. Aggregation requests are split into two collections. The collection "rawAggregationRequests" stores the initial aggregation request inserted through the admin interface containing the fields start, end, type - the type of the request, the three fields n, value, valueList reused across all aggregations to pass data, the timestamp when the request was filed to the server and a flag indicating whether this request has been started yet\footnote{E.g. when the end data of a newly inserted aggregation request is in the future, the request will be started only when this day has passed}. Upon start of the aggregation request, a list of the 10 most recently active users is retrieved in order to serve this request. The request body is then encrypted with the first users public key and stored in the collection "aggregationRequests". Each time, a user requests an aggregationRequest, proceeds with it and sends the results back to the server, the result is inserted into the database as a new aggregationRequest. The fields of this collection are 
 \begin{itemize}
 	\item rawRequestId - The id of the related rawRequest. This field is not available through the API.
@@ -126,3 +126,7 @@ We organize the data in four collections. The user collection stores the user da
 	\item commpleted - A flag indicating whether this aggregation request has already been proceeded by the respective user and the resulting aggregationRequest has been received by the server.
 \end{itemize}
 The last collection called "aggregationResults" is used to store the results of an aggregation request. Once there are no more users to serve an aggregationRequest, the last user sends the final data unencrypted to the server where it is stored as an aggregationResult. It contains the same fields as the rawAggregationRequest except the started flag and additionally a field started\_at and timestamp - indicating when the aggregation request referenced through rawRequestId was started and when it was completed.
+
+\subsection(request-chain)\label{request-chain}
+//TODO
+server.js also invokes a scheduled task which re-routes stale requests where the user has not proceeded with the pending request either due to being offline or due to a problem handling the request. When new aggregation requests are started, the lastSeen timestamp of users is taken into account to exclude users that have not connected for a certain time. Furthermore, the list of users who are selected to serve the new request is ordered by the time the user was last seen.
