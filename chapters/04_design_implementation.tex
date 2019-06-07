@@ -10,25 +10,25 @@ As server side technology we chose node.js in conjunction with a mongoDB object 
 The results can be made available to the public either via a dedicated route of the server or directly through granting right access to the respective collection \footnote{A collection in an object store is the equivalent to a table in a SQL database} of the database.
 
 \section{Android Application}
-The Android application is aimed to collect GPS data, detect the user's current activity and count the user's steps. The data collection process happens in the background without any user interaction needed. Aggregation requests to aggregate data accross devices are also served without any user interaction needed.
-The android application can be grouped into three main parts:
-\begin{itemize}
-	\item A module responsible for collecting data
-	\item A module responsible for locally aggregating raw data
-	\item A module responsible for handling aggregation requests
-\end{itemize}
-The application targets Android Oreo (API level 27) and requires a minimum API level of 19. Approximately 96.8\% of devices run on this or a higher version of Android \cite{android-api-level-share} which allows our application to be installed on the majority of Android devices.
+The Android application targets Android Oreo (API level 27) and requires a minimum API level of 19. Approximately 96.8\% of devices run on this or a higher version of Android \cite{android-api-level-share} which allows our application to be installed on the majority of Android devices.
 Furthermore, the application leverages Goolge Play Services to obtain GPS and activity data. Without Google Play Services installed, the application will not work. In order to ease future adaptability, we chose to use the Dagger2 \footnote{https://dagger.dev/} framework for dependency injection in order to decouple classes as far as possible. Further use of frameworks and libraries will be explained in the following respective sections.
 
-\subsection{Separation of concerns regarding location data}
-We chose to separate the aggregation and collection of location data in order to decouple the modules and provide the possibility to extend the model of aggregated data in the future without the need to chose the raw data model. Vice versa the data collection process can be modified without impacting the aggregation process.
+Th application is aimed to collect GPS data, detect the user's current activity and count the user's steps. The data collection process happens in the background without any user interaction needed. Aggregation requests to aggregate data accross devices are also served without any user interaction needed.
+The android application can be grouped into three main parts of loosely coupled modules:
+\begin{itemize}
+	\item A module responsible for collecting and saving raw data
+	\item A module responsible for locally aggregating raw data
+	\item A module responsible for communicating with the server and handling aggregation requests
+\end{itemize}
+The control flow as depicted in figure XX is as follows: 
+The application has only one Main Activity in order to ask the user to allow location access and start the background services. Apart from that the only Activity does not serve any specific purpose. 
+The local aggregation as well as the polling of new requests from the server happens in the background on a 15 minute interval. The Android Workmanager controls this periodic work without any user interaction being required.
 
-\subsection{Overall Android Architecture}
-The application has only one Main Activity in order to ask the user to grant location access. Apart from that the only Activity does not serve any specific purpose. It displays the 10 most recent database entries for some tables, used during the development and testing process.
-The application itself is structured into loosely coupled modules taking care of retrieving and saving the raw data, locally aggregating the data and communicating with the server.
-The local aggregation as well as the polling of new requests from the server happens on a 15 minute interval. The Android Workmanager controls this periodic work.
 For the App in order to have maximum possibilities collecting esspecially GPS data and preventing the Android operating system from shutting down when not interacted with by the user (which is usually never the case), a non-dismissible status notification is displayed at all time. (Compare to the non-dismissible status notification displayed by Google Maps when the navigation system is active). Also the application is registered to be automatically restarted upon boot\footnote{From Android XX on, all apps are automatically managed by the battery manager which restricts background launches. The user has to switch this option to manually manage in order to allow the app to function in the way it was designed.} and also when the application is closed by the user (e.g. via the task manager) so that once installed, no further user interaction is necessary.
-Furthermore, the application, respectively each module is heavily unit tested in norder to guarantee functionality and facilitate further development by other research teams. Unit tests are based on JUnnit 4 for Android and expresso.
+Furthermore, the application, respectively each module is heavily unit tested in norder to guarantee functionality and facilitate further development by other research teams. Unit and integration tests are based on AndroidJUnit4 and the expresso \footnote{https://developer.android.com/training/testing/espresso} framework.
+
+\subsection{Separation of concerns regarding data collection and aggregation}
+We choose to separate the aggregation and collection of location data in order to decouple the modules and provide the possibility to extend the model of aggregated data in the future without the need to change the raw data model. Vice versa the data collection process can be modified without impacting the aggregation process.
 
 \subsection {Data collection}
 We use the Android Room Persistence library which is a layer on top of the standard LiteSQL database used in most Android applications. We collect three types of data:
