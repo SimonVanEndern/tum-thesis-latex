@@ -9,6 +9,22 @@ As server side technology we chose node.js in conjunction with a mongoDB object 
 
 The results can be made available to the public either via a dedicated route of the server or directly through granting right access to the respective collection\footnote{A collection in an object store is the equivalent to a table in a SQL database} of the database.
 
+The following sections describe the implementation of the Android application and the server and explain design decisions. We start with an outline of the API shared by the application and the server.
+
+\section{API}
+The API is designed as a pure REST API based on JSON.
+The API consists of the following endpoints:
+\begin{itemize}
+	\item POST /user - for creating a new user
+	\item GET /requests - for retrieving aggregation requests for a user
+	\item POST /forward - for sending a processed aggregation request back to the server
+	\item GET /aggregations - for retrieving all completed aggregation results
+	\item POST /admin/sampleRequest - for starting a new aggregation request.
+\end{itemize}
+
+The routes used for interaction with the application (except the one for creating a new user) are secured and can only be used if the users can successfully be authenticated. The routes for starting new aggregation requests and retrieving all results require administrator authentication. The route for the results is designed to be available to the public without authentication. Nevertheless we restrict access only to result types that have been examined to fully protect users' privacy. So, for example, our experimental trajectory request type is not available to the public
+Figure XX depicts an example usage of each of those endpoints.
+
 \section{Android Application}
 The Android application targets Android Oreo (API level 27) and requires a minimum API level of 19. Approximately 96.8\% of devices run on this or a higher version of Android \cite{android-api-level-share} which allows our application to be installed on the majority of Android devices.
 Furthermore, the application leverages Goolge Play Services to obtain GPS and activity data. Without Google Play Services installed, the application will not work. In order to ease future adaptability, we chose to use the Dagger2\footnote{https://dagger.dev/} framework for dependency injection in order to decouple classes as far as possible. Further use of frameworks and libraries will be explained in the following respective sections.
@@ -73,21 +89,6 @@ The aggregation itself takes the type parameter of the request to specify which 
 
 In case that the aggregation should be changed to actually work over P2P e.g. using local WIFI networks this module only has to be adapted to the new routing of requests. No further changes to the application are necessary.
 %In case of edge-computing, ... only this module has to be adapted to receive the requets from and send them to the respective endpoints and the system works fine.
-
-\subsection{API}
-// Move to beginning of chapter before Android appllication
-The API is designed as a pure JSON API.
-The API consists of the following endpoints:
-\begin{itemize}
-	\item POST /user - for creating a new user
-	\item GET /requests - for retrieving aggregation requests for a user
-	\item POST /forward - for sending a processed aggregation request back to the server
-	\item GET /aggregations - for retrieving all completed aggregation results
-	\item POST /admin/sampleRequest - for starting a new aggregation request.
-\end{itemize}
-
-The routes used for interaction with the application (except the one for creating a new user) are secured and can only be used if the users can successfully be authenticated. The routes for starting new aggregation requests and retrieving all results require administration authentication. The route for the results was designed to be available to the public without authentication but restricted in our setting to avoid privacy issues that might evolve due to the experimental request.
-Figure XX depicts an example usage of each of those endpoints. There are some other routes that are only used for debugging purposes. 
 
 \section{Data aggregation design}
 All aggregation requests have in common that the underlying data is specified through start day and end day. Thus the minimum timespan for an aggregation is 24 hours. All other timespans are multiples of 24 hours.
