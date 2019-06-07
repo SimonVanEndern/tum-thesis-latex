@@ -25,6 +25,23 @@ The API consists of the following endpoints:
 The routes used for interaction with the application (except the one for creating a new user) are secured and can only be used if the users can successfully be authenticated. The routes for starting new aggregation requests and retrieving all results require administrator authentication. The route for the results is designed to be available to the public without authentication. Nevertheless we restrict access only to result types that have been examined to fully protect users' privacy. So, for example, our experimental trajectory request type is not available to the public
 Figure XX depicts an example usage of each of those endpoints.
 
+The encryptedRequest as of figure XX contains the encrypted version of the request described in the following subsection.
+
+//TODO: Integrate this section somewhere else (in methodology)
+\subsection{Data aggregation design}
+All aggregation requests have a start day and an end day in common. Days' time is always treated as 00:00 o'clock. Thus, the timespan for an aggregation is always a multiple of 24 hours.
+The following aggregation requests were implemented:
+\begin{enumerate}
+	\item Computing the average number of steps walked across all users participating in the request.
+	\item Computing the average time spent walking, running, in a vehicle or on a bicycle\footnote{https://developers.google.com/android/reference/com/google/android/gms/location/DetectedActivity}.
+	\item Collecting a list of the average number of steps walked by each participant during the timespan.
+	\item collecting a list of all trajectories registered by the users' phones.
+\end{enumerate}
+
+Aggregation 1 and 2 do are implemented in order to answer research question XX. Aggregation 3 was implemented to test research question XX.
+%whether this type of aggregation, which allows for more advances statistical computations as median values and distribution properties, still completely preserves privacy.
+Aggregation 4 imposes a privacy risk discussed in XX on the user and was implemented in order to get an overview of the data quality of our setup and validate the feasability of the other aggregation requests proposed in XX.//TODO
+
 \section{Android Application}
 The Android application targets Android Oreo (API level 27) and requires a minimum API level of 19. Approximately 96.8\% of devices run on this or a higher version of Android \cite{android-api-level-share} which allows our application to be installed on the majority of Android devices.
 Furthermore, the application leverages Goolge Play Services to obtain GPS and activity data. Without Google Play Services installed, the application will not work. In order to ease future adaptability, we chose to use the Dagger2\footnote{https://dagger.dev/} framework for dependency injection in order to decouple classes as far as possible. Further use of frameworks and libraries will be explained in the following respective sections.
@@ -40,7 +57,7 @@ The control flow as depicted in figure XX is as follows:
 The application has only one Main Activity in order to ask the user to allow location access and start the background services. Apart from that the only Activity does not serve any specific purpose. 
 The local aggregation as well as the polling of new requests from the server happens in the background on a 15 minute interval. The Android Workmanager controls this periodic work without any user interaction being required.
 
-For the App in order to have maximum possibilities collecting esspecially GPS data and preventing the Android operating system from shutting down when not interacted with by the user (which is usually never the case), a non-dismissible status notification is displayed at all time. (Compare to the non-dismissible status notification displayed by Google Maps when the navigation system is active). Also the application is registered to be automatically restarted upon boot\footnote{From Android XX on, all apps are automatically managed by the battery manager which restricts background launches. The user has to switch this option to manually manage in order to allow the app to function in the way it was designed.} and also when the application is closed by the user (e.g. via the task manager) so that once installed, no further user interaction is necessary.
+For the App in order to have maximum possibilities collecting esspecially GPS data and preventing the Android operating system from shutting down when not interacted with by the user (which is usually never the case), a non-dismissible status notification is displayed at all time. (Compare to the non-dismissible status notification displayed by Google Maps when the navigation system is active). Also the application is registered to be automatically restarted upon boot\footnote{From Android 6.0 on (API level 23), restricts apps' behaviour in order to reduce battery consumption. E.g. all apps are automatically managed by the battery manager which restricts background launches. The user has to switch this option to manual management in order to allow the app to function in the way it was designed. See https://developer.android.com/guide/background/ and also https://developer.android.com/training/monitoring-device-state/doze-standby} and also when the application is closed by the user (e.g. via the task manager) so that once installed, no further user interaction is necessary.
 Furthermore, the application, respectively each module is heavily unit tested in norder to guarantee functionality and facilitate further development by other research teams. Unit and integration tests are based on AndroidJUnit4 and the expresso\footnote{https://developer.android.com/training/testing/espresso} framework.
 
 \subsection{Separation of concerns regarding data collection and aggregation}
@@ -89,19 +106,6 @@ The aggregation itself takes the type parameter of the request to specify which 
 
 In case that the aggregation should be changed to actually work over P2P e.g. using local WIFI networks this module only has to be adapted to the new routing of requests. No further changes to the application are necessary.
 %In case of edge-computing, ... only this module has to be adapted to receive the requets from and send them to the respective endpoints and the system works fine.
-
-\section{Data aggregation design}
-All aggregation requests have in common that the underlying data is specified through start day and end day. Thus the minimum timespan for an aggregation is 24 hours. All other timespans are multiples of 24 hours.
-The following aggregation requests were implemented:
-\begin{enumerate}
-	\item Computing the average number of steps walked.
-	\item Computing the average time spent walking, in a vehicle or on a bicycle\footnote{https://developers.google.com/android/reference/com/google/android/gms/location/DetectedActivity}.
-	\item Aggregating a list of the average number of steps walked during the timespan of each user.
-	\item Aggregating a list of all trajectories registered by the users phone.
-\end{enumerate}
-
-We had no doubt that aggregation 1 and 2 do not pose any privacy risk to the users participating in the aggregation. Aggregation 3 was implemented to test whether this type of aggregation, which allows for more advances statistical computations as median values and distribution properties, still completely preserves privacy.
-Aggregation 4 imposes a privacy risk discussed in XX on the user and was implemented in order to get an overview of the data quality of our setup and validate the feasability of the other aggregation requests proposed in XX.
 
 \section{Server Design and Implementation}\label{server}
 The server is build using the event-driven node.js verion 10.15.3 leveraging the express\footnote{https://expressjs.com/} web-server framework and using the mocha\footnote{https://mochajs.org/} testing framework in combination with the chai\footnote{https://www.chaijs.com/} assertion library for unit and integration testing. The layered architecture starts with the server - server.js handling authentication and updating the respective users lastSeen property. Afterwards routes.js connects each API endpoint to the respective function in requests.js which contains the overall logic of the endpoint. The repository module than handles those requests according to the underlying datamodels and persists data in a mongoDB object store. server.js also invokes a scheduled task which re-routes stale requests where the user has not proceeded with the pending request either due to being offline or due to a problem handling the request. When new aggregation requests are started, the lastSeen timestamp of users is taken into account to exclude users that have not connected for a certain time. Furthermore, the list of users who are selected to serve the new request is ordered by the time the user was last seen.
