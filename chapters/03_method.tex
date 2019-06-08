@@ -26,7 +26,7 @@ And the data contained in the outgoing response after processing the request mig
 
  The aggregated results are available only to our research team in order to protect the research participants privacy in case there is a privacy risk we have not thought of but the setting allows for them being available to the public. The aggregation requsts themselves are controlled by our research team and inserted on a daily basis.
 
- \subsection{Aggregation schemes}\lebel{aggregation-schemes}
+ \subsection{Aggregation schemes}\label{aggregation-schemes}
  We found two types of aggregation requests to be of interest. First, the evalulation of mean values and second, the evaluation of more advanced statistical values such as median or other percentiles and distribution. The latter includes the possibility to calculate the former. Nevertheless, we want to test all research questions independently.
  We found the following aggregations to be especially of interest:
  \begin{enumerate}
@@ -47,6 +47,19 @@ And the data contained in the outgoing response after processing the request mig
  For all these and more aggregations, always both, the mean value and if possible, a complete list of values to compute other statistical figures are of interest.
 
  \subsection{Narrowing the area of the aggregation request}
+ The aggregation requests outlined in the former subsection only provide useful data if the area of the aggregation can be limited e.g. to the scope of a city. Otherwise the resulting data would not allow for comparison and the scope of each aggregation would either be the whole user base which especially in the case of listing values would result in a huge amount of data passed around. Or, the limited number of participants in each aggregation would not be locally close which would 1. not result in useful data and 2. make it impossible to do aggregations as the average speed on roads. 
+ In order to limit the area of aggregation and avoid sending the aggregation request to each user and leaving him with determining whether he is inside the area and participates in the request, the initiator of those requests has to now the location of users, respectively the location where the user is active the most.
+ We do not see this as a violation of the user's privacy due to the following reasons:
+ \begin{enumerate}
+ 	\item The exact location of the user e.g. the home or work location is not of interest at all. Rather the area for which the user can provide data is of interest. We propose to cluster location areas in a hierarchical structure similar to XXX and determine the granularity of the location published to the server as follows:
+ 	\begin{enumerate}
+ 		\item Each user sends the most coarse locational area as possible to the server - e.g. the continent.
+ 		\item If more than the required anonymity threshold of e.g. 10 active users are already registered with this location at the server, the server not only links this location to the user but also requests the user to send a less coarse location.
+ 		\item The user step by step sends a less coarse location e.g country, district, etc. until the server denies the location because not enough active users have registered with the location on this granularity level. It nevertheless increases the counter of users who requested access to this location. Once the counter exceeds a certain number, the server sends an aggregation request to participants in the more coarse area encompassing the requested less coarse area to determine the number of active users. If this number is above the required threshold, the granularity level for this location is made available and users can now register with this area and aggregation requests targeting this area can be send.
+ 		\item The fullfilment of the threshold has to be checked on a regular basis in order to close areas once the user base sinks below the anonymity threshold.
+ 	\end{enumerate}
+ 	In a more advanced setting, it should be possible to register with more than one area on the same level to avoid that a user e.g. living close to a city provides only data about the city or the bordering area. Nevertheless, 1. this should be limited to areas bordering each other to avoid user identification similar as in XX and 2. it has to be investigated whether this indeed not poses a risk or whether also the combination of areas needs to meet a certain anonymity threshold.
+ \end{enumerate}
 
 \includegraphics[width=\textwidth]{data/concept.jpg}
 
