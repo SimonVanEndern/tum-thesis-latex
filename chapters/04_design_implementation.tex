@@ -16,11 +16,81 @@ The API is designed as a pure REST API based on JSON.
 The API consists of the following endpoints:
 \begin{itemize}
 	\item POST /user - for creating a new user
-	\item GET /requests - for retrieving aggregation requests for a user
+	\item GET /requests?pk=... - for retrieving aggregation requests for a user
 	\item POST /forward - for sending a processed aggregation request back to the server
 	\item GET /aggregations - for retrieving all completed aggregation results
 	\item POST /admin/sampleRequest - for starting a new aggregation request.
 \end{itemize}
+\begin{lstlisting}[language=json,firstnumber=1]
+{
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG..."
+}
+\end{lstlisting}
+Response:
+\begin{lstlisting}[language=json,firstnumber=1]
+{
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG...",
+  "password": "LSFDfzduSFSozfwf"
+}
+\end{lstlisting}
+Response get Requests:
+\begin{lstlisting}[language=json,firstnumber=1]
+[{
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG...",
+  "serverId": "5cfbd6734e733a0079ee5c0f",
+  "nextuser" : "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhBms...",
+  "encryptionKey":"HXporX7tqrgkf6Cp8OlqOcpLb...",
+  "iv":"pMxQ2nHqbz1Zu24Lfi5HYQ==",
+  "encryptedRequest":"xtgP2e9AeAK8hfPXQe03..."
+}]
+\end{lstlisting}
+POST /forward:
+\begin{lstlisting}[language=json,firstnumber=1]
+{
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG...",
+  "password": "LSFDfzduSFSozfwf",
+  "serverId": "5cfbd6734e733a0079ee5c0f",
+  "encryptionKey":"HXporX7tqrgkf6Cp8OlqOcpLb...",
+  "iv":"pMxQ2nHqbz1Zu24Lfi5HYQ==",
+  "encryptedRequest":"xtgP2e9AeAK8hfPXQe03..."
+}
+\end{lstlisting}
+GET /aggregations
+\begin{lstlisting}[language=json,firstnumber=1]
+[{
+  "timestamp": 1559216514521,
+  "startedAt": 1559216514685,
+  "start": "2019-05-28",
+  "end": "2019-05-31",
+  "type": "steps",
+  "n": 6,
+  "value": 4271,
+  "valueList": []
+},
+{
+  "timestamp": 1559216514521,
+  "startedAt": 1559216514685,
+  "start": "2019-05-28",
+  "end": "2019-05-31",
+  "type": "stepsListing",
+  "n": 5,
+  "value": 0,
+  "valueList": [1661, 1246, 3195, 7714, 7842]
+ }]
+\end{lstlisting}
+
+POST: /admin/insertSample
+\begin{lstlisting}[language=json,firstnumber=1]
+[{
+  "password": "adminPassword",
+  "start": "2019-05-31",
+  "end": "2019-06-05",
+  "type": "activity_2",
+}]
+\end{lstlisting}
+
+
+TODO: Password should go into header in the future.
 
 The routes used for interaction with the application (except the one for creating a new user) are secured and can only be used if the users can successfully be authenticated. The routes for starting new aggregation requests and retrieving all results require administrator authentication. The route for the results is designed to be available to the public without authentication. Nevertheless we restrict access only to result types that have been examined to fully protect users' privacy. So, for example, our experimental trajectory request type is not available to the public
 Figure XX depicts an example usage of each of those endpoints.
