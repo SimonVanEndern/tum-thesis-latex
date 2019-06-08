@@ -29,8 +29,10 @@ The encryptedRequest as of figure XX contains the encrypted version of the reque
 
 //TODO: Integrate this section somewhere else (in methodology)
 \subsection{Data Aggregation Design}
+All aggregations proposed in section \ref{aggregation-schemes} can be implemented using only 4 fields: An integer \textit{n} specifying the current number of participants, A Floating Point Number \textit{value} e.g. containing the current mean value of the aggregation, a list \textit{valueList} of Floating Point Numbers that can be reused for different purposes accross requests and a \textit{type} field that specifies the request and the scheme how the other fields are populated e.g. the encoding of the \textit{valueList}
+
 All aggregation requests have a start day and an end day in common. Days' time is always treated as 00:00 o'clock. Thus, the timespan for an aggregation is always a multiple of 24 hours.
-The following aggregation requests were implemented:
+Due to limited scope of this thesis, only the following out of the aggregation requests defined in section \ref{aggregation-schemes} were implemented:
 \begin{enumerate}
 	\item Computing the average number of steps walked across all users participating in the request.
 	\item Computing the average time spent walking, running, in a vehicle or on a bicycle\footnote{https://developers.google.com/android/reference/com/google/android/gms/location/DetectedActivity}.
