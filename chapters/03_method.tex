@@ -1,10 +1,8 @@
 % !TeX root = ../main.tex
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 \chapter{Methodology}\label{chapter:method}
-We aim to solve two problems: First the raw dataset being available centrally itself and second the risk of inference attacks. Most research is based on datasets that span only over a few days or weeks. When collecting location data over months, the chance of successful inference attack increases in all cases with more data available.
-
-In order to address the problem and test our hypothesis, we propose a framework in which we collect and locally aggregate location data on end user devices (smartphones) throug an application designed for this purpose. The raw data will stay on each device and will only be used to serve aggregation requests. The aggregation requests have to be defined upfront. An example is the determination of the average steps per day by each user. An incoming aggregation request might look like
-\begin{verbatim}
+In order to avoid having a central raw dataset and to eliminate the risk of inference attacks on anonymized data, we propose a framework in which we collect and locally aggregate location data on end user devices (smartphones) through an application designed for this purpose. The raw data will stay on each device and will only be used to serve aggregation requests send from the central server. The aggregation requests have to be defined upfront. An example is the determination of the average number steps per day accross all users. An incoming aggregation request might look like the following:
+\begin{lstlisting}[language=json,firstnumber=1]
 {
 	"start": "2019-05-30",
 	"end": "2019-06-02",
@@ -13,18 +11,30 @@ In order to address the problem and test our hypothesis, we propose a framework 
 	"value": 2000,
 	"valueList": []
 }
-\end{verbatim}
-And the data contained in the outgoing response after processing the request might look like
-\begin{verbatim}
+\end{lstlisting}
+while the data contained in the outgoing response after processing the request might look like this:
+\begin{lstlisting}[language=json,firstnumber=1]
 {
 	"n" : 4,
 	"value": 2500,
 	"valueList": []
 }
-\end{verbatim}
- In order to protect the user's privacy and completely shield the raw data from the server, it would be necessary to pass the request via P2P from one device to another until the last device finally sends the results to the server. P2P on mobile phones though is hardly possible. On the other hand, if the server is used to pass an aggreation request from one device to another, it could read the data and compute the respective user's input from the difference. We propose to use encryption in order to hinder the server from reading the data. On installation of the application on a smartphone, a public-private key-pair is generated and every installed application registers at the server with this public key. The corresponding private key is stored locally. On start of an aggregation request, not only the first user but also the following user who should deal with the aggregation request is determmined and the public key of the next user is passed along with the aggregation request. When one end user device needs to send the processed aggregation request to the next phone, it encrypts the data using the provided public key of the next user in the standard hybrid encryption\footnote{In hybrid encryption as used in SSL, the message itself is encrypted with a synchronous key while this key itself is encrypted using the public key} approach leveraging the benefits of synchronous keys. This way the next phone in the aggregation chain will be able to decrypt the request and process the data while the server is unable to read the data until the aggregation request is finally send in plain text for publishing to the server. This process is depicted in figure XX.
+\end{lstlisting}
+\begin{figure}[h!]
+	\caption{Decentral unencrypted aggregation process}
+	\label{decentral-aggregation-unencrypted}
+	\includegraphics[width=\textwidth]{data/diagrams/decentral-aggregation-6.png}
+\end{figure}
+Figure \ref{decentral-aggregation-unencrypted} depicts the process of such aggregation request.
+ In order to protect the user's privacy and completely shield the raw data from the server, it would be necessary to pass the request via P2P from one device to another until the last device finally sends the results to the server. P2P on mobile phones though is hardly possible. On the other hand, if the server is used to pass an aggreation request from one device to another, it could read the data and compute the respective user's input from the difference. We propose to use encryption in order to hinder the server from reading the data. On installation of the application on a smartphone, a public-private key-pair is generated and every installed application registers at the server with this public key. The corresponding private key is stored locally. On start of an aggregation request, not only the first user but also the following user who should deal with the aggregation request is determmined and the public key of the next user is passed along with the aggregation request. When one end user device needs to send the processed aggregation request to the next phone, it encrypts the data using the provided public key of the next user in the standard hybrid encryption\footnote{In hybrid encryption as used in SSL, the message itself is encrypted with a synchronous key while this key itself is encrypted using the public key} approach leveraging the benefits of synchronous keys. This way the next phone in the aggregation chain will be able to decrypt the request and process the data while the server is unable to read the data until the aggregation request is finally send in plain text for publishing to the server. This process is depicted in figure \ref{decentral-aggregation-encrypted}. This process currently assumes a trusted server and trusted devices. Chapter \ref{chapter:conclusion} discusses these limitations.
 
- The aggregated results are available only to our research team in order to protect the research participants privacy in case there is a privacy risk we have not thought of but the setting allows for them being available to the public. The aggregation requsts themselves are controlled by our research team and inserted on a daily basis.
+ \begin{figure}[h!]
+	\caption{Decentral encrypted aggregation process}
+	\label{decentral-aggregation-encrypted}
+	\includegraphics[width=\textwidth]{data/diagrams/decentral-encrypted-aggregation-4.png}
+\end{figure}
+
+ The aggregated results are available only to our research team in order to protect the research participants' privacy in case there is a privacy risk we have not thought of but the setting allows for them being available to the public. The aggregation requsts themselves are controlled by our research team and inserted on a daily basis.
 
  \subsection{Aggregation schemes}\label{aggregation-schemes}
  We found two types of aggregation requests to be of interest. First, the evalulation of mean values and second, the evaluation of more advanced statistical values such as median or other percentiles and distribution. The latter includes the possibility to calculate the former. Nevertheless, we want to test all research questions independently.
@@ -61,5 +71,4 @@ And the data contained in the outgoing response after processing the request mig
  	In a more advanced setting, it should be possible to register with more than one area on the same level to avoid that a user e.g. living close to a city provides only data about the city or the bordering area. Nevertheless, 1. this should be limited to areas bordering each other to avoid user identification similar as in XX and 2. it has to be investigated whether this indeed not poses a risk or whether also the combination of areas needs to meet a certain anonymity threshold.
  \end{enumerate}
 
-\includegraphics[width=\textwidth]{data/concept.jpg}
-
+%\includegraphics[width=\textwidth]{data/concept.jpg}

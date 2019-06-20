@@ -2,16 +2,16 @@
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 \chapter{Related Work}\label{chapter:related-work}
 
-\section{Classification of location data and apps that use it}
-In order to review existing approaches and research, we classify location aware services by the acceptable delay of the location information being available:
-Such a classification has already been made by \parencite{hoh2005protecting}.
+\section{Classification of location data usage according to acceptable delay}
+In order to review existing approaches and research, we classify location aware services by the acceptable delay of the location information being available. Similar to the classification made by \parencite{hoh2005protecting}, we define three categories:
 \begin{enumerate}
-  \item Almost no delation tolerance: e.g. an application showing a pop-up about a nearby venue e.g. a coffe shop when a pedestrian passes
-  \item Some delay e.g. one minute is acceptable: An application e.g. google maps derives the information of congested traffic from devices reporting their GPS data which show lower than usual speed. As congestions worth reporting last longer than one minute, some delay in the device's information reaching the server is acceptable.
-  \item Significant delay of hours, days or even weeks is acceptable for historical and statistical use of location data e.g. to find out about popular visiting times
+  \item Almost no delay tolerance: e.g. an application showing a pop-up about a nearby venue e.g. a coffe shop when a pedestrian passes
+  \item Some delay tolerance e.g. one minute is acceptable: An application e.g. google maps derives the information of congested traffic from devices reporting their GPS data which show lower than usual speed. As congestions worth reporting last longer than one minute, some delay in the device's information reaching the server is acceptable.
+  \item Significant delay tolerance of hours, days or even weeks is acceptable for historical and statistical use of location data e.g. to find out about popular visiting times
 \end{enumerate}
-Most research investigates user's privacy in case 3 [Citations!!!] or 2. For case one there are already solutions available.
-We will first review research tackling location privaacy in case 3 and 2 and then briefly point out the findings for case 1.
+Most research investigates user's privacy in case 3 \parencite{krumm, cellphone, privacy-home-work-pairs, twitter} where the delay of the data being available for processing is not an issue. Some research deals with case one \parencite{location-privacy, mix-zones} where solutions can be provided e.g. as in \parencite{casper} where not the exact location is send to a server but a region and the server sends a list of possible matches that is then matched locally with the exact location.
+Our research targets case 3 in which a significant delay is acceptable.
+%review research tackling location privacy in case 3 and 2 and then briefly point out the findings for case 1.
 
 %\subsection{What has been achieved so far}
 
@@ -68,5 +68,5 @@ Decentralized methods for data analysis are also motivated from the area of IoT 
 
 TODO: Relate to \parencite{k-anonymity}
 
-\includegraphics[width=\textwidth]{data/research-overview.jpg}
-\includegraphics[width=\textwidth]{data/research-overview-2.jpg}
+%\includegraphics[width=\textwidth]{data/research-overview.jpg}
+%\includegraphics[width=\textwidth]{data/research-overview-2.jpg}
