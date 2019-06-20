@@ -2,7 +2,7 @@
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 \chapter{Performance and Evaluation}\label{chapter:performance}
 \section{Deployment}
-The proposed Android application and server have been tested on 16 devices for one week from 30.05.2019 until 05.06.2019. However, evaluating the lastSeen timestamp of the users showed that only 13 installations were active after 31.05.2019. The server was deployed\footnote{The version deployed during field testing can be found here: https://github.com/SimonVanEndern/location-server/releases/tag/v1.0 The final version provides the same functionality but includes improvements (e.g. bug-fixes, comments, ...) over the deployed version.} in the IBM Cloud as a 128 MB node.js instance. The database was hosted as a free version at mongodb.com.
+The proposed Android application and server have been tested on 16 devices for six day from 30.05.2019 until 04.06.2019. However, evaluating the lastSeen timestamp of the users showed that only 13 installations were active after 31.05.2019. The server was deployed\footnote{The version deployed during field testing can be found at https://github.com/SimonVanEndern/location-server/releases/tag/v1.0 The final version provides the same functionality but includes improvements (e.g. bug-fixes, comments, ...) over the deployed version.} in the IBM Cloud as a 128 MB node.js instance. The database was hosted as a free version at mongodb.com.
 
 We ran each of 7 requests on a daily basis and also for each timespan of several days within this period. The raw results can be found at XXX\footnote{Only 7 of the 8 aggregations are available as it is. The results of aggregation 8 were modified in order to protect user priacy}. We used this testing period also to improve the performance of the server as well as the Android application and to find and remove bugs.
 
@@ -76,7 +76,7 @@ We ran each of 7 requests on a daily basis and also for each timespan of several
 30.05.2019                 & 10         & 8.24                     \\ \hline
 31.05.2019                 & 10         & 119.92                   \\ \hline
 30.05.2019 - 31.05.2019    & 10         & 68.40                    \\ \hline
-30.05.2019 - 31.05.2019    & 10         & 68.40                    \\ \hline
+30.05.2019 - 31.05.2019    & 10         & 90.49                    \\ \hline
 30.05.2019 - 01.06.2019    & 10         & 82.19                    \\ \hline
 01.06.2019                 & 4          & 90.40                    \\ \hline
 30.05.2019 - 03.06.2019    & 9          & 62.16                    \\ \hline
