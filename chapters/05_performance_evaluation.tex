@@ -7,137 +7,146 @@ The proposed Android application and server have been tested on 16 devices for s
 We ran each of 7 requests on a daily basis and also for each timespan of several days within this period. The results can be found in the following tables\footnote{The results are also available in JSON format at https://github.com/SimonVanEndern/tum-thesis-latex/tree/master/published/results}. The results of aggregation 8 were modified in order to protect user priacy. We used this testing period also to improve the performance of the server as well as the Android application and to find and remove bugs.
 
 \begin{table}[]
-\begin{tabular}{|l|l|l|}
-\hline
-\multicolumn{3}{|c|}{\textbf{Average time spent running}}          \\ \hline
-\textbf{Time period / Day} & \textbf{N} & \textbf{Value {[}min{]}} \\ \hline
-30.09.2019                 & 10         & 1.43                     \\ \hline
-31.05.2019                 & 10         & 1.21                     \\ \hline
-30.05.2019 - 31.05.2019    & 10         & 1.96                     \\ \hline
-30.05.2019 - 31.05.2019    & 10         & 1.89                     \\ \hline
-30.05.2019 - 01.06.2019    & 10         & 1.73                     \\ \hline
-30.05.2019 - 03.06.2019    & 9          & 1.79                     \\ \hline
-03.06.2019                 & 9          & 1.95                     \\ \hline
-04.06.2019                 & 8          & 0                        \\ \hline
-30.05.2019 - 04.06.2019    & 8          & 1.55                     \\ \hline
-01.06.2019 - 04.06.2019    & 7          & 0.99                     \\ \hline
-31.06.2019 - 04.06.2019    & 7          & 0.83                     \\ \hline
-02.06.2019 - 04.06.2019    & 7          & 1.05                     \\ \hline
-03.06.2019 - 04.06.2019    & 7          & 0.16                     \\ \hline
-\end{tabular}
-\label{results-running}
-\caption{Average time spent running}
+	\parbox{.45\linewidth}{
+		\centering
+		\begin{tabular}{|l|l|l|}
+			\hline
+			\multicolumn{3}{|c|}{\textbf{Average time spent running}}          \\ \hline
+			\textbf{Time period / Day} & \textbf{N} & \textbf{Value {[}min{]}} \\ \hline
+			30.09.2019                 & 10         & 1.43                     \\ \hline
+			31.05.2019                 & 10         & 1.21                     \\ \hline
+			30.05.2019 - 31.05.2019    & 10         & 1.96                     \\ \hline
+			30.05.2019 - 31.05.2019    & 10         & 1.89                     \\ \hline
+			30.05.2019 - 01.06.2019    & 10         & 1.73                     \\ \hline
+			30.05.2019 - 03.06.2019    & 9          & 1.79                     \\ \hline
+			03.06.2019                 & 9          & 1.95                     \\ \hline
+			04.06.2019                 & 8          & 0                        \\ \hline
+			30.05.2019 - 04.06.2019    & 8          & 1.55                     \\ \hline
+			01.06.2019 - 04.06.2019    & 7          & 0.99                     \\ \hline
+			31.06.2019 - 04.06.2019    & 7          & 0.83                     \\ \hline
+			02.06.2019 - 04.06.2019    & 7          & 1.05                     \\ \hline
+			03.06.2019 - 04.06.2019    & 7          & 0.16                     \\ \hline
+		\end{tabular}
+		\label{results-running}
+		\caption{Average time spent running}
+	}
+	\hfill
+	\parbox{.45\linewidth}{
+		\centering
+		\begin{tabular}{|l|l|l|}
+			\hline
+			\multicolumn{3}{|c|}{\textbf{Average time spent walking}}          \\ \hline
+			\textbf{Time period / Day} & \textbf{N} & \textbf{Value {[}min{]}} \\ \hline
+			30.09.2019                 & 10         & 17.63                    \\ \hline
+			31.05.2019                 & 10         & 97.25                    \\ \hline
+			30.05.2019 - 31.05.2019    & 10         & 63.20                    \\ \hline
+			30.05.2019 - 31.05.2019    & 10         & 78.41                    \\ \hline
+			30.05.2019 - 01.06.2019    & 10         & 75.14                    \\ \hline
+			01.06.2019                 & 4          & 72.85                    \\ \hline
+			30.05.2019 - 03.06.2019    & 9          & 81.94                    \\ \hline
+			03.06.2019                 & 9          & 146.49                   \\ \hline
+			04.06.2019                 & 8          & 86.77                    \\ \hline
+			30.05.2019 - 04.06.2019    & 8          & 61.86                    \\ \hline
+			01.06.2019 - 04.06.2019    & 7          & 57.44                    \\ \hline
+			31.06.2019 - 04.06.2019    & 7          & 67.63                    \\ \hline
+			02.06.2019 - 04.06.2019    & 7          & 51.75                    \\ \hline
+			03.06.2019 - 04.06.2019    & 7          & 64.04                    \\ \hline
+		\end{tabular}
+		\label{results-walking}
+		\caption{Average time spent walking}
+	}
 \end{table}
 
 \begin{table}[]
-\begin{tabular}{|l|l|l|}
-\hline
-\multicolumn{3}{|c|}{\textbf{Average time spent walking}}          \\ \hline
-\textbf{Time period / Day} & \textbf{N} & \textbf{Value {[}min{]}} \\ \hline
-30.09.2019                 & 10         & 17.63                    \\ \hline
-31.05.2019                 & 10         & 97.25                    \\ \hline
-30.05.2019 - 31.05.2019    & 10         & 63.20                    \\ \hline
-30.05.2019 - 31.05.2019    & 10         & 78.41                    \\ \hline
-30.05.2019 - 01.06.2019    & 10         & 75.14                    \\ \hline
-01.06.2019                 & 4          & 72.85                    \\ \hline
-30.05.2019 - 03.06.2019    & 9          & 81.94                    \\ \hline
-03.06.2019                 & 9          & 146.49                   \\ \hline
-04.06.2019                 & 8          & 86.77                    \\ \hline
-30.05.2019 - 04.06.2019    & 8          & 61.86                    \\ \hline
-01.06.2019 - 04.06.2019    & 7          & 57.44                    \\ \hline
-31.06.2019 - 04.06.2019    & 7          & 67.63                    \\ \hline
-02.06.2019 - 04.06.2019    & 7          & 51.75                    \\ \hline
-03.06.2019 - 04.06.2019    & 7          & 64.04                    \\ \hline
-\end{tabular}
-\label{results-walking}
-\caption{Average time spent walking}
+	\parbox{.45\linewidth}{
+		\centering
+		\begin{tabular}{|l|l|l|}
+			\hline
+			\multicolumn{3}{|c|}{\textbf{Average number of steps per day}}     \\ \hline
+			\textbf{Time period / Day} & \textbf{N} & \textbf{Value}           \\ \hline
+			30.05.2019                 & 5          & 4331.6                   \\ \hline
+			31.05.2019                 & 5          & 3439.8                   \\ \hline
+			30.05.2019 - 31.05.2019    & 6          & 3278.7                   \\ \hline
+			30.05.2019 - 31.05.2019    & 5          & 4030.2                   \\ \hline
+			30.05.2019 - 01.06.2019    & 6          & 4271                     \\ \hline
+			01.06.2019                 & 1          & 17                       \\ \hline
+			30.05.2019 - 03.06.2019    & 5          & 643959                   \\ \hline
+			03.06.2019                 & 3          & 455411.3                 \\ \hline
+			04.06.2019                 & 3          & 1123                     \\ \hline
+			30.05.2019 - 04.06.2019    & 5          & 3622.6                   \\ \hline
+			01.06.2019 - 04.06.2019    & 2          & 2088.5                   \\ \hline
+			31.05.2019 - 04.06.2019    & 3          & 4681.3                   \\ \hline
+			02.04.2019 - 04.06.2019    & 3          & 326363.3                 \\ \hline
+			03.04.2019 - 04.06.2019    & 3          & 455903.7                 \\ \hline
+		\end{tabular}
+		\label{results-steps}
+		\caption{Average number of steps per day}
+	}
+	\hfill
+	\parbox{.45\linewidth}{
+		\begin{tabular}{|l|l|l|}
+			\hline
+			\multicolumn{3}{|c|}{\textbf{Average time spent in a vehicle}}     \\ \hline
+			\textbf{Time period / Day} & \textbf{N} & \textbf{Value {[}min{]}} \\ \hline
+			30.05.2019                 & 10         & 8.24                     \\ \hline
+			31.05.2019                 & 10         & 119.92                   \\ \hline
+			30.05.2019 - 31.05.2019    & 10         & 68.40                    \\ \hline
+			30.05.2019 - 31.05.2019    & 10         & 90.49                    \\ \hline
+			30.05.2019 - 01.06.2019    & 10         & 82.19                    \\ \hline
+			01.06.2019                 & 4          & 90.40                    \\ \hline
+			30.05.2019 - 03.06.2019    & 9          & 62.16                    \\ \hline
+			03.06.2019                 & 9          & 71.74                    \\ \hline
+			04.06.2019                 & 8          & 35.51                    \\ \hline
+			30.05.2019 - 04.06.2019    & 8          & 59.34                    \\ \hline
+			01.06.2019 - 04.06.2019    & 7          & 51.07                    \\ \hline
+			31.05.2019 - 04.06.2019    & 7          & 68.20                    \\ \hline
+			02.04.2019 - 04.06.2019    & 7          & 48.89                    \\ \hline
+			03.04.2019 - 04.06.2019    & 7          & 45.96                    \\ \hline
+		\end{tabular}
+		\label{results-vehicle}
+		\caption{Average time spent in a vehicle}
+	}
 \end{table}
 
 \begin{table}[]
-\begin{tabular}{|l|l|l|}
-\hline
-\multicolumn{3}{|c|}{\textbf{Average time spent biking}}           \\ \hline
-\textbf{Time period / Day} & \textbf{N} & \textbf{Value {[}min{]}} \\ \hline
-30.05.2019                 & 10         & 2.29                     \\ \hline
-30.05.2019 - 31.05.2019    & 10         & 11.10                    \\ \hline
-01.06.2019                 & 4          & 14.99                    \\ \hline
-03.06.2019                 & 9          & 31.03                    \\ \hline
-04.06.2019                 & 8          & 23.81                    \\ \hline
-\end{tabular}
-\label{results-biking}
-\caption{Average time spent biking}
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{Average time spent biking}}           \\ \hline
+		\textbf{Time period / Day} & \textbf{N} & \textbf{Value {[}min{]}} \\ \hline
+		30.05.2019                 & 10         & 2.29                     \\ \hline
+		30.05.2019 - 31.05.2019    & 10         & 11.10                    \\ \hline
+		01.06.2019                 & 4          & 14.99                    \\ \hline
+		03.06.2019                 & 9          & 31.03                    \\ \hline
+		04.06.2019                 & 8          & 23.81                    \\ \hline
+	\end{tabular}
+	\label{results-biking}
+	\caption{Average time spent biking}
 \end{table}
 
 \begin{table}[]
-\begin{tabular}{|l|l|l|}
-\hline
-\multicolumn{3}{|c|}{\textbf{Average time spent in a vehicle}}     \\ \hline
-\textbf{Time period / Day} & \textbf{N} & \textbf{Value {[}min{]}} \\ \hline
-30.05.2019                 & 10         & 8.24                     \\ \hline
-31.05.2019                 & 10         & 119.92                   \\ \hline
-30.05.2019 - 31.05.2019    & 10         & 68.40                    \\ \hline
-30.05.2019 - 31.05.2019    & 10         & 90.49                    \\ \hline
-30.05.2019 - 01.06.2019    & 10         & 82.19                    \\ \hline
-01.06.2019                 & 4          & 90.40                    \\ \hline
-30.05.2019 - 03.06.2019    & 9          & 62.16                    \\ \hline
-03.06.2019                 & 9          & 71.74                    \\ \hline
-04.06.2019                 & 8          & 35.51                    \\ \hline
-30.05.2019 - 04.06.2019    & 8          & 59.34                    \\ \hline
-01.06.2019 - 04.06.2019    & 7          & 51.07                    \\ \hline
-31.05.2019 - 04.06.2019    & 7          & 68.20                    \\ \hline
-02.04.2019 - 04.06.2019    & 7          & 48.89                    \\ \hline
-03.04.2019 - 04.06.2019    & 7          & 45.96                    \\ \hline
-\end{tabular}
-\label{results-vehicle}
-\caption{Average time spent in a vehicle}
-\end{table}
-
-\begin{table}[]
-\begin{tabular}{|l|l|l|}
-\hline
-\multicolumn{3}{|c|}{\textbf{Average number of steps per day}}     \\ \hline
-\textbf{Time period / Day} & \textbf{N} & \textbf{Value}           \\ \hline
-30.05.2019                 & 5          & 4331.6                   \\ \hline
-31.05.2019                 & 5          & 3439.8                   \\ \hline
-30.05.2019 - 31.05.2019    & 6          & 3278.7                   \\ \hline
-30.05.2019 - 31.05.2019    & 5          & 4030.2                   \\ \hline
-30.05.2019 - 01.06.2019    & 6          & 4271                     \\ \hline
-01.06.2019                 & 1          & 17                       \\ \hline
-30.05.2019 - 03.06.2019    & 5          & 643959                   \\ \hline
-03.06.2019                 & 3          & 455411.3                 \\ \hline
-04.06.2019                 & 3          & 1123                     \\ \hline
-30.05.2019 - 04.06.2019    & 5          & 3622.6                   \\ \hline
-01.06.2019 - 04.06.2019    & 2          & 2088.5                   \\ \hline
-31.05.2019 - 04.06.2019    & 3          & 4681.3                   \\ \hline
-02.04.2019 - 04.06.2019    & 3          & 326363.3                 \\ \hline
-03.04.2019 - 04.06.2019    & 3          & 455903.7                 \\ \hline
-\end{tabular}
-\label{results-steps}
-\caption{Average number of steps per day}
-\end{table}
-
-\begin{table}[]
-\begin{tabular}{|l|l|l|}
-\hline
-\multicolumn{3}{|c|}{\textbf{Listing of average number of steps per day per of each participant}} \\ \hline
-\textbf{Time period / Day}         & \textbf{N}        & \textbf{Values}                          \\ \hline
-30.05.2019                         & 10                & 1661, 1246, 3195, 7714, 7842             \\ \hline
-31.05.2019                         & 10                & 2747, 775, 3924, 9203                    \\ \hline
-30.05.2019 - 31.05.2019            & 10                & 550, 2905, 3195, 775, 88828, 3419        \\ \hline
-30.05.2019 - 31.05.2019            & 10                & 550, 8828, 5145, 3195, 2433              \\ \hline
-30.05.2019 - 01.06.2019            & 10                & 8126, 3195, 283, 8828, 1629, 3565        \\ \hline
-01.06.2019                         & 4                 & 17                                       \\ \hline
-30.05.2019 - 03.06.2019            & 9                 & 598, 3195, 1669, 8828, 3205505           \\ \hline
-03.06.2019                         & 9                 & 914, 1042, 1364278                       \\ \hline
-04.06.2019                         & 8                 & 1103, 13332, 934                         \\ \hline
-30.05.2019 - 04.06.2019            & 8                 & 757, 1719, 8828, 3614, 3195              \\ \hline
-01.06.2019 - 04.06.2019            & 7                 & 826, 33511                               \\ \hline
-31.05.2019 - 04.06.2019            & 7                 & 757, 9203,, 4084                         \\ \hline
-02.04.2019 - 04.06.2019            & 7                 & 974691, 1231, 3168                       \\ \hline
-03.04.2019 - 04.06.2019            & 7                 & 1364278, 1231, 2202                      \\ \hline
-\end{tabular}
-\label{results-steps-listing}
-\caption{Average number of steps per day of each user}
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{Listing of average number of steps per day per of each participant}} \\ \hline
+		\textbf{Time period / Day}         & \textbf{N}        & \textbf{Values}                          \\ \hline
+		30.05.2019                         & 10                & 1661, 1246, 3195, 7714, 7842             \\ \hline
+		31.05.2019                         & 10                & 2747, 775, 3924, 9203                    \\ \hline
+		30.05.2019 - 31.05.2019            & 10                & 550, 2905, 3195, 775, 88828, 3419        \\ \hline
+		30.05.2019 - 31.05.2019            & 10                & 550, 8828, 5145, 3195, 2433              \\ \hline
+		30.05.2019 - 01.06.2019            & 10                & 8126, 3195, 283, 8828, 1629, 3565        \\ \hline
+		01.06.2019                         & 4                 & 17                                       \\ \hline
+		30.05.2019 - 03.06.2019            & 9                 & 598, 3195, 1669, 8828, 3205505           \\ \hline
+		03.06.2019                         & 9                 & 914, 1042, 1364278                       \\ \hline
+		04.06.2019                         & 8                 & 1103, 13332, 934                         \\ \hline
+		30.05.2019 - 04.06.2019            & 8                 & 757, 1719, 8828, 3614, 3195              \\ \hline
+		01.06.2019 - 04.06.2019            & 7                 & 826, 33511                               \\ \hline
+		31.05.2019 - 04.06.2019            & 7                 & 757, 9203,, 4084                         \\ \hline
+		02.04.2019 - 04.06.2019            & 7                 & 974691, 1231, 3168                       \\ \hline
+		03.04.2019 - 04.06.2019            & 7                 & 1364278, 1231, 2202                      \\ \hline
+	\end{tabular}
+	\label{results-steps-listing}
+	\caption{Average number of steps per day of each user}
 \end{table}
 
 \section{Data Consumption}
