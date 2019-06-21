@@ -137,7 +137,7 @@ All aggregations proposed in section \ref{aggregation-schemes} can be implemente
 Due to limited scope of this thesis, only the following out of the aggregation requests defined in section \ref{aggregation-schemes} were implemented:
 \begin{enumerate}
 	\item Computing the average number of steps walked across all users participating in the request.
-	\item Computing the average time spent walking, running, in a vehicle or on a bicycle\footnote{https://developers.google.com/android/reference/com/google/android/gms/location/DetectedActivity}.
+	\item Computing the average time spent walking, running, in a vehicle or on a bicycle\footnote{See https://developers.google.com/android/reference/com/google/android/gms/location/DetectedActivity}.
 	\item Collecting a list of the average number of steps walked by each participant during the timespan.
 	\item collecting a list of all trajectories registered by the users' phones.
 \end{enumerate}
@@ -149,7 +149,7 @@ Aggregation 4 imposes a privacy risk discussed in \parencite{twitter, cellphone,
 
 \section{Android Application}
 The Android application targets Android Oreo (API level 27) and requires a minimum API level of 19. Approximately 96.8\% of devices run on this or a higher version of Android \cite{android-api-level-share} which allows our application to be installed on the majority of Android devices.
-Furthermore, the application leverages Goolge Play Services to obtain GPS and activity data. Without Google Play Services installed, the application will not work. In order to ease future adaptability, we chose to use the Dagger2\footnote{https://dagger.dev/} framework for dependency injection in order to decouple classes as far as possible. Further use of frameworks and libraries will be explained in the following respective sections.
+Furthermore, the application leverages Goolge Play Services to obtain GPS and activity data. Without Google Play Services installed, the application will not work. In order to ease future adaptability, we chose to use the Dagger2\footnote{See https://dagger.dev/} framework for dependency injection in order to decouple classes as far as possible. Further use of frameworks and libraries will be explained in the following respective sections.
 
 Th application is aimed to collect GPS data, detect the user's current activity and count the user's steps. The data collection process happens in the background without any user interaction needed. Aggregation requests to aggregate data accross devices are also served without any user interaction needed.
 \begin{samepage}
