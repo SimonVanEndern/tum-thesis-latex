@@ -3,17 +3,17 @@
 \chapter{Design and Implementation}\label{chapter:design}
 
 \section{Technology Stack}
-In order to implement the architecture proposed in chapter \ref{chapter:method} we choose Android as end user device platform. Android has the highest market share \cite{android-market-share} among mobile devices and offers a healthy ecosystem of frameworks and libraries that simplify development. Furthermore we opted for an implementation in Kotlin instead of Java to reduce boilerplate code and improve readability.
+In order to implement the architecture proposed in chapter \ref{chapter:method} we choose Android as end user device platform. Android has the highest market share among mobile devices \cite{android-market-share} and offers a healthy ecosystem of frameworks and libraries that simplify development. Furthermore we opted for an implementation in Kotlin instead of Java to reduce boilerplate code and improve readability.
 
 As server side technology we choose node.js in conjunction with a mongoDB object store database. A NoSQL database like mongoDB provides flexibility and easy adaption of data schemes without much overhead and thus perfectly fits our prototyping purpose. We choose node.js out of the same reasons. In contrast to a statically typed language, javascript provides more flexibility and ease of change. Furthermore, node.js is often used in combination with mongoDB and provides seamingless integration.
 
-The results can be made available to the public either via a dedicated route of the server or directly through granting access to the respective collection\footnote{A collection in an object store is the equivalent to a table in an SQL database.} of the database.
+The aggregation results are made available to the public via a dedicated route of the server but might also be made available directly through granting access to the respective collection\footnote{A collection in an object store is the equivalent to a table in an SQL database.} of the database.
 
 The following sections describe the implementation of the Android application and the server and explain design decisions. We start with an outline of the API shared by both, the Android application and the server.\\
 
 \begin{samepage}
 \section{API}\label{api}
-The API is designed as a pure REST API based on JSON and consists of the following endpoints:
+The API is designed as a REST API based on JSON data exchange format and consists of the following endpoints:
 \begin{itemize}
 	\item POST /user HTTP/1.1
   \\for creating a new user (see figure \ref{post-user-request} and \ref{post-user-response}).
@@ -25,10 +25,10 @@ The API is designed as a pure REST API based on JSON and consists of the followi
   \\for sending a processed aggregation request back to the server (see figure \ref{post-request}).
 
 	\item GET /aggregations HTTP/1.1
-  \\for retrieving all completed aggregation results (see figure \ref{get-aggregations}).
+  \\for retrieving all aggregation results (see figure \ref{get-aggregations}).
 
 	\item POST /admin/sampleRequest HTTP/1.1
-  \\for starting a new aggregation request (see figure \ref{insert-sample}).
+  \\for initiating a new aggregation (see figure \ref{insert-sample}).
 \end{itemize}
 \end{samepage}
 
@@ -38,7 +38,7 @@ The API is designed as a pure REST API based on JSON and consists of the followi
     "publicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG..."
   }
   \end{lstlisting}
-  \caption{POST /user}
+  \caption{Body of an HTTP request for creating a new user}
   \label{post-user-request}
 \end{figure}
 
@@ -49,7 +49,7 @@ The API is designed as a pure REST API based on JSON and consists of the followi
     "password": "LSFDfzduSFSozfwf"
   }
   \end{lstlisting}
-  \caption{Response to POST /user}
+  \caption{Body of an HTTP response upon successful creation of a new user}
   \label{post-user-response}
 \end{figure}
 
@@ -64,7 +64,7 @@ The API is designed as a pure REST API based on JSON and consists of the followi
     "encryptedRequest":"xtgP2e9AeAK8hfPXQe03..."
   }]
   \end{lstlisting}
-  \caption{Response to GET /requests}
+  \caption{Body of an HTTP response listing all aggregation requests for the specified user}
   \label{get-requests-response}
 \end{figure}
 
@@ -79,7 +79,7 @@ The API is designed as a pure REST API based on JSON and consists of the followi
     "encryptedRequest":"xtgP2e9AeAK8hfPXQe03..."
   }
   \end{lstlisting}
-  \caption{POSt /forward}
+  \caption{Body of an HTTP request sending the processed aggregation request back to the server}
   \label{post-request}
 \end{figure}
 
@@ -106,7 +106,7 @@ The API is designed as a pure REST API based on JSON and consists of the followi
     "valueList": [1661, 1246, 3195, 7714, 7842]
    }]
   \end{lstlisting}
-  \caption{Response to GET /aggregations}
+  \caption{Body of an HTTP response listing all completed aggregations}
   \label{get-aggregations}
 \end{figure}
 
@@ -119,18 +119,19 @@ The API is designed as a pure REST API based on JSON and consists of the followi
     "type": "activity_2",
   }]
   \end{lstlisting}
-  \caption{POST /admin/insertDample}
+  \caption{Body of an HTTP request for initiating a new aggregation}
   \label{insert-sample}
 \end{figure}
 
 %TODO: Password should go into header in the future.
 
-The routes used for interaction with the application (except the one for creating a new user are secured and can only be used if the user can successfully be authenticated. The routes for starting new aggregation requests and retrieving all results require administrator authentication. The route for the results is designed to be available to the public without authentication. Nevertheless we restrict access only to result types that have been examined to fully protect users' privacy. So, for example, our experimental trajectory request type is not available to the public.
+The routes used for interaction with the application (except the one for creating a new user) are secured and can only be used if the user can be authenticated successfully. The routes for initiating new aggregations and retrieving all results require administrator authentication. The route for the results is designed to be available to the public without authentication. Nevertheless we restrict access in this test setup to fully protect users' privacy.
+%So, for example, our experimental trajectory request type is not available to the public.
 
 The encryptedRequest field e.g. in figure \ref{get-requests-response} contains the encrypted version of the request described in chapter \ref{chapter:method}.
 
 %//TODO: Integrate this section somewhere else (in methodology)
-\subsection{Data Aggregation Design}
+\subsection{Data Aggregation Design}\label{data-aggregation-design}
 All aggregations proposed in section \ref{aggregation-schemes} can be implemented using only 4 fields: An Integer \textit{n} specifying the current number of participants, a Floating Point Number \textit{value} e.g. containing the current mean value of the aggregation, a list \textit{valueList} of Floating Point Numbers that can be reused for different purposes accross requests and a String \textit{type} that specifies the request and the used scheme how the other fields are populated e.g. the encoding of the \textit{valueList}. In addition, all aggregation requests have a start day and an end day. Days' time is always treated as 00:00 o'clock. Thus, the timespan for an aggregation is always a multiple of 24 hours.\\
 
 \begin{samepage}
