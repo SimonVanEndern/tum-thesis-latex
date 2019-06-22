@@ -5,37 +5,39 @@
 \section{Classification of location data usage according to acceptable delay}
 In order to review existing approaches and research, we classify location aware services by the acceptable delay of the location information being available. Similar to the classification made by \parencite{hoh2005protecting}, we define three categories:
 \begin{enumerate}
-  \item Almost no delay tolerance: e.g. an application showing a pop-up about a nearby venue e.g. a coffe shop when a pedestrian passes
-  \item Some delay tolerance e.g. one minute is acceptable: An application e.g. google maps derives the information of congested traffic from devices reporting their GPS data which show lower than usual speed. As congestions worth reporting last longer than one minute, some delay in the device's information reaching the server is acceptable.
-  \item Significant delay tolerance of hours, days or even weeks is acceptable for historical and statistical use of location data e.g. to find out about popular visiting times
+  \item Almost no delay tolerance: e.g. an application showing a pop-up about a nearby venue e.g. a coffe shop when a pedestrian passes by.
+  \item Some delay tolerance e.g. one minute: An application e.g. google maps derives the information of congested traffic from devices reporting their GPS data which show lower than usually on the respective road. As congestions worth reporting last longer than one minute, some delay in the device's information reaching the server is acceptable.
+  \item Significant delay tolerance of hours, days or even weeks: For historical and statistical use of location data e.g. to find out about popular visiting times of a venue, almost any delay is acceptable.
 \end{enumerate}
-Most research investigates user's privacy in case 3 \parencite{krumm, cellphone, privacy-home-work-pairs, twitter} where the delay of the data being available for processing is not an issue. Some research deals with case one \parencite{location-privacy, mix-zones} where solutions can be provided e.g. as in \parencite{casper} where not the exact location is send to a server but a region and the server sends a list of possible matches that is then matched locally with the exact location.
-Our research targets case 3 in which a significant delay is acceptable.
+Some research deals with case one where almost no delay tolerance is acceptable \parencite{location-privacy, mix-zones}. \parencite{casper} proposes a solution where not the exact location is send to a server but the rough region of the user. The server then sends a list of all possible matches like e.g. venues in this area to the client. Locally, this list is then matched with the exact location in order to fulfill the aim of the respective application.
+Most research though investigates user's privacy in case 3 where the delay of the data being available for processing is not an issue \parencite{krumm, cellphone, privacy-home-work-pairs, twitter}. In the following, we will concentrate on this case as well.
+%Our research targets case 3 in which a significant delay is acceptable.
 %review research tackling location privacy in case 3 and 2 and then briefly point out the findings for case 1.
 
 %\subsection{What has been achieved so far}
 
 %Most existing approaches focus on publishing location data where a huge delay is acceptable as can be seen in the following table: TODO [create table].
 
-\section{Research has identified the following privacy problems}
-\subsection{Central databases itself pose a risk due to possible theft}
+\section{Privacy problems arising from location data}
+\subsection{Risk of privacy intrusion through theft of central databases}
 Centralized databases containing raw location data expose users to a privacy risk (through theft) \parencite{iot, hoh2006enhancing}. \parencite{p2p-android} proposes the use of P2P over WIFI and Bluetooth to decrease the need of central instances. A decentralized analysis approach and it's implications for data privacy is also investigated by \parencite{iot} as an alternative to cloud-based IoT.
-\parencite{crowdsourcing} proposes an approach in which raw data is hidden from the central instance but still aggregated data can be obtained by using encryption methods. Raw data is encrypted using a modified approach of public-private key-pair cryptography in which the sum of two encrypted messages can be decrypted to the sum of the encrypted messages. Furthermore, only a number of messages above a certain threshold can be encrypted this way using the different encryption shares. While this approach is close to our work in general, we propose a more general and flexible setup.
-Another approach by \parencite{hoh2006enhancing} also uses encryption in combination with a middleware. The server storing the data and the participant (e.g. a vehicle) share a symmetric key which is stored securely in the vehicle. The middleware ensures authentication of the participant, and forwards the locaation to the central server. Nevertheless, several research as e.g. \parencite{krumm, twitter, cellphone} have shown that it is easy to infer identity from such datasets. Even though they solve the problem of user authentication, it seems hardly feasable as the symmetric key has to be pre-installed on every participating device.
+\parencite{crowdsourcing} proposes an approach in which raw data is hidden from the central instance but still aggregated data can be obtained by using encryption methods. Raw data is encrypted using a modified approach of public-private key-pair cryptography in which the sum of two encrypted messages can be decrypted to the sum of the encrypted messages. Furthermore, only a number of messages above a certain threshold can be encrypted this way using the different encryption shares. 
+%While this approach is close to our work in general, we propose a more general and flexible setup.
+Another approach by \parencite{hoh2006enhancing} also uses encryption in combination with a middleware. The server storing the data and the participant (e.g. a vehicle) share a symmetric key which is stored securely in the vehicle. The middleware ensures authentication of the participant, and forwards the location to the central server without giving away the vehicle's identity. Nevertheless, several research as e.g. \parencite{krumm, twitter, cellphone} have shown that it is easy to infer identity from such datasets. 
+%Even though they solve the problem of user authentication, it seems hardly feasable as the symmetric key has to be pre-installed on every participating device.
 
-\section{Inference attacks on published anonymized data}
-\subsection{Inferring home and work location from consecutive data samples}
-Research has shown, that from a location data set that is pseudonymous, i.e. the identifiers have been stripped or anonymized from the data, it is possible to infer the home location of single users through so-called inference attacks \parencite{krumm, cellphone, privacy-home-work-pairs, hoh2006enhancing, twitter} and also the work location with a slightly lower probability \parencite{cellphone, privacy-home-work-pairs}. The same problem arises when using data collected through crowdsourcing \parencite{crowdsourcing}.
-These home locations or home-work location pairs can then be used to look up the corresponding user's identity e.g.by combining it with publicly available information e.g. reverse map coding of coordinates to addresses and then searching for entries in telephone books to infer the users identity from it's home location \parencite{krumm, privacy-home-work-pairs, hoh2006enhancing}. Especially in suburban areas this is quite successful as usually one house can be mapped to only one person or family. This identity can then be linked to other sensitive data, e.g. locations visited by the identified user. This problem also arises in the area of IoT \parencite{iot, hoh2006enhancing}.
+\subsection{Inference attacks on published anonymized data}
+%\subsection{Inferring home and work location from consecutive data samples}
+Research has shown, that from a location data set that is pseudonymous, i.e. the identifiers have been stripped off or the data-set has been anonymized in another way, it is possible to infer the home location of single users through so-called inference attacks \parencite{krumm, cellphone, privacy-home-work-pairs, hoh2006enhancing, twitter} and also the work location with a slightly lower probability \parencite{cellphone, privacy-home-work-pairs}. The same problem arises when using data collected through crowdsourcing \parencite{crowdsourcing}.
+These home locations or home-work location pairs can then be used to look up the corresponding user's identity e.g. by combining it with publicly available information. One possibility is to reverse code GPS coordinates to addresses and then e.g. search for entries in telephone books to infer the user's identity from it's home location \parencite{krumm, privacy-home-work-pairs, hoh2006enhancing}. Especially in suburban areas this is quite successful as usually one house can be mapped to only one person or family. This identity can then be linked to other sensitive data, e.g. locations visited by the identified user. The same problem also arises in the area of IoT \parencite{iot, hoh2006enhancing}.
 
-In general, the problem can be summarized as not adhering to k-anonymity.
+\section{Countermeasures to prevent inference attacks}
+In general, the problem can be solved by providing k-anonymity for the data-set \parencite{k-anonymity}. A data-set is k-anonymous, if querying for an identifier in this data-set always returns a result set of at least k entries.
+In order to achieve this, several approaches have been investigated. 
+\parencite{krumm} propose spatial cloaking. K-anonymity is achieved by dropping data points or perturbing them or dropping all data points around a random point around the home location. Also obfuscating locational data close to a home location and mapping GPS points to the next street crossing is possible to increase anonymity.
+More sophisticated approaches as e.g. \parencite{time-to-confusion} focus on making it less likely to identify GPS points of one trajectory being subsequent and belonging to the same user.
 
-\subsection{Solutions / Countermeasures to prevent inference attacks}
-In order to protect users' privacy but still be able to publish data, several approaches have been investigated. 
-Spatial cloaking: Achieving k-anonymity by dropping data points or perturbing them or dropping all data points around a random point around the home location \parencite{krumm}. Also obfuscating locational data close to a home location and mapping GPS points to the next street crossing is possible to increase anonymity.
-More sophisticated approaches: \parencite{time-to-confusion}
-
-\subsection{Problems still after countermeasures}
+\section{Limitations of countermeasures}
 Nevertheless, data suppression algorithms have only limited success and can only reduce, but not eliminate the risk \parencite{hoh2006enhancing}. 
 
 \subsubsection{Data is useless if k-anonymity is guaranteed}

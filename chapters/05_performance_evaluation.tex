@@ -4,7 +4,35 @@
 \section{Deployment}
 The proposed Android application\footnote{The version deployed during field testing can be found at https://github.com/SimonVanEndern/location-app/releases/tag/v1.0} and server have been tested on 16 devices for six days from 30.05.2019 until 04.06.2019. However, evaluating the lastSeen timestamp of the users showed that only 13 installations were active after 31.05.2019. The server was deployed\footnote{The version deployed during field testing can be found at https://github.com/SimonVanEndern/location-server/releases/tag/v1.0 The final version provides the same functionality but includes improvements (e.g. bug-fixes, comments, ...) over the deployed version.} in the IBM Cloud as a 128 MB node.js instance. The database was hosted as a free version at mongodb.com.
 
-We ran 7 different aggregation requests defined in section \ref{data-aggregation-design} covering different timespans from single days to the whole period. The results can be found in the tables in this section\footnote{The results are also available in JSON format at https://github.com/SimonVanEndern/tum-thesis-latex/tree/master/published/results} and will be discussed in section \ref{results}. The results of the collection of trajectories were modified in order to protect the priacy of all research participants. We used this testing period also to improve the performance of the server as well as the Android application and to find and remove bugs. All improvements are incorporated in the most recent commits of the respective GitHub repositories.
+We ran 7 different aggregation requests defined in section \ref{data-aggregation-design} covering different timespans from single days to the whole time period. The results can be found in the tables in this section\footnote{The results are also available in JSON format at https://github.com/SimonVanEndern/tum-thesis-latex/tree/master/published/results} and will be discussed in section \ref{results}. The results of the collection of trajectories were modified in order to protect the priacy of all research participants. We used this testing period also to improve the performance of the server as well as the Android application and to find and remove bugs. All improvements are incorporated in the most recent commits of the respective GitHub repositories.
+
+\section{Data Consumption}
+As expected, the data consumption of the Android application was low. Some research participants provided information about the app's data usage. Table \ref{data-consumption} shows the 12 collected results of this rather qualitative analysis. Screenshots of the provided information are attached in the appendix. On 75\% of the samples the data consumption for 6 days was below 21 MB. The highest data consumption was 376 and is attributable to an error that occurred on the last day of the testing period. Requests were sent multiple times during the whole period and up to unlimited times on the last day due to this error in combination with another error. This explains the high data consumption reported also by two other participants as the error occurred at least on three devices. The data suggests that the average data consumption would be lower and regarding the size of our setup below 100 MB per month. Furthermore, a mobile connection is not required. In the future, the setup can be changed to use only or mostly WIFI connections.
+Some few few available reports about battery consumption also indicate a rather moderate battery consumption.
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\multicolumn{2}{|c|}{\textbf{Combined Data Consumption from 30.05.2019 - 04.06.2019}}                     \\ \hline
+		\textbf{Data Consumption} & \multicolumn{1}{c|}{\textbf{Comment}}                       \\ \hline
+		20.5 MB                            &                                                             \\ \hline
+		8.18 MB                            &                                                             \\ \hline
+		8.5 MB                             & From 01.04.2019 - 04.06.2019 only                           \\ \hline
+		11.98 MB                           &                                                             \\ \hline
+		6.29 MB                            & mobile data only, WIFI unknown                              \\ \hline
+		0 MB                               & mobile data only, WIFI unknown                              \\ \hline
+		376 MB                             & Known and fixed error                                       \\ \hline
+		6.19 MB                            & mobile data only, WIFI unknown                              \\ \hline
+		2.6 MB                             &                                                             \\ \hline
+		18.53 MB                           & 16.5 MB mobile, 2.03 MB WIFI                                \\ \hline
+		75.73 MB                           & From 01.04.2019 - 04.06.2019 only, possible error candidate \\ \hline
+		49.39 MB                           & mobile data only, WIFI unknown, possible error candidate    \\ \hline
+	\end{tabular}
+	\caption{Data consumption of the Android application during the testing period}
+	\label{data-consumption}
+\end{table}
+
 
 \begin{table}[]
 	\parbox{.45\linewidth}{
@@ -27,8 +55,8 @@ We ran 7 different aggregation requests defined in section \ref{data-aggregation
 			02.06.2019 - 04.06.2019    & 7          & 1.05                     \\ \hline
 			03.06.2019 - 04.06.2019    & 7          & 0.16                     \\ \hline
 		\end{tabular}
-		\label{results-running}
 		\caption{Average time spent running}
+		\label{results-running}
 	}
 	\hfill
 	\parbox{.45\linewidth}{
@@ -52,8 +80,8 @@ We ran 7 different aggregation requests defined in section \ref{data-aggregation
 			02.06.2019 - 04.06.2019    & 7          & 51.75                    \\ \hline
 			03.06.2019 - 04.06.2019    & 7          & 64.04                    \\ \hline
 		\end{tabular}
-		\label{results-walking}
 		\caption{Average time spent walking}
+		\label{results-walking}
 	}
 \end{table}
 
@@ -79,8 +107,8 @@ We ran 7 different aggregation requests defined in section \ref{data-aggregation
 			02.04.2019 - 04.06.2019    & 3          & 326363.3                 \\ \hline
 			03.04.2019 - 04.06.2019    & 3          & 455903.7                 \\ \hline
 		\end{tabular}
-		\label{results-steps}
 		\caption{Average number of steps per day}
+		\label{results-steps}
 	}
 	\hfill
 	\parbox{.45\linewidth}{
@@ -103,8 +131,8 @@ We ran 7 different aggregation requests defined in section \ref{data-aggregation
 			02.04.2019 - 04.06.2019    & 7          & 48.89                    \\ \hline
 			03.04.2019 - 04.06.2019    & 7          & 45.96                    \\ \hline
 		\end{tabular}
-		\label{results-vehicle}
 		\caption{Average time spent in a vehicle}
+		\label{results-vehicle}
 	}
 \end{table}
 
@@ -120,8 +148,8 @@ We ran 7 different aggregation requests defined in section \ref{data-aggregation
 		03.06.2019                 & 9          & 31.03                    \\ \hline
 		04.06.2019                 & 8          & 23.81                    \\ \hline
 	\end{tabular}
-	\label{results-biking}
 	\caption{Average time spent biking}
+	\label{results-biking}
 \end{table}
 
 \begin{table}[]
@@ -145,23 +173,19 @@ We ran 7 different aggregation requests defined in section \ref{data-aggregation
 		02.04.2019 - 04.06.2019            & 7                 & 974691, 1231, 3168                       \\ \hline
 		03.04.2019 - 04.06.2019            & 7                 & 1364278, 1231, 2202                      \\ \hline
 	\end{tabular}
-	\label{results-steps-listing}
 	\caption{Average number of steps per day of each user}
+	\label{results-steps-listing}
 \end{table}
 
-\section{Data Consumption}
-The application used very few data. Some research participants provided information about the app's data usage. Table XX shows the collected results of this rather qualitative analysis. Screenshots of the provided information are attached in the appendix. On most phones the data consumption for 6 days was below 20 MB. The highest data consumption was 376 and is attributable to an error that occurred on the last day of the testing period. Requests were sent multiple up to unlimited times. This explains the high data consumption reported also by two other participants. This error was present during the whole testing period but interacted with another error that occurred only on the last day. This suggests, that the actual data consumption of the application would be far lower in practise (with the errors being fixed).
-Also the few available reports about battery consumption indicate a rather moderate battery consumption.
-
-\section{Results}\label{results}
-We computed the aggregated results for each of the 6 days of the testing period separately and for 5 timespans from each of those days until the last day. The results can be seen in figure XXX. 
+\section{Aggregation Results}\label{results}
+We computed the aggregation over several different timespans. We aggregated the average number of steps across all participants, the average time spent walking, running, in a vehicle or on a bicycle and the list of each individual average number of steps. The results can be seen in table \ref{results-running} - \ref{results-steps-listing}.
 On most of the days the average time spent walking is roughly around one hour per day. Nevertheless, on the 3rd of June the value is clearly higher and 31st as well. We do not see any reason for this spike -- 03.06. is a regular work day - nevertheless, the value is not that high as it would suggest errors. The value on the first day being below the other values is definitely attributable to the fact that we started to roll out the application on this day.
 The average time running is around 1-2 minutes per day. This is not surprising. The only scenarios usually are when somebody has to catch some transport or actively is running (and might probably not carry his or her phone).
 Due to an error in the setup, we only have the daily average data for the time spent biking which ranges from 11 to 31 minutes per day and sounds realistic regarding that the participants where all in Munich.
 The time spent in a  vicle ranges from half an hour to 90 minutes on average per day and has one spike of almost 2 hours on 31.06. This can be explained as one of our research team had a very long car ride on this day. Comparing the data with the registered trajectories, there is another pretty long car ride which might have attributed to the high average of 90 minutes per day. 
 The average steps per day range in the lower range of some thousands. Though, there are some values which clearly expose an error in our aggregation process. Excluding these definitely incorrect values from the statistics, the values all are in an expected range. 
 Investigating the list of average steps, it is clear that the erro did not occur in the aggregation process but in the process of local aggregation of data. There is always maximum one value off, all other values are withinn an expected range. The zero values are due to non step sensor being present on the respective phones (which are excluded in the average aggregation).
-Using the algorithm described in chapter \ref{local-data-aggregation} a total of 406 trajectories where computed out of the raw GPS data. A part of the trajectories are shown in figure \ref{trajectories1} and \ref{trajectories2}. The complete results can be found in the appendix. \footnote{Whenever the trajectory started or ended clearly in a precise private location e.g. housing, we modified this location. So the results actually do not represent real trajectories anymore}
+Using the algorithm described in chapter \ref{local-data-aggregation} a total of 406 trajectories where computed out of the raw GPS data. A part of the trajectories are shown in figure \ref{trajectories1} and \ref{trajectories2}. The complete results can be found in the appendix\footnote{Whenever the trajectory started or ended clearly in a precise private location e.g. housing, we modified this location. So the results actually do not represent real trajectories anymore}.
 
 \begin{figure}[h!]
 	\caption{Trajectories}
