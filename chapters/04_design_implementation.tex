@@ -38,7 +38,7 @@ The API is designed as a REST API based on JSON data exchange format and consist
     "publicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG..."
   }
   \end{lstlisting}
-  \caption{Body of an HTTP request for creating a new user}
+  \caption{Body of an HTTP request for creating a new user.}
   \label{post-user-request}
 \end{figure}
 
@@ -49,7 +49,7 @@ The API is designed as a REST API based on JSON data exchange format and consist
     "password": "LSFDfzduSFSozfwf"
   }
   \end{lstlisting}
-  \caption{Body of an HTTP response upon successful creation of a new user}
+  \caption{Body of an HTTP response upon successful creation of a new user.}
   \label{post-user-response}
 \end{figure}
 
@@ -57,14 +57,14 @@ The API is designed as a REST API based on JSON data exchange format and consist
   \begin{lstlisting}[language=json,firstnumber=1]
   [{
     "publicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG...",
-    "serverId": "5cfbd6734e733a0079ee5c0f",
+    "serverId": "acfbdxxfceoelaOdkfeecIf",
     "nextuser" : "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhBms...",
-    "encryptionKey":"HXporX7tqrgkf6Cp8OlqOcpLb...",
-    "iv":"pMxQ2nHqbz1Zu24Lfi5HYQ==",
-    "encryptedRequest":"xtgP2e9AeAK8hfPXQe03..."
+    "encryptionKey":"HXporXstqrgkfsCpezlqZcpLb...",
+    "iv":"pMxQznHqbzeZuzVLfiFHYQ==",
+    "encryptedRequest":"xtgPteNAeAKEhfPXQeZt..."
   }]
   \end{lstlisting}
-  \caption{Body of an HTTP response listing all aggregation requests for the specified user}
+  \caption{Body of an HTTP response listing all aggregation requests for the specified user.}
   \label{get-requests-response}
 \end{figure}
 
@@ -73,13 +73,13 @@ The API is designed as a REST API based on JSON data exchange format and consist
   {
     "publicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG...",
     "password": "LSFDfzduSFSozfwf",
-    "serverId": "5cfbd6734e733a0079ee5c0f",
-    "encryptionKey":"HXporX7tqrgkf6Cp8OlqOcpLb...",
-    "iv":"pMxQ2nHqbz1Zu24Lfi5HYQ==",
-    "encryptedRequest":"xtgP2e9AeAK8hfPXQe03..."
+    "serverId": "acfbdxxfceoelaOdkfeecIf",
+    "encryptionKey":"HXporXstqrgkfsCpezlqZcpLb...",
+    "iv":"pMxQznHqbzeZuzVLfiFHYQ==",
+    "encryptedRequest":"xtgPteNAeAKEhfPXQeZt..."
   }
   \end{lstlisting}
-  \caption{Body of an HTTP request sending the processed aggregation request back to the server}
+  \caption{Body of an HTTP request sending the processed aggregation request back to the server.}
   \label{post-request}
 \end{figure}
 
@@ -106,7 +106,7 @@ The API is designed as a REST API based on JSON data exchange format and consist
     "valueList": [1661, 1246, 3195, 7714, 7842]
    }]
   \end{lstlisting}
-  \caption{Body of an HTTP response listing all completed aggregations}
+  \caption{Body of an HTTP response listing all completed aggregations.}
   \label{get-aggregations}
 \end{figure}
 
@@ -119,7 +119,7 @@ The API is designed as a REST API based on JSON data exchange format and consist
     "type": "activity_2",
   }]
   \end{lstlisting}
-  \caption{Body of an HTTP request for initiating a new aggregation}
+  \caption{Body of an HTTP request for initiating a new aggregation.}
   \label{insert-sample}
 \end{figure}
 
