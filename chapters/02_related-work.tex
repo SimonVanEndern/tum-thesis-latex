@@ -38,33 +38,29 @@ In order to achieve this, several approaches have been investigated.
 More sophisticated approaches as e.g. \parencite{time-to-confusion} focus on making it less likely to identify GPS points of one trajectory being subsequent and belonging to the same user.
 
 \section{Limitations of countermeasures}
-Nevertheless, data suppression algorithms have only limited success and can only reduce, but not eliminate the risk \parencite{hoh2006enhancing}. 
+Usually there is a trade-off between the level of anonymity and the usefullness of the data. When k-anonymity is guaranteed, often the resulting data-set becomes useless because the data quality is not sufficient anymore \parencite{krumm, cellphone, k-anonymity-old, k-anonymity, k-anonymity-achieving}.
+On the one hand, when the data-set is tried to be kept usefull, data suppression algorithms have only limited success and can only reduce, but not eliminate the risk \parencite{hoh2006enhancing}. \parencite{time-to-confusion, location-privacy, hoh2006enhancing} find that anonymization techniques might score well in densly populated areas or areas with high traffic but poorly in sparsely populated areas especially where a single address can be mapped to a single person or family. Also the applied techniques might not achieve the expected results for individuals who's work and home location are further away than average \parencite{privacy-home-work-pairs}.
+Furthermore, taking other sources and databases into account, k-anonymity might be compromised due to quasi-identifiers \parencite{k-anonymity-achieving} e.g. a combination of attributes that do not identify an individual but allow linking two different data-sets and by that creating new identifiers.
 
-\subsubsection{Data is useless if k-anonymity is guaranteed}
-Insufficient accuracy / the data set becomes useless \parencite{krumm, cellphone, k-anonymity-old, k-anonymity, k-anonymity-achieving}.
+%\subsubsection{Still privacy breaches possible}
+%\begin{itemize}
+%	\item More advanced privacy breaking algorithms
+%\item Taking other sources into accouont, e.g. history of location data
+%Extending the time period over which data is collected generally increases the risk.
 
-\subsubsection{Countermeasures not effective in sparsely populated areas}
-Anonymization techniques might score well in densly populated areas or areas with high traffic but poorly in sparsely populated areas especially where a single address can be mapped to a single person or family \parencite{time-to-confusion, location-privacy, hoh2006enhancing} [location-privacy correct paper or cited wrong paper???] or might not work for individuals whos work and home location are further away than average \parencite{privacy-home-work-pairs}.
+%\item quasi-identifiers not thought of \parencite{k-anonymity-achieving}
+%\end{itemize}
 
-\subsubsection{Still privacy breaches possible}
-\begin{itemize}
-	\item More advanced privacy breaking algorithms
-\item Taking other sources into accouont, e.g. history of location data
-Extending the time period over which data is collected generally increases the risk.
-
-\item quasi-identifiers not thought of
-\end{itemize}
-
-\subsection{All methods depend on trust to a third party or the provider itself}
-Still all approaches depend on first centrally collecting the original raw data and then before querying \parencite{k-anonymity} applying anonymization techniques.
+%\subsection{All methods depend on trust to a third party or the provider itself}
+%Still all approaches depend on first centrally collecting the original raw data and then before querying \parencite{k-anonymity} applying anonymization techniques.
 
 %\section{Category 1 location data use: instant}
 %\parencite{location-privacy, mix-zones} introduces mix-nodes, that can nevertheless not guarantee privacy and also depnds on a trusted third party.
-		Also \parencite{casper} proposes a solution (close to our summary) how to enable privacy for instant use of location data.
+		%Also \parencite{casper} proposes a solution (close to our summary) how to enable privacy for instant use of location data.
 
 %Decentralized methods for data analysis are also motivated from the area of IoT \parencite{iot}.
 
-TODO: Relate to \parencite{k-anonymity}
+%TODO: Relate to \parencite{k-anonymity}
 
 %\includegraphics[width=\textwidth]{data/research-overview.jpg}
 %\includegraphics[width=\textwidth]{data/research-overview-2.jpg}
