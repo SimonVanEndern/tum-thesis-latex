@@ -154,34 +154,34 @@ Aggregation 4 imposes a privacy risk as discussed in \parencite{twitter, cellpho
 The Android application targets Android Oreo (API level 27) and requires a minimum API level of 19. Approximately 96.8\% of devices run on this or a higher version of Android \cite{android-api-level-share} which allows our application to be installed on the majority of Android devices.
 Furthermore, the application leverages Goolge Play Services to obtain GPS and activity data. Without Google Play Services installed, the application will not work. In order to ease future adaptability, we chose to use the Dagger2\footnote{See https://dagger.dev/} framework for dependency injection in order to decouple classes as far as possible. Further use of frameworks and libraries will be explained in the following respective sections.
 
-Th application is aimed to collect GPS data, detect the user's current activity and count the user's steps. The data collection process happens in the background without any user interaction needed. Aggregation requests to aggregate data accross devices are also served without any user interaction needed.
 \begin{samepage}
+The application is aimed to collect GPS data, detect the user's current activity and count the user's steps. The data collection process happens in the background without any user interaction required. Aggregation requests to aggregate data accross devices are also served without the need of any user interaction.
 The android application can be grouped into three main parts of loosely coupled modules:
 \begin{itemize}
-	\item A module responsible for collecting and saving raw data
-	\item A module responsible for locally aggregating raw data
-	\item A module responsible for communicating with the server and handling aggregation requests
+	\item A module responsible for collecting and saving raw data.
+	\item A module responsible for locally aggregating raw data.
+	\item A module responsible for communicating with the server and handling aggregation requests.
 \end{itemize}
 \end{samepage}
 
 \begin{figure}[h!]
+  \includegraphics[width=\textwidth]{data/diagrams/android-architecture.png}
   \caption{Android architecture}
   \label{android-overview}
-  \includegraphics[width=\textwidth]{data/diagrams/android-architecture.png}
 \end{figure}
 
 The control flow as depicted in figure \ref{android-overview} is as follows: 
-The application has only one Main Activity in order to ask the user to allow location access and start the background services. Apart from that the only Activity does not serve any specific purpose. 
-The local aggregation as well as the polling of new requests from the server happens in the background on a 15 minute interval. The Android Workmanager controls this periodic work without any user interaction being required.
+The Android application has only one Main Activity in order to ask the user to allow location access and start the background services. Apart from that, this Activity does not serve any specific purpose. 
+The local aggregation as well as the polling of new requests from the server happens in the background on a 15 minute interval and is initiated by the background service. The Android Workmanager then controls this periodic work without any user interaction being required.
 
-For the App in order to have maximum possibilities collecting esspecially GPS data and preventing the Android operating system from shutting down when not interacted with by the user (which is usually never the case), a non-dismissible status notification is displayed at all time\footnote{Compare to the non-dismissible status notification displayed by Google Maps when the navigation system is active}. Also the application is registered to be automatically restarted upon boot\footnote{From Android 6.0 on (API level 23), restricts apps' behaviour in order to reduce battery consumption. E.g. all apps are automatically managed by the battery manager which restricts background launches. The user has to switch this option to manual management in order to allow the app to function in the way it was designed. See https://developer.android.com/guide/background/ and also https://developer.android.com/training/monitoring-device-state/doze-standby} and also when the application is closed by the user (e.g. via the task manager) so that once installed, no further user interaction is necessary.
-Furthermore, the application, respectively each module is heavily unit tested in order to guarantee functionality and facilitate further development by other research teams. Unit and integration tests are based on AndroidJUnit4\footnote{See https://developer.android.com/reference/android/support/test/runner/AndroidJUnit4} and the expresso\footnote{See https://developer.android.com/training/testing/espresso} framework.
+For the App in order to have maximum possibilities collecting esspecially GPS data and preventing the Android operating system from shutting down when not interacted with by the user (which is usually never the case), a non-dismissible status notification is displayed at all time\footnote{Compare to the non-dismissible status notification displayed by Google Maps when the navigation system is active.}. Also, the application is registered to be automatically restarted upon boot\footnote{From Android 6.0 on (API level 23), apps' behaviour is restriceted by the operating system in order to reduce battery consumption. E.g. all apps are automatically managed by the battery manager which restricts background launches. The user has to switch this option to manual management in order to allow the app to function in the way it was designed. See https://developer.android.com/guide/background/ and also https://developer.android.com/training/monitoring-device-state/doze-standby.} and also when the application is closed by the user (e.g. via the task manager) so that once installed, no further user interaction is necessary.
+Furthermore, the application, respectively each module is heavily unit tested in order to guarantee functionality and facilitate further development by other research teams. Unit and integration tests are based on AndroidJUnit4\footnote{See https://developer.android.com/reference/android/support/test/runner/AndroidJUnit4.} and the expresso\footnote{See https://developer.android.com/training/testing/espresso.} framework.
 
 \subsection{Separation of concerns regarding Data Collection and Aggregation}
 We choose to separate the aggregation and collection of location data in order to decouple the modules and provide the possibility to extend the model of aggregated data in the future without the need to change the raw data model. Vice versa the data collection process can be modified without impacting the aggregation process.
 
 \subsection {Data Collection}
-We use the Android Room Persistence library\footnote{See https://developer.android.com/topic/libraries/architecture/room} to locally store data. The library provides a layer over the standard LiteSQL database commonly used in many Android applications. We collect three types of data:
+We use the Android Room Persistence library\footnote{See https://developer.android.com/topic/libraries/architecture/room.} to locally store data. The library provides a layer over the standard LiteSQL database commonly used in many Android applications. We collect three types of data:
 \begin{itemize}
 	\item Steps: If available, the phone's internal step sensor provides updates on a regular basis. The step sensor always informs about the total number of steps since the last reboot. Upon each time we receive data from the step sensor, this data is stored directly in the \textit{step\_counter\_table}.
 	\item User's activities: The Google Play Services  activity recognition API leverages different data and sensors available on the phone in order to inform about the most probable current activity of the user as one of \textit{still, walking, running, in a vehicle, on bicycle\footnote{See https://developers.google.com/android/reference/com/google/android/gms/location/DetectedActivity}}. Whenever there is a change detected, two events are fired - one for exiting the former and one for entering the current activity. The events might not be dispatched instantly but contain the timestamp of the exact occurence. Upon each received event, this data is stored directly in the \textit{activity\_transition\_table}.
