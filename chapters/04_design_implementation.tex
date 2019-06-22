@@ -125,14 +125,15 @@ The API is designed as a REST API based on JSON data exchange format and consist
 
 %TODO: Password should go into header in the future.
 
-The routes used for interaction with the application (except the one for creating a new user) are secured and can only be used if the user can be authenticated successfully. The routes for initiating new aggregations and retrieving all results require administrator authentication. The route for the results is designed to be available to the public without authentication. Nevertheless we restrict access in this test setup to fully protect users' privacy.
+The routes used for interaction with the application (except the one for creating a new user) are secured and can only be accessed if the user can be authenticated successfully. The routes for initiating new aggregations and retrieving all results require administrator authentication (see figure \ref{insert-sample}. The route for the results is designed to be available to the public without authentication. Nevertheless we restrict access in this test setup to fully protect users' privacy.
+On creation of a new user, the server response contains a password randomly generated for the user to be used for authentication in all future server communication as e.g. in figure \ref{post-request}. All aggregations waiting to be processed by the user and also the respective responses (see figure \ref{post-request} and \ref{get-requests-response}) contain the public key of the user to identify which user should handle the request. Furthermore, the request contains a field \textit{encryptionKey} which is a synchronous key, encrypted with the users public key, that has been used in combination with the initialization vector \textit{iv} to encrypt the actual aggregation request described in chapter \ref{chapter:method} send along in \textit{encryptedRequest} in it's encrypted version. The \textit{serverId} is the identifier of the request used by the server's database.
 %So, for example, our experimental trajectory request type is not available to the public.
 
-The encryptedRequest field e.g. in figure \ref{get-requests-response} contains the encrypted version of the request described in chapter \ref{chapter:method}.
+%The encryptedRequest field e.g. in figure \ref{get-requests-response} contains the encrypted version of the request .
 
 %//TODO: Integrate this section somewhere else (in methodology)
 \subsection{Data Aggregation Design}\label{data-aggregation-design}
-All aggregations proposed in section \ref{aggregation-schemes} can be implemented using only 4 fields: An Integer \textit{n} specifying the current number of participants, a Floating Point Number \textit{value} e.g. containing the current mean value of the aggregation, a list \textit{valueList} of Floating Point Numbers that can be reused for different purposes accross requests and a String \textit{type} that specifies the request and the used scheme how the other fields are populated e.g. the encoding of the \textit{valueList}. In addition, all aggregation requests have a start day and an end day. Days' time is always treated as 00:00 o'clock. Thus, the timespan for an aggregation is always a multiple of 24 hours.\\
+All aggregations proposed in section \ref{aggregation-schemes} can be implemented using only 4 fields: An Integer \textit{n} specifying the current number of participants, a Floating Point Number \textit{value} e.g. containing the current mean value of the aggregation, a list \textit{valueList} of Floating Point Numbers that can be reused for different purposes accross requests and a String \textit{type} that specifies the request type and by that the used scheme, i.e. how the other fields are populated e.g. the encoding of the \textit{valueList}. In addition, all aggregation requests have a start day and an end day. Days' time is always treated as 00:00 o'clock. Thus, the timespan for an aggregation is always a multiple of 24 hours. Figure \ref{get-aggregations} shows two examples of completed aggregations which highlight the reusability of the 4 fields. They furthermore contain a \textit{timestamp} when the aggregation has been completed and when it had been started (\textit{startedAt}).\\
 
 \begin{samepage}
 Due to limited scope of this thesis, only the following out of the aggregation requests defined in section \ref{aggregation-schemes} were implemented:
@@ -140,13 +141,14 @@ Due to limited scope of this thesis, only the following out of the aggregation r
 	\item Computing the average number of steps walked across all users participating in the request.
 	\item Computing the average time spent walking, running, in a vehicle or on a bicycle\footnote{See https://developers.google.com/android/reference/com/google/android/gms/location/DetectedActivity}.
 	\item Collecting a list of the average number of steps walked by each participant during the timespan.
-	\item collecting a list of all trajectories registered by the users' phones.
+	\item Collecting a list of all trajectories registered by the users' phones.
 \end{enumerate}
 \end{samepage}
 
-All aggregations work as a prove of concept of the proposed setup and hence serve answering research question 1. Aggregation 1, 2 and furthermore help to investigate which types of aggregations are possible to be published and allow for an investigation whether overlapping timeperiods allow for inference attacks. Thus  they help to answer research question 2 and 3. Aggregation 3 was implemented especially in order to test research question 2.
+Nevertheless, implementation of other aggregations is straight forward using the provided setup.
+All aggregations work as a prove of concept of the proposed setup and hence serve answering research question 1. Aggregation 1, 2 and 3 furthermore help to investigate which types of aggregations are possible to be published and allow for an investigation whether overlapping timeperiods allow for inference attacks. Thus they help to answer research question 2 and 3. Especially aggregation 3 in comparison with aggregation 1 and 2 allow for answering research question 2.
 %whether this type of aggregation, which allows for more advances statistical computations as median values and distribution properties, still completely preserves privacy.
-Aggregation 4 imposes a privacy risk discussed in \parencite{twitter, cellphone, krumm} on the user and was implemented in order to get an overview of the data quality of our setup and validate the feasability of the other aggregation requests proposed in section \ref{aggregation-schemes}.
+Aggregation 4 imposes a privacy risk as discussed in \parencite{twitter, cellphone, krumm} on the user and was only implemented in order to get an overview of the data quality of our setup and validate the feasability of the other aggregation requests proposed in section \ref{aggregation-schemes}.
 
 \section{Android Application}
 The Android application targets Android Oreo (API level 27) and requires a minimum API level of 19. Approximately 96.8\% of devices run on this or a higher version of Android \cite{android-api-level-share} which allows our application to be installed on the majority of Android devices.
