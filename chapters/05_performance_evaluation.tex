@@ -4,7 +4,7 @@
 \section{Deployment}
 The proposed Android application\footnote{The version deployed during field testing can be found at https://github.com/SimonVanEndern/location-app/releases/tag/v1.0} and server have been tested on 16 devices for six days from 30.05.2019 until 04.06.2019. However, evaluating the \textit{lastSeen} timestamp of the users showed that only 13 installations were active after 31.05.2019. The server was deployed\footnote{The version deployed during field testing can be found at https://github.com/SimonVanEndern/location-server/releases/tag/v1.0 The final version provides the same functionality but includes improvements (e.g. bug-fixes, comments, ...) over the deployed version.} in the IBM Cloud as a 128 MB node.js instance. The database was hosted as a free version at mongodb.com.
 
-We ran 7 different aggregation requests defined in section \ref{data-aggregation-design} covering different timespans from single days to the whole time period. The results can be found in the tables in this section\footnote{The results are also available in JSON format at https://github.com/SimonVanEndern/tum-thesis-latex/tree/master/published/results} and will be discussed in chapter \ref{results}. The results of the collection of trajectories were modified in order to protect the priacy of all research participants. We used this testing period also to improve the performance of the server as well as the Android application and to find and remove bugs. All improvements are incorporated in the most recent commits of the respective GitHub repositories.
+We ran 7 different aggregation requests defined in section \ref{data-aggregation-design} covering different timespans from single days to the whole time period. Also, we limited the number of participants in each aggregation to 10. The results can be found in the tables in this section\footnote{The results are also available in JSON format at https://github.com/SimonVanEndern/tum-thesis-latex/tree/master/published/results} and will be discussed in chapter \ref{results}. The results of the collection of trajectories were modified in order to protect the priacy of all research participants. We used this testing period also to improve the performance of the server as well as the Android application and to find and remove bugs. All improvements are incorporated in the most recent commits of the respective GitHub repositories.
 
 \section{Data Consumption}
 As expected, the data consumption of the Android application was low. Some research participants provided information about the app's data usage. Table \ref{data-consumption} shows the 12 collected results of this rather qualitative than quantitative analysis. Screenshots of the provided information are attached in the appendix. On 75\% of the devices the data consumption for 6 days was below 21 MB. The highest data consumption was 376 MB and is attributable to an error that occurred on the last day of the testing period. Requests were sent multiple times during the whole period and up to unlimited times on the last day due to this error in combination with another error that was present during the whole timespan. This explains the high data consumption reported also by two other participants as the error occurred at least on three devices. The data suggests that the average data consumption in a production environment would be lower and regarding the size of our setup below 100 MB per month. Furthermore, a mobile connection is not required. In the future, the setup can be changed to use only or mostly WIFI connections.
@@ -34,9 +34,10 @@ Some few available reports about battery consumption also indicate a rather mode
 \end{table}
 
 \section{Aggregation Results}\label{results}
-We computed the aggregation over several different timespans. We aggregated the average number of steps across all participants, the average time spent walking, running, in a vehicle or on a bicycle and collected a list of each individual's average number of steps. The results can be seen in table \ref{results-running} - \ref{results-steps-listing}.
+We computed the aggregation over several different timespans. We aggregated the average number of steps across all participants, the average time spent walking, running, in a vehicle or on a bicycle and collected a list of each individual's average number of steps. The results can be seen in table \ref{results-running} - \ref{results-steps-listing}. The results from the experimental aggregation of trajectories will be discussed in chapter \ref{trajectories}.
+
 \subsection{Validity of results}
-Excluding the value of 30.05.2019 where the collection of results started and the data of the fraction of the day before installation is not included, the average time spent walking computed in the aggregations ranges from 52 to 146 minutes per day. The average time spent walking computed for the whole timespan where data from 8 devices is included amounts to 62 minutes. At the same time, reported number of steps per day ranges from 1123 to 4682 per day, excluding outliers (see table \ref{results-steps}). The average number of steps computed for the whole timespan with data from 5 participating devices is 3622. Taking an average speed of roughly 100 steps per minute into account \parencite{steps2}, the results from average time spent walking and average number of steps diverge by a factor of 1.7. Considering that apparently only 6 devices had a step sensor on their phone and the sample size of the steps aggregation is only about half of the sample size of the other aggregations, this deviation does not seem out of range. Furthermore there was an error computing the number of steps on at least one phone which caused some of the results to be off. Regarding table \ref{results-steps-listing} it seems likely that only on one device this error occurred.
+Excluding the value of 30.05.2019 where the collection of results started and the data of the fraction of the day before installation is not included, the average time spent walking computed in the aggregations ranges from 52 to 146 minutes per day. The average time spent walking computed for the whole timespan where data from 8 devices is included amounts to 62 minutes. At the same time, reported number of steps per day ranges from 1123 to 4682 per day, excluding outliers (see table \ref{results-steps}). The average number of steps computed for the whole timespan with data from 5 participating devices is 3622. Taking an average speed of roughly 100 steps per minute into account \parencite{steps2}, the results from average time spent walking and average number of steps diverge by a factor of 1.7. Considering that apparently only 6 devices had a step sensor on their phone and the sample size of the steps aggregation is only about half of the sample size of the other aggregations, this deviation does not seem out of range. Furthermore there was an error computing the number of steps on at least one phone which caused some of the results to be off. Regarding table \ref{results-steps-listing} it is clear, that the error occurred in the local aggregation process and it seems likely that only on one device this error occurred, as in each aggregation only one value is errorneous.
 
 \begin{table}[]
 	\parbox{.45\linewidth}{
@@ -45,20 +46,20 @@ Excluding the value of 30.05.2019 where the collection of results started and th
 			\hline
 			\multicolumn{3}{|c|}{\textbf{Average number of steps per day}}     \\ \hline
 			\textbf{Time period / Day} & \textbf{N} & \textbf{Value}           \\ \hline
-			30.05.2019                 & 5          & 4331.6                   \\ \hline
-			31.05.2019                 & 5          & 3439.8                   \\ \hline
-			30.05.2019 - 31.05.2019    & 6          & 3278.7                   \\ \hline
-			30.05.2019 - 31.05.2019    & 5          & 4030.2                   \\ \hline
-			30.05.2019 - 01.06.2019    & 6          & 4271                     \\ \hline
+			30.05.2019                 & 5          & 4332                     \\ \hline
+			31.05.2019                 & 5          & 3440                     \\ \hline
 			01.06.2019                 & 1          & 17                       \\ \hline
-			30.05.2019 - 03.06.2019    & 5          & 643959                   \\ \hline
-			03.06.2019                 & 3          & 455411.3                 \\ \hline
+			03.06.2019                 & 3          & 455411                   \\ \hline
 			04.06.2019                 & 3          & 1123                     \\ \hline
-			30.05.2019 - 04.06.2019    & 5          & 3622.6                   \\ \hline
-			01.06.2019 - 04.06.2019    & 2          & 2088.5                   \\ \hline
-			31.05.2019 - 04.06.2019    & 3          & 4681.3                   \\ \hline
-			02.04.2019 - 04.06.2019    & 3          & 326363.3                 \\ \hline
-			03.04.2019 - 04.06.2019    & 3          & 455903.7                 \\ \hline
+			30.05.2019 - 31.05.2019    & 6          & 3279                     \\ \hline
+			30.05.2019 - 31.05.2019    & 5          & 4030                     \\ \hline
+			30.05.2019 - 01.06.2019    & 6          & 4271                     \\ \hline
+			30.05.2019 - 03.06.2019    & 5          & 643959                   \\ \hline
+			30.05.2019 - 04.06.2019    & 5          & 3623                     \\ \hline
+			31.05.2019 - 04.06.2019    & 3          & 4681                     \\ \hline
+			01.06.2019 - 04.06.2019    & 2          & 2089                     \\ \hline
+			02.04.2019 - 04.06.2019    & 3          & 326363                   \\ \hline
+			03.04.2019 - 04.06.2019    & 3          & 455904                   \\ \hline
 		\end{tabular}
 		\caption{Average number of steps per day}
 		\label{results-steps}
@@ -68,20 +69,20 @@ Excluding the value of 30.05.2019 where the collection of results started and th
 		\centering
 		\begin{tabular}{|l|l|l|}
 			\hline
-			\multicolumn{3}{|c|}{\textbf{Average time spent walking}}          \\ \hline
-			\textbf{Time period / Day} & \textbf{N} & \textbf{Value {[}min{]}} \\ \hline
+			\multicolumn{3}{|c|}{\textbf{Average time spent walking {[}min{]}}}          \\ \hline
+			\textbf{Time period / Day} & \textbf{N} & \textbf{Value} \\ \hline
 			30.09.2019                 & 10         & 17.63                    \\ \hline
 			31.05.2019                 & 10         & 97.25                    \\ \hline
+			01.06.2019                 & 4          & 72.85                    \\ \hline
+			03.06.2019                 & 9          & 146.49                   \\ \hline
+			04.06.2019                 & 8          & 86.77                    \\ \hline
 			30.05.2019 - 31.05.2019    & 10         & 63.20                    \\ \hline
 			30.05.2019 - 31.05.2019    & 10         & 78.41                    \\ \hline
 			30.05.2019 - 01.06.2019    & 10         & 75.14                    \\ \hline
-			01.06.2019                 & 4          & 72.85                    \\ \hline
 			30.05.2019 - 03.06.2019    & 9          & 81.94                    \\ \hline
-			03.06.2019                 & 9          & 146.49                   \\ \hline
-			04.06.2019                 & 8          & 86.77                    \\ \hline
 			30.05.2019 - 04.06.2019    & 8          & 61.86                    \\ \hline
-			01.06.2019 - 04.06.2019    & 7          & 57.44                    \\ \hline
 			31.06.2019 - 04.06.2019    & 7          & 67.63                    \\ \hline
+			01.06.2019 - 04.06.2019    & 7          & 57.44                    \\ \hline
 			02.06.2019 - 04.06.2019    & 7          & 51.75                    \\ \hline
 			03.06.2019 - 04.06.2019    & 7          & 64.04                    \\ \hline
 		\end{tabular}
@@ -101,69 +102,69 @@ Similarly, the average number of steps across all participants of an aggregation
 		\textbf{Time period / Day}         & \textbf{N}        & \textbf{Values}                          \\ \hline
 		30.05.2019                         & 10                & 1661, 1246, 3195, 7714, 7842             \\ \hline
 		31.05.2019                         & 10                & 2747, 775, 3924, 9203                    \\ \hline
+		01.06.2019                         & 4                 & 17                                       \\ \hline
+		03.06.2019                         & 9                 & 914, 1042, 1364278                       \\ \hline
+		04.06.2019                         & 8                 & 1103, 13332, 934                         \\ \hline
 		30.05.2019 - 31.05.2019            & 10                & 550, 2905, 3195, 775, 8828, 3419        \\ \hline
 		30.05.2019 - 31.05.2019            & 10                & 550, 8828, 5145, 3195, 2433              \\ \hline
 		30.05.2019 - 01.06.2019            & 10                & 8126, 3195, 283, 8828, 1629, 3565        \\ \hline
-		01.06.2019                         & 4                 & 17                                       \\ \hline
 		30.05.2019 - 03.06.2019            & 9                 & 598, 3195, 1669, 8828, 3205505           \\ \hline
-		03.06.2019                         & 9                 & 914, 1042, 1364278                       \\ \hline
-		04.06.2019                         & 8                 & 1103, 13332, 934                         \\ \hline
 		30.05.2019 - 04.06.2019            & 8                 & 757, 1719, 8828, 3614, 3195              \\ \hline
-		01.06.2019 - 04.06.2019            & 7                 & 826, 33511                               \\ \hline
 		31.05.2019 - 04.06.2019            & 7                 & 757, 9203, 4084                         \\ \hline
+		01.06.2019 - 04.06.2019            & 7                 & 826, 33511                               \\ \hline
 		02.04.2019 - 04.06.2019            & 7                 & 974691, 1231, 3168                       \\ \hline
 		03.04.2019 - 04.06.2019            & 7                 & 1364278, 1231, 2202                      \\ \hline
 	\end{tabular}
-	\caption{Average number of steps per day of each user}
+	\caption{Average number of steps per day of each user.}
 	\label{results-steps-listing}
 \end{table}
 
 \begin{table}[]
-	\parbox{.45\linewidth}{
+	\parbox{.40\linewidth}{
 		\centering
 		\begin{tabular}{|l|l|l|}
 			\hline
-			\multicolumn{3}{|c|}{\textbf{Average time spent running}}          \\ \hline
-			\textbf{Time period / Day} & \textbf{N} & \textbf{Value {[}min{]}} \\ \hline
+			\multicolumn{3}{|c|}{\textbf{Average time spent running {[}min{]}}}          \\ \hline
+			\textbf{Time period / Day} & \textbf{N} & \textbf{Value} \\ \hline
 			30.09.2019                 & 10         & 1.43                     \\ \hline
 			31.05.2019                 & 10         & 1.21                     \\ \hline
+			03.06.2019                 & 9          & 1.95                     \\ \hline
+			04.06.2019                 & 8          & 0                        \\ \hline
 			30.05.2019 - 31.05.2019    & 10         & 1.96                     \\ \hline
 			30.05.2019 - 31.05.2019    & 10         & 1.89                     \\ \hline
 			30.05.2019 - 01.06.2019    & 10         & 1.73                     \\ \hline
 			30.05.2019 - 03.06.2019    & 9          & 1.79                     \\ \hline
-			03.06.2019                 & 9          & 1.95                     \\ \hline
-			04.06.2019                 & 8          & 0                        \\ \hline
 			30.05.2019 - 04.06.2019    & 8          & 1.55                     \\ \hline
-			01.06.2019 - 04.06.2019    & 7          & 0.99                     \\ \hline
 			31.06.2019 - 04.06.2019    & 7          & 0.83                     \\ \hline
+			01.06.2019 - 04.06.2019    & 7          & 0.99                     \\ \hline
 			02.06.2019 - 04.06.2019    & 7          & 1.05                     \\ \hline
 			03.06.2019 - 04.06.2019    & 7          & 0.16                     \\ \hline
 		\end{tabular}
-		\caption{Average time spent running}
+		\caption{Average time spent running.}
 		\label{results-running}
 	}
 	\hfill
-	\parbox{.45\linewidth}{
+	\parbox{.50\linewidth}{
 		\begin{tabular}{|l|l|l|}
 			\hline
-			\multicolumn{3}{|c|}{\textbf{Average time spent in a vehicle}}     \\ \hline
-			\textbf{Time period / Day} & \textbf{N} & \textbf{Value {[}min{]}} \\ \hline
+			\multicolumn{3}{|c|}{\textbf{Average time spent in a vehicle {[}min{]}}}     \\ \hline
+			\textbf{Time period / Day} & \textbf{N} & \textbf{Value} \\ \hline
 			30.05.2019                 & 10         & 8.24                     \\ \hline
 			31.05.2019                 & 10         & 119.92                   \\ \hline
+			01.06.2019                 & 4          & 90.40                    \\ \hline
+			03.06.2019                 & 9          & 71.74                    \\ \hline
+			04.06.2019                 & 8          & 35.51                    \\ \hline
 			30.05.2019 - 31.05.2019    & 10         & 68.40                    \\ \hline
 			30.05.2019 - 31.05.2019    & 10         & 90.49                    \\ \hline
 			30.05.2019 - 01.06.2019    & 10         & 82.19                    \\ \hline
-			01.06.2019                 & 4          & 90.40                    \\ \hline
 			30.05.2019 - 03.06.2019    & 9          & 62.16                    \\ \hline
-			03.06.2019                 & 9          & 71.74                    \\ \hline
-			04.06.2019                 & 8          & 35.51                    \\ \hline
 			30.05.2019 - 04.06.2019    & 8          & 59.34                    \\ \hline
 			01.06.2019 - 04.06.2019    & 7          & 51.07                    \\ \hline
 			31.05.2019 - 04.06.2019    & 7          & 68.20                    \\ \hline
 			02.04.2019 - 04.06.2019    & 7          & 48.89                    \\ \hline
 			03.04.2019 - 04.06.2019    & 7          & 45.96                    \\ \hline
 		\end{tabular}
-		\caption{Average time spent in a vehicle}
+		\caption{Average time spent in a vehicle.}
 		\label{results-vehicle}
 	}
 \end{table}
@@ -172,31 +173,33 @@ Similarly, the average number of steps across all participants of an aggregation
 	\centering
 	\begin{tabular}{|l|l|l|}
 		\hline
-		\multicolumn{3}{|c|}{\textbf{Average time spent biking}}           \\ \hline
-		\textbf{Time period / Day} & \textbf{N} & \textbf{Value {[}min{]}} \\ \hline
+		\multicolumn{3}{|c|}{\textbf{Average time spent biking {[}min{]}}}           \\ \hline
+		\textbf{Time period / Day} & \textbf{N} & \textbf{Value} \\ \hline
 		30.05.2019                 & 10         & 2.29                     \\ \hline
-		30.05.2019 - 31.05.2019    & 10         & 11.10                    \\ \hline
 		01.06.2019                 & 4          & 14.99                    \\ \hline
 		03.06.2019                 & 9          & 31.03                    \\ \hline
 		04.06.2019                 & 8          & 23.81                    \\ \hline
+		30.05.2019 - 31.05.2019    & 10         & 11.10                    \\ \hline
 	\end{tabular}
-	\caption{Average time spent biking}
+	\caption{Average time spent biking.}
 	\label{results-biking}
 \end{table}
 
 The average time spent in a vehicle (including means of public transport) ranges from 36 to 120 minutes (excluding the aggregation only covering the first day). The average time spent in a vehicle computed by the aggregation covering the whole timespan is 59 minutes.
-The average time spent biking ranges from 11 to 31 minutes. The aggregation across the whole timespan was errorneous and had to be discarded. Both aggregations - the time spent biking and the time spent in a vehicle seem reasonable to us.
+The average time spent biking ranges from 11 to 31 minutes. The aggregation across the whole timespan was errorneous and had to be discarded. Both aggregations - the time spent biking and the time spent in a vehicle seem reasonable to us, especially as all participants were active in the Munich area which is also a quite bike friendly city. Furthermore, the collected trajectories in section \ref{trajectories} show two rather long trajectories which probably contributed to the high average time spent in a vehicle in one of the aggregations.
 
 \subsection{Implications}
+The same aggregation covering the timespan from 30.05.2019 to 31.05.2019 has been computed twice for 4 of the aggregations. The results show that not only the number of participants varies but also the value varies from 4\% to 18\%. For each aggregation, the selected participants might be differnt. With a total number of 16 participants in our research, though there has to be an intersection. Nevertheless, the deviation in the same aggregation is within an acceptable range and will be more robust, when the number of participants is increased. Furthermore, the median value will be even more robust to computing the same aggregation twice. We see the same phenomena e.g. regarding the aggregations for the time spent running on 30.05.2019, 31.05.2019 and the aggregation covering both days. The aggregation covering both days yields a higher value than each single aggregation which is due to the fact of a differing underlying research population.
 
+\subsection{Inference on aggregated data}
+Regarding the aggregations computing mean values across all participants, we do not see any possibility to infer information about the users who participated. Especially as not even the identifier of the user used by the server is published alongside with the aggregation. In addition, we showed that when repeating the same aggregation request, the user base changes and the value accordingly. Nevertheless, from the two different values for the same aggregation request, we cannot draw any inference. Also an overlapping in the aggregations e.g. 30.05.2019, 31.05.2019 and an aggregation covering both days as well as the aggregations covering the first two days and the last five days does not allow for inference in the case of mean values aggregated across all participants.
+The collection of individual mean values in table \ref{results-steps-listing} shows that with a high probability the same participant with an average value of 8828 steps per day who participated in the request covering the first two days also participated in the request covering the whole timespan. Based on the information that days with a zero value of the step counter are excluded also locally from the aggregation, we can infer that this person's phone did not register any steps after the first two days, otherwise they value in the second aggregation would have changed. Similarly, we can infer that the user with 757 steps on average per day who participated in the requests covering the whole 6 day timespan and the aggregation covering only the last 5 days probably did not register steps on the first day.
+In summary, we can only infer information about the fact of some users who participated in one aggregation, did or did not participate in another aggregation. As this information is endogenous to our data-set, it can in no case be used to be linked to other data-sets in order to infer further information.
+Assuming that we would also have the collected averages of all aggregations and not only steps.
+Furthermore, linking different aggregations e.g. the number of steps and the time spent walking is only possible with a limited likelihood due to the following reasons. First, there is no exact match of e.g. time spent walking for a number of steps, so that always a range of values of another aggregation would fit. Next, we cannot even assure that the same user participated in both different aggregations. Assuming nevertheless that there is another data-set where the combination of walked steps, time spent walking, etc. is a quasi-identifier as defined by \parencite{k-anonymity-achieving}, the likelihood of obtaining a correct link is low due to the afore mentioned reasons and a good level of anonymity regarding k-anonymity would always be supplied naturally. And still, those aggregations do not expose raw location data / GPS data points which are usually the risk.
 
-On most of the days the average time spent walking is roughly around one hour per day. Nevertheless, on the 3rd of June the value is clearly higher and 31st as well. We do not see any reason for this spike -- 03.06. is a regular work day - nevertheless, the value is not that high as it would suggest errors. The value on the first day being below the other values is definitely attributable to the fact that we started to roll out the application on this day.
-The average time running is around 1-2 minutes per day. This is not surprising. The only scenarios usually are when somebody has to catch some transport or actively is running (and might probably not carry his or her phone).
-Due to an error in the setup, we only have the daily average data for the time spent biking which ranges from 11 to 31 minutes per day and sounds realistic regarding that the participants where all in Munich.
-The time spent in a  vicle ranges from half an hour to 90 minutes on average per day and has one spike of almost 2 hours on 31.06. This can be explained as one of our research team had a very long car ride on this day. Comparing the data with the registered trajectories, there is another pretty long car ride which might have attributed to the high average of 90 minutes per day. 
-The average steps per day range in the lower range of some thousands. Though, there are some values which clearly expose an error in our aggregation process. Excluding these definitely incorrect values from the statistics, the values all are in an expected range. 
-Investigating the list of average steps, it is clear that the erro did not occur in the aggregation process but in the process of local aggregation of data. There is always maximum one value off, all other values are withinn an expected range. The zero values are due to non step sensor being present on the respective phones (which are excluded in the average aggregation).
-Using the algorithm described in chapter \ref{local-data-aggregation} a total of 406 trajectories where computed out of the raw GPS data. A part of the trajectories are shown in figure \ref{trajectories1} and \ref{trajectories2}. The complete results can be found in the appendix\footnote{Whenever the trajectory started or ended clearly in a precise private location e.g. housing, we modified this location. So the results actually do not represent real trajectories anymore}.
+\subsection{Trajectories}\label{trajectories}
+Using the algorithm described in chapter \ref{local-data-aggregation} a total of 406 trajectories where computed from the raw GPS data. The experimental collection of trajectories clearly shows privacy risks as pointed out e.g. by \parencite{cellphone}, why we only publish a modified results set\footnote{Whenever the trajectory started or ended clearly in a precise private location e.g. housing or work-place, we slightly modified this trajectory. So the results do not represent actual trajectories. Nevertheless, the meaning of the results should not have changed.}. Most of the trajectories are shown in figure \ref{trajectories1} and \ref{trajectories2}. The complete results can also be found in the appendix.
 
 \begin{figure}[h!]
 	\caption{Trajectories}
@@ -210,26 +213,13 @@ Using the algorithm described in chapter \ref{local-data-aggregation} a total of
 	\includegraphics[width=\textwidth]{data/trajectories-3.png}
 \end{figure}
 
-\section{Implications}
-Our results show clearly, that there is no privacy risk imposed on the user upon publication of the aggregated average data. Especially it was shown that when repeating the request, the user base changes and the value accordingly. So, publishing pure mean values of analysis does not impose any privacy risk to the user. Furthermore we showed exemplary with the steps aggregation, that also the collection of the users' average values is possible without posing a privacy risk to the user. This implies, that not only the aggregation of mean values but also the collection of locally aggregated data is possible without privacy concerns. We do not see any possibility to infer that the same user took part in different aggregations. There might be a chance in case of a very high steps value and a very high mean time spent walking or running, but this would only allow to assume the same user being present in both aggregations which allows for no further inference.
+In more than 90\% of all cases, local trajectories obtained from one of the researchers participating devices could match an activity for more than 90\% of the time. This data data suggests that these trajectories can easily be linked locally and a change of transport system e.g. metro to bike can be identified. For example at the locations Giselastraße, Odeonsplatz and central station, many trajectories end or start. Mapping the current activity to those trajectories enables aggregations as mentioned in chapter \ref{aggregation-schemes}. Noting that locally all data points of the trajectories are available, it is also easy to compute the distance travelled or infer a more granular transport definition e.g. train, bus, car, etc. Also, it is possible to compute how many people combine e.g. bike and car or public transport and furthermore identify, which station is most likely (in case of public transport) to be combined with bike.
 
-Nevetheless when collecting the average data, through overlapping requests e.g. one from 30.05 - 02.06 and one from 01.06. - 04.06 it might be possible to infer the exact date of some of the data present in both requests. Though, we do not see any risk aggregating on a daily basis or even hourly if there is any reason for this granularity level. Thus, the inference does no harm.
-
-In more than 90\% of cases, local trajectories could match an activity for more than 90\% of the time.
-The experimental collection of trajectories clearly shows privacy risks as pointed out in XX. Nevertheless, the data suggests that those trajectories can easily be linked locally and identify changing of transport system or e.g. metro line. For example at the locations Giselastraße, Odeonsplatz and central station and other locations, many trajectories end respectively start. Mapping the current activity to those trajectories enables aggregations as mentioned in chapter \ref{aggregation-schemes}. Noting that locally all data points of the trajectories are available, it is also easy to compute the distance travelled. Also it is possible to compute how many people combine e.g. bike and car or public transport and furthermore identify, which station is most likely (in case of public transport) to be combined with bike.
-
-
-Also it would be possible to create a "travelled road" or "travelled public transport" map by aggregating the trajectories data so that there would not be multiple trajectories but each road either marked used or not used. This way it would be possible to identify that a user lives in a certain area but could not link to the work location due to obfuscation with other routes joining. This map would on the other hand allow to have a feeling of which areas are covered by the data / app. This map could also be extended with the average speed on the respective road depending on vehicle or bike and also compare whether bike is faster.
-
-Computing time to work and average time at work.
-
-It also allows for computing how many people go by car, bike, or mixed to work.
-
-We also started an aggregation a second time - walking from 30.05 - 01.06. which shows as expected a different result than the original aggregation due to the 10 users being not the same users as in the first request. Nevertheless, the value is not far off as expected.
-
-TODO:
 The trajectories also show, that in the not anonymized data set we had at hands, often trajectories of which the endpoints did not clearly indicate an ongoing, the numeration of the trajectory indicated that they were connected. This 1. highlights the importance of list order randomization and 2. shows that our algorithm of finding trajectories still has possibilities for improvement. (TODO: Randomize order in published data set)
 
-\section{Scenario Traffic Jam}
+
+\section{Further scenarios e.g. Scenario Traffic Jam}
+Also it would be possible to create a "travelled road" or "travelled public transport" map by aggregating the trajectories data so that there would not be multiple trajectories but each road either marked used or not used. This way it would be possible to identify that a user lives in a certain area but could not link to the work location due to obfuscation with other routes joining. This map would on the other hand allow to have a feeling of which areas are covered by the data / app. This map could also be extended with the average speed on the respective road depending on vehicle or bike and also compare whether bike is faster.
+
 A typical scenario of google maps is o notify users about traffic jams and suggest alternate routes. The calculation of alternate routes taking traffic jams into account can clearly happen locally with the maps data. Google maps works when offline. The data about all current traffic jams can also be made publicly available through a server. Generating the data can also happen without exposing raw data: The user downloads a map containing data of the usual speeds at each street. While the user is driving, the app registers the speed and compares it in the background to the normal speed. If the speed is significantly lower, the user chooses a random list of known users and sends the signal as a request for those users to the server. They randomly according to a fixed percentage choose to inform the server about the traffic jam or forward the signal another time. The signal contains a unique id thus that the server even when receiving it muliply times knows it is from one user. If more than a threshold of signals is received, a traffic jam is "created". Also the request is not forwarded anymore after a certain time to stop it from spreading unlimited.
 
