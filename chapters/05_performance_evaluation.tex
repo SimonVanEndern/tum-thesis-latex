@@ -2,13 +2,13 @@
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 \chapter{Performance and Evaluation}\label{chapter:performance}
 \section{Deployment}
-The proposed Android application\footnote{The version deployed during field testing can be found at https://github.com/SimonVanEndern/location-app/releases/tag/v1.0} and server have been tested on 16 devices for six days from 30.05.2019 until 04.06.2019. However, evaluating the lastSeen timestamp of the users showed that only 13 installations were active after 31.05.2019. The server was deployed\footnote{The version deployed during field testing can be found at https://github.com/SimonVanEndern/location-server/releases/tag/v1.0 The final version provides the same functionality but includes improvements (e.g. bug-fixes, comments, ...) over the deployed version.} in the IBM Cloud as a 128 MB node.js instance. The database was hosted as a free version at mongodb.com.
+The proposed Android application\footnote{The version deployed during field testing can be found at https://github.com/SimonVanEndern/location-app/releases/tag/v1.0} and server have been tested on 16 devices for six days from 30.05.2019 until 04.06.2019. However, evaluating the \textit{lastSeen} timestamp of the users showed that only 13 installations were active after 31.05.2019. The server was deployed\footnote{The version deployed during field testing can be found at https://github.com/SimonVanEndern/location-server/releases/tag/v1.0 The final version provides the same functionality but includes improvements (e.g. bug-fixes, comments, ...) over the deployed version.} in the IBM Cloud as a 128 MB node.js instance. The database was hosted as a free version at mongodb.com.
 
-We ran 7 different aggregation requests defined in section \ref{data-aggregation-design} covering different timespans from single days to the whole time period. The results can be found in the tables in this section\footnote{The results are also available in JSON format at https://github.com/SimonVanEndern/tum-thesis-latex/tree/master/published/results} and will be discussed in section \ref{results}. The results of the collection of trajectories were modified in order to protect the priacy of all research participants. We used this testing period also to improve the performance of the server as well as the Android application and to find and remove bugs. All improvements are incorporated in the most recent commits of the respective GitHub repositories.
+We ran 7 different aggregation requests defined in section \ref{data-aggregation-design} covering different timespans from single days to the whole time period. The results can be found in the tables in this section\footnote{The results are also available in JSON format at https://github.com/SimonVanEndern/tum-thesis-latex/tree/master/published/results} and will be discussed in chapter \ref{results}. The results of the collection of trajectories were modified in order to protect the priacy of all research participants. We used this testing period also to improve the performance of the server as well as the Android application and to find and remove bugs. All improvements are incorporated in the most recent commits of the respective GitHub repositories.
 
 \section{Data Consumption}
-As expected, the data consumption of the Android application was low. Some research participants provided information about the app's data usage. Table \ref{data-consumption} shows the 12 collected results of this rather qualitative analysis. Screenshots of the provided information are attached in the appendix. On 75\% of the samples the data consumption for 6 days was below 21 MB. The highest data consumption was 376 and is attributable to an error that occurred on the last day of the testing period. Requests were sent multiple times during the whole period and up to unlimited times on the last day due to this error in combination with another error. This explains the high data consumption reported also by two other participants as the error occurred at least on three devices. The data suggests that the average data consumption would be lower and regarding the size of our setup below 100 MB per month. Furthermore, a mobile connection is not required. In the future, the setup can be changed to use only or mostly WIFI connections.
-Some few few available reports about battery consumption also indicate a rather moderate battery consumption.
+As expected, the data consumption of the Android application was low. Some research participants provided information about the app's data usage. Table \ref{data-consumption} shows the 12 collected results of this rather qualitative than quantitative analysis. Screenshots of the provided information are attached in the appendix. On 75\% of the devices the data consumption for 6 days was below 21 MB. The highest data consumption was 376 MB and is attributable to an error that occurred on the last day of the testing period. Requests were sent multiple times during the whole period and up to unlimited times on the last day due to this error in combination with another error that was present during the whole timespan. This explains the high data consumption reported also by two other participants as the error occurred at least on three devices. The data suggests that the average data consumption in a production environment would be lower and regarding the size of our setup below 100 MB per month. Furthermore, a mobile connection is not required. In the future, the setup can be changed to use only or mostly WIFI connections.
+Some few available reports about battery consumption also indicate a rather moderate battery consumption.
 
 \begin{table}[h!]
 	\centering
@@ -29,34 +29,39 @@ Some few few available reports about battery consumption also indicate a rather 
 		75.73 MB                           & From 01.04.2019 - 04.06.2019 only, possible error candidate \\ \hline
 		49.39 MB                           & mobile data only, WIFI unknown, possible error candidate    \\ \hline
 	\end{tabular}
-	\caption{Data consumption of the Android application during the testing period}
+	\caption{Data consumption of the Android application during the testing period.}
 	\label{data-consumption}
 \end{table}
 
+\section{Aggregation Results}\label{results}
+We computed the aggregation over several different timespans. We aggregated the average number of steps across all participants, the average time spent walking, running, in a vehicle or on a bicycle and collected a list of each individual's average number of steps. The results can be seen in table \ref{results-running} - \ref{results-steps-listing}.
+\subsection{Validity of results}
+Excluding the value of 30.05.2019 where the collection of results started and the data of the fraction of the day before installation is not included, the average time spent walking computed in the aggregations ranges from 52 to 146 minutes per day. The average time spent walking computed for the whole timespan where data from 8 devices is included amounts to 62 minutes. At the same time, reported number of steps per day ranges from 1123 to 4682 per day, excluding outliers (see table \ref{results-steps}). The average number of steps computed for the whole timespan with data from 5 participating devices is 3622. Taking an average speed of roughly 100 steps per minute into account \parencite{steps2}, the results from average time spent walking and average number of steps diverge by a factor of 1.7. Considering that apparently only 6 devices had a step sensor on their phone and the sample size of the steps aggregation is only about half of the sample size of the other aggregations, this deviation does not seem out of range. Furthermore there was an error computing the number of steps on at least one phone which caused some of the results to be off. Regarding table \ref{results-steps-listing} it seems likely that only on one device this error occurred.
 
 \begin{table}[]
 	\parbox{.45\linewidth}{
 		\centering
 		\begin{tabular}{|l|l|l|}
 			\hline
-			\multicolumn{3}{|c|}{\textbf{Average time spent running}}          \\ \hline
-			\textbf{Time period / Day} & \textbf{N} & \textbf{Value {[}min{]}} \\ \hline
-			30.09.2019                 & 10         & 1.43                     \\ \hline
-			31.05.2019                 & 10         & 1.21                     \\ \hline
-			30.05.2019 - 31.05.2019    & 10         & 1.96                     \\ \hline
-			30.05.2019 - 31.05.2019    & 10         & 1.89                     \\ \hline
-			30.05.2019 - 01.06.2019    & 10         & 1.73                     \\ \hline
-			30.05.2019 - 03.06.2019    & 9          & 1.79                     \\ \hline
-			03.06.2019                 & 9          & 1.95                     \\ \hline
-			04.06.2019                 & 8          & 0                        \\ \hline
-			30.05.2019 - 04.06.2019    & 8          & 1.55                     \\ \hline
-			01.06.2019 - 04.06.2019    & 7          & 0.99                     \\ \hline
-			31.06.2019 - 04.06.2019    & 7          & 0.83                     \\ \hline
-			02.06.2019 - 04.06.2019    & 7          & 1.05                     \\ \hline
-			03.06.2019 - 04.06.2019    & 7          & 0.16                     \\ \hline
+			\multicolumn{3}{|c|}{\textbf{Average number of steps per day}}     \\ \hline
+			\textbf{Time period / Day} & \textbf{N} & \textbf{Value}           \\ \hline
+			30.05.2019                 & 5          & 4331.6                   \\ \hline
+			31.05.2019                 & 5          & 3439.8                   \\ \hline
+			30.05.2019 - 31.05.2019    & 6          & 3278.7                   \\ \hline
+			30.05.2019 - 31.05.2019    & 5          & 4030.2                   \\ \hline
+			30.05.2019 - 01.06.2019    & 6          & 4271                     \\ \hline
+			01.06.2019                 & 1          & 17                       \\ \hline
+			30.05.2019 - 03.06.2019    & 5          & 643959                   \\ \hline
+			03.06.2019                 & 3          & 455411.3                 \\ \hline
+			04.06.2019                 & 3          & 1123                     \\ \hline
+			30.05.2019 - 04.06.2019    & 5          & 3622.6                   \\ \hline
+			01.06.2019 - 04.06.2019    & 2          & 2088.5                   \\ \hline
+			31.05.2019 - 04.06.2019    & 3          & 4681.3                   \\ \hline
+			02.04.2019 - 04.06.2019    & 3          & 326363.3                 \\ \hline
+			03.04.2019 - 04.06.2019    & 3          & 455903.7                 \\ \hline
 		\end{tabular}
-		\caption{Average time spent running}
-		\label{results-running}
+		\caption{Average number of steps per day}
+		\label{results-steps}
 	}
 	\hfill
 	\parbox{.45\linewidth}{
@@ -85,30 +90,57 @@ Some few few available reports about battery consumption also indicate a rather 
 	}
 \end{table}
 
+The average time spent running ranges up to only 2 minutes per day with one day having a 0 value across 8 participating devices. Most likely, only a fraction of the research participants goes running on a regular basis and probably even less take their smartphone along. This assumption reflects the low values for the average time spent running. Especially as attributing the whole average value to one device only would mean that one person conducted a run of less than 20 minutes seems unlikely, while it seems likely that quite some persons run for a short amount of time e.g. to catch a train or metro. Nevertheless, we cannot prove this assumption. It furthermore highlights, that for thorough analysis the aggregation of the mean value is not sufficient.
+Similarly, the average number of steps across all participants of an aggregation is not very robust and does not provide much information. Table \ref{results-steps-listing} provides the average number of steps of each individual participating in the request. With the median ranging from 3195 to 3565 in all aggregations with more than 3 valid values and a mean number of 5205 steps in Germany \parencite{steps3} we have no doubt about the correctness of the values except the values resulting from (probably only one) errorneous device.
+
+\begin{table}[]
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{Listing of average number of steps per day per of each participant}} \\ \hline
+		\textbf{Time period / Day}         & \textbf{N}        & \textbf{Values}                          \\ \hline
+		30.05.2019                         & 10                & 1661, 1246, 3195, 7714, 7842             \\ \hline
+		31.05.2019                         & 10                & 2747, 775, 3924, 9203                    \\ \hline
+		30.05.2019 - 31.05.2019            & 10                & 550, 2905, 3195, 775, 8828, 3419        \\ \hline
+		30.05.2019 - 31.05.2019            & 10                & 550, 8828, 5145, 3195, 2433              \\ \hline
+		30.05.2019 - 01.06.2019            & 10                & 8126, 3195, 283, 8828, 1629, 3565        \\ \hline
+		01.06.2019                         & 4                 & 17                                       \\ \hline
+		30.05.2019 - 03.06.2019            & 9                 & 598, 3195, 1669, 8828, 3205505           \\ \hline
+		03.06.2019                         & 9                 & 914, 1042, 1364278                       \\ \hline
+		04.06.2019                         & 8                 & 1103, 13332, 934                         \\ \hline
+		30.05.2019 - 04.06.2019            & 8                 & 757, 1719, 8828, 3614, 3195              \\ \hline
+		01.06.2019 - 04.06.2019            & 7                 & 826, 33511                               \\ \hline
+		31.05.2019 - 04.06.2019            & 7                 & 757, 9203, 4084                         \\ \hline
+		02.04.2019 - 04.06.2019            & 7                 & 974691, 1231, 3168                       \\ \hline
+		03.04.2019 - 04.06.2019            & 7                 & 1364278, 1231, 2202                      \\ \hline
+	\end{tabular}
+	\caption{Average number of steps per day of each user}
+	\label{results-steps-listing}
+\end{table}
+
 \begin{table}[]
 	\parbox{.45\linewidth}{
 		\centering
 		\begin{tabular}{|l|l|l|}
 			\hline
-			\multicolumn{3}{|c|}{\textbf{Average number of steps per day}}     \\ \hline
-			\textbf{Time period / Day} & \textbf{N} & \textbf{Value}           \\ \hline
-			30.05.2019                 & 5          & 4331.6                   \\ \hline
-			31.05.2019                 & 5          & 3439.8                   \\ \hline
-			30.05.2019 - 31.05.2019    & 6          & 3278.7                   \\ \hline
-			30.05.2019 - 31.05.2019    & 5          & 4030.2                   \\ \hline
-			30.05.2019 - 01.06.2019    & 6          & 4271                     \\ \hline
-			01.06.2019                 & 1          & 17                       \\ \hline
-			30.05.2019 - 03.06.2019    & 5          & 643959                   \\ \hline
-			03.06.2019                 & 3          & 455411.3                 \\ \hline
-			04.06.2019                 & 3          & 1123                     \\ \hline
-			30.05.2019 - 04.06.2019    & 5          & 3622.6                   \\ \hline
-			01.06.2019 - 04.06.2019    & 2          & 2088.5                   \\ \hline
-			31.05.2019 - 04.06.2019    & 3          & 4681.3                   \\ \hline
-			02.04.2019 - 04.06.2019    & 3          & 326363.3                 \\ \hline
-			03.04.2019 - 04.06.2019    & 3          & 455903.7                 \\ \hline
+			\multicolumn{3}{|c|}{\textbf{Average time spent running}}          \\ \hline
+			\textbf{Time period / Day} & \textbf{N} & \textbf{Value {[}min{]}} \\ \hline
+			30.09.2019                 & 10         & 1.43                     \\ \hline
+			31.05.2019                 & 10         & 1.21                     \\ \hline
+			30.05.2019 - 31.05.2019    & 10         & 1.96                     \\ \hline
+			30.05.2019 - 31.05.2019    & 10         & 1.89                     \\ \hline
+			30.05.2019 - 01.06.2019    & 10         & 1.73                     \\ \hline
+			30.05.2019 - 03.06.2019    & 9          & 1.79                     \\ \hline
+			03.06.2019                 & 9          & 1.95                     \\ \hline
+			04.06.2019                 & 8          & 0                        \\ \hline
+			30.05.2019 - 04.06.2019    & 8          & 1.55                     \\ \hline
+			01.06.2019 - 04.06.2019    & 7          & 0.99                     \\ \hline
+			31.06.2019 - 04.06.2019    & 7          & 0.83                     \\ \hline
+			02.06.2019 - 04.06.2019    & 7          & 1.05                     \\ \hline
+			03.06.2019 - 04.06.2019    & 7          & 0.16                     \\ \hline
 		\end{tabular}
-		\caption{Average number of steps per day}
-		\label{results-steps}
+		\caption{Average time spent running}
+		\label{results-running}
 	}
 	\hfill
 	\parbox{.45\linewidth}{
@@ -152,33 +184,12 @@ Some few few available reports about battery consumption also indicate a rather 
 	\label{results-biking}
 \end{table}
 
-\begin{table}[]
-	\centering
-	\begin{tabular}{|l|l|l|}
-		\hline
-		\multicolumn{3}{|c|}{\textbf{Listing of average number of steps per day per of each participant}} \\ \hline
-		\textbf{Time period / Day}         & \textbf{N}        & \textbf{Values}                          \\ \hline
-		30.05.2019                         & 10                & 1661, 1246, 3195, 7714, 7842             \\ \hline
-		31.05.2019                         & 10                & 2747, 775, 3924, 9203                    \\ \hline
-		30.05.2019 - 31.05.2019            & 10                & 550, 2905, 3195, 775, 88828, 3419        \\ \hline
-		30.05.2019 - 31.05.2019            & 10                & 550, 8828, 5145, 3195, 2433              \\ \hline
-		30.05.2019 - 01.06.2019            & 10                & 8126, 3195, 283, 8828, 1629, 3565        \\ \hline
-		01.06.2019                         & 4                 & 17                                       \\ \hline
-		30.05.2019 - 03.06.2019            & 9                 & 598, 3195, 1669, 8828, 3205505           \\ \hline
-		03.06.2019                         & 9                 & 914, 1042, 1364278                       \\ \hline
-		04.06.2019                         & 8                 & 1103, 13332, 934                         \\ \hline
-		30.05.2019 - 04.06.2019            & 8                 & 757, 1719, 8828, 3614, 3195              \\ \hline
-		01.06.2019 - 04.06.2019            & 7                 & 826, 33511                               \\ \hline
-		31.05.2019 - 04.06.2019            & 7                 & 757, 9203,, 4084                         \\ \hline
-		02.04.2019 - 04.06.2019            & 7                 & 974691, 1231, 3168                       \\ \hline
-		03.04.2019 - 04.06.2019            & 7                 & 1364278, 1231, 2202                      \\ \hline
-	\end{tabular}
-	\caption{Average number of steps per day of each user}
-	\label{results-steps-listing}
-\end{table}
+The average time spent in a vehicle (including means of public transport) ranges from 36 to 120 minutes (excluding the aggregation only covering the first day). The average time spent in a vehicle computed by the aggregation covering the whole timespan is 59 minutes.
+The average time spent biking ranges from 11 to 31 minutes. The aggregation across the whole timespan was errorneous and had to be discarded. Both aggregations - the time spent biking and the time spent in a vehicle seem reasonable to us.
 
-\section{Aggregation Results}\label{results}
-We computed the aggregation over several different timespans. We aggregated the average number of steps across all participants, the average time spent walking, running, in a vehicle or on a bicycle and the list of each individual average number of steps. The results can be seen in table \ref{results-running} - \ref{results-steps-listing}.
+\subsection{Implications}
+
+
 On most of the days the average time spent walking is roughly around one hour per day. Nevertheless, on the 3rd of June the value is clearly higher and 31st as well. We do not see any reason for this spike -- 03.06. is a regular work day - nevertheless, the value is not that high as it would suggest errors. The value on the first day being below the other values is definitely attributable to the fact that we started to roll out the application on this day.
 The average time running is around 1-2 minutes per day. This is not surprising. The only scenarios usually are when somebody has to catch some transport or actively is running (and might probably not carry his or her phone).
 Due to an error in the setup, we only have the daily average data for the time spent biking which ranges from 11 to 31 minutes per day and sounds realistic regarding that the participants where all in Munich.
