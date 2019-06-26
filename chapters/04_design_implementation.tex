@@ -148,7 +148,7 @@ All aggregations work as a prove of concept of the proposed setup and hence serv
 %whether this type of aggregation, which allows for more advances statistical computations as median values and distribution properties, still completely preserves privacy.
 Aggregation 4 imposes a privacy risk as discussed in \parencite{twitter, cellphone, krumm} on the user and was only implemented in order to get an overview of the data quality of our setup and validate the feasability of the other aggregation requests proposed in section \ref{aggregation-schemes}.
 
-\section{Android Application}
+\section{Android Application}\label{android-app}
 The Android application targets Android Oreo (API level 27) and requires a minimum API level of 19. Approximately 96.8\% of devices run on this or a higher version of Android \cite{android-api-level-share} which allows our application to be installed on the majority of Android devices.
 Furthermore, the application leverages Goolge Play Services to obtain GPS and activity data. Without Google Play Services installed, the application will not work. In order to ease future adaptability, we chose to use the Dagger2 framework \parencite{dagger} for dependency injection in order to decouple classes as far as possible. Further use of frameworks and libraries will be explained in the following respective sections.
 
