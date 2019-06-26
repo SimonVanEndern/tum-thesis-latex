@@ -3,37 +3,25 @@
 
 \chapter{Introduction}\label{chapter:introduction}
 \section{Motivation}
-%\section{Why we need an open-source location data approach}\label{chapter:introduction:section:motivation}
 
-%\subsection{General motivation: We want to open-source data} \label{general-motivation}
 “Data is the new oil" \parencite{data-is-the-new-oil, data-is-the-new-oil2} is a quote many people agree with. More and more businesses are based not on specific production capacities but on data and especially the ability to process it and the exclusive owenership over it. The success and monopoly of companies like Google, Facebook and Amazon can be attributed to this exclusive ownership at least to a reasonable extend.
 
 While patents that used to power companies' success provide a balance through granting exclusive rights having to make the knowledge public, many companies e.g. Coca-Cola have decided successfully not to file for a patent and thus not having to reveal their knowledge \parencite{coca-cola}. If that approach is not compromised, it guarantees both, non-disclosure and  exclusive rights. Similarly, the non-disclosure of huge data sets collected by Facebook, Google and Amazon circumvent the balance intended by patents. But this unavailability of huge amounts of data to the public is an impediment of innovation and increased growth. For example, cities would benefit from aggregated location data in order to optimize traffic scheduling as also highlighted by Hoh et al. \parencite{hoh2005protecting}.
 Nevertheless, the publication of raw data sets is impossible because it severly intrudes the privacy of the owners of the data.
 
-%\subsection{Main problem: Conflict between privacy and publishing user data}
 So, even if companies would agree on a publication, a problem arises.
 There is a conflict between preserving user privacy and publishing user data.
-%\subsection{Existing privacy problem: The availability of central data sets}
 But in fact, users' privacy is already compromised even without publication of their data. Already the mere existence of central data sets pose a privacy risk to users, because security issues might allow for theft and unwanted publication of these data.
 An example is the theft of 14 million users' data from facebook \parencite{facebook}.
 
-%\subsection{Relaxed privacy problems: The limited but not eliminated risk through a modified central data set}
 Some governments and other institutions already publish some of their data sets after anonymizing them 
-%e.g. through cloaking of data so that it achieves k-anonymity 
 and there are crowdsourcing and open source approaches to make data available to everybody [CITE!!!]. 
 Nevertheless, the applied anonymization is often not sufficient or at least critical if the resulting data set should still be useful. Research shows that inferences can be drawn from the published data sets that violate the respective users' privacy \parencite{cellphone, twitter}. Also, most research is based on datasets that span only over a few days or weeks. When collecting location data over longer periods, the chance of successful inference attacks increases in all cases with more data available. So, in addition to the privacy risk imposed on the user by the existence of a central data set, publishing anonymized data poses another risk to users' privacy.
 
-%\subsection{New problem in case of modified central data set: Trust to the server is needed}
-%Furthermore, besides the remaining risk of inference attacks on published anonymized data sets, the anonymization through those algorithms always depend on a trusted server to collect the data from all users and then publish the results of any analysis applying privacy-preserving algorithms beforehand. So even if the data is only stored anonymized on the server, besides the remaining risk of inference attacks, this still imposes a high privacy risk to every user, as trust can be misued by the trusted server itself.\\
-
 \section{Research Questions}
 In order to further investigate the trade-off between publication of location data and preservation of user privacy, we pose the following research questions:
-% (We assume trust to the server)
-%: No central raw data set but only aggregated data}
 
 \subsection*{RQ1: Is aggregation of location data possible without raw data being accessible to anybody but the owner?}
-% Or: What are the limitations that make this possible?
 Previous work has shown that in order to overcome the conflict between privacy intrusion and (public) data availability, a solution is needed that works without storing raw data in a central data set.
 This solution should eliminate the risk of leaking raw user data through theft from a centralized database. It should furthermore eliminate the risk of inference attacks on published believed-to-be-anonymized raw data if only aggregated data is stored on a central server. We investigate whether there is a solution and also what limitations this solution has, respectively which assumptions must hold for the solution to be valid.
 
@@ -44,54 +32,9 @@ Clearly, a mean value exposes less details about the underlying raw data than th
 Previous work has covered inference attacks on anonymized raw data sets. They have shown that inference attacks can be based on overlapping timespans or the same data set being published using different anonymization techniques. We will investigate, whether there is also a risk of inference attacks based on overlapping timespans in aggregated data and examine the limitations of publishing aggregated data.
 
 \section{Contributions}
-While most research follows the approach of degrading data in order to provide anonymity, we do not first collect the whole data set and then reduce it to a data set meeting privacy-constraints but we start from the bottom up. First by performing aggregation in a decentralized manner and second by verifying that an aggregation does not violate users' privacy pior to using this aggregation in a production environment. Step by step, the set of possible aggregations to be published can be extended after verifiying in a test environment, that the respective aggregation does not intrude the users' privacy. The data stemming from those aggregations will then be available to the public. 
-%proposing a framework that only releases aggregated data where no interference of any user information is possible. 
-%This gives us maximum possible feedback on eventual privacy problems, creates trust through transparency and fosters innovation through availability of data to everyone.
+While most research follows the approach of degrading data in order to provide anonymity, we do not first collect the whole data set and then reduce it to a data set meeting privacy-constraints but we start from the bottom up. First, by performing aggregation in a decentralized manner and second by analyzing if an aggregation does not violate users' privacy pior to using this aggregation in a production environment. Step by step, the set of possible aggregations to be published could be extended after analyzing in a test environment if the respective aggregation does not intrude the users' privacy. The data stemming from those aggregations will then be available to the public. 
 
-%For our solution, we will focus on the sub-area of location data and location privacy.
-We investigate the possibility of storing raw location data only decentralized on the collecting devices. On a central database available to the public, only aggregated data is stored, thus the privacy risk arising form a central database containing the overall raw data set is eliminated. Similar to previous research, we assume the central server to be trusted and also the clients to be trusted. As the aggregation process happens decentrally, the central server will never hold any other than aggregated data and never know about individual raw data. 
+We investigate the possibility of storing raw location data only decentralized on the collecting devices. On a central database available to the public, only aggregated data is stored, thus, the privacy risk arising form a central database containing the overall raw data set is eliminated. Similar to previous research [CITE!!!], we assume the central server to be trusted and also the clients to be trusted. As the aggregation process happens decentrally, the central server will never hold any other than aggregated data and never know about individual raw data. 
 
-Our research is organized as follows: First we review related work in the areas of location privacy and anonymization techniques.
-Chapter \ref{chapter:method} outlines the general architecture of our approach using decentralized data analysis and Chapter \ref{chapter:design} documents the implemented setup and explains design decisions. We present the the results of field-testing our setup in \ref{chapter:performance}, Chapter \ref{chapter:conclusion} discusses limitations as e.g. a trusted server, reproducability considerations and outlines possible future work.
-
-
-%and supports the process of not randomly collecting data and afterwards researching on metrics that are actually needed but first on evaluating which metrices are needed and then retrieving them if possible without raising privacy concerns.
-
-%\section{Outline}
-%The structure of our research is organized as follows: First we re-
-%view related work in the areas of location privacy and anonymisation techniques. In
-%section \ref{chapter:solution} we describe our approach of decentralized data analysis to get along without a central database.
-%Section XXX describes the setup in detail. Section XXX analysis the result from field-testing our application.
-%Section XXX incorporates the results into our proposal of a possibility to achieve 100\% privacy through all applications.
-%Section XXX summarizes our work and points out further research possibilities.
-
-%The rest of this research is organized as f
-
-%But also privacy concerns of users have increased due to leakages where their data was not well protected at e.g. facebook and stolen and published.
-
-
-
-%So, we identify two related issues compromising data privacy. 
-%\begin{enumerate}
-%  \item The availability of huge data sets at central servers imposes a risk stemming from the computer science area of security. (main risk)
-%  \item Publication of entire data sets can even after applying anonymization techniques not guarantee privacy preservation. (reduced risk)
-%\end{enumerate}
-
-%\subsection{Examples of direct and indirect privacy breaches}
-
-
-%An example for the second issue is that the location data of Twitter tweets was published without asking the user for permission. Furthermore this data is only available through the API, so that the user is not aware of this infringement. Using this data, ~\parencite{twitter} has shown that this data can be used to infer a users home address and often also the work address, even if the user itself is privacy-aware, thus does not publish his / her name, etc.
-
-
-
-%\begin{itemize}
-%  \item Collect less data \parencite{privacy-home-work-pairs}
-%  \item Mixing approach \parencite{location-privacy}
-%  \item Anonymize data to meet the kriteria of k-anonymity \parencite{k-anonymity} and \parencite{cellphone}
-%  \item spatial cloaking \parencite{krumm}
-%  \item Remove not only identifiers from the data set but also apply algorithms, that remove samples, that can be (due to few samples in this area) identified \parencite{time-to-confusion}
-%\end{itemize}
-
-%\subsection{Problems that still arise}
-
-%Still this privacy is only limited if only this one data set is taken into account. If e.g. multiple of those data sets from different data collectors are combined, or information about an individual like home and work adress is provided, privacy breaches are still highly likely.
+Our research is organized as follows: First, we review related work in the areas of location privacy and anonymization techniques.
+Chapter \ref{chapter:method} proposes our solution and outlines the general architecture of our approach using decentralized data analysis. Chapter \ref{chapter:design} documents the implementation of the setup proposed in Chapter \ref{chapter:method} and explains design decisions. We present the results of field testing our setup in Chapter \ref{chapter:performance}, Chapter \ref{chapter:conclusion} summarizes our work, discusses limitations as e.g. a trusted server, outlines possible future work and concludes with reproducability considerations.
