@@ -188,6 +188,8 @@ We use the Android Room Persistence library \parencite{room} to store data local
 	\item GPS positions: GPS data is retrieved through the \textit{FusedLocationProviderClient} which leverages cellphone-tower and WIFI data apart from GPS to determine the position. In order to limit battery consumption, GPS data is only requested every minute if the device's detected activity is \textit{still}\footnote{Neertheless, if other applications request a GPS position, our application also receives this data, even if it occurs on a faster interval.}. If the current detected activity is \textit{walking}, the interval is set to 5 seconds and in any other state, the interval is set to every second. The data is stored in the linked tables \textit{gps\_data\_table} and \textit{gps\_location\_table}. We choosse to separate the GPS point itself from the timestamp having in mind that future aggregations might need or leverage the separation of spatial data and time and more than one event might be attached to the same GPS point.
 \end{itemize}
 
+Regarding the findings of Liao et al. \parencite{liao2005location}, the accuracy and possible options of the detected activity could also be improved by the user of similar frameworks and advanced methods.
+
 \subsection{Local Data Aggregation}\label{local-data-aggregation}
 
 \begin{table}[]
