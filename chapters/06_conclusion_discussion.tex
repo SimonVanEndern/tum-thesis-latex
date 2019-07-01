@@ -3,7 +3,7 @@
 \chapter{Conclusion and Discussion}\label{chapter:conclusion}
 \section{Conclusion}
 
-\subsection*{RQ1: How is aggregation of location data possible without raw data being accessible to anybody but the owner?}
+\subsection*{RQ1: How is the aggregation of location data possible without raw data being accessible to anybody but the owner?}
 We developed and field tested an approach that allows for decentral aggregation of data that preserves the privacy of users. Due to fast-changing IP-addresses, stable P2P on mobile devices is currently either limited to WIFI and Bluetooth connections or limited by the Bandwidth and cost of SMS. Hence, we proposed a solution based on the assumption of a trusted server that forwards messages between the different Android mobile phones. Nevertheless, the messages are encrypted and only the target device can encrypt the message, as long as the server is not compromised. On the mobile devices, raw data i.e. GPS data, steps and detected activities is collected and locally aggregated through an Android application. This locally aggregated data is then used to serve aggregation requests initiated and forwarded by a central server but the raw data and the locally aggregated data itself is never send away from the device. Thus, considering the assumption of a trusted server and trusted devices, we propose a solution that indeed manages to aggregate locational data without the raw data being exposed from the collecting devices.
 %This highlights that we had to base our solution on the assumption of a trusted server and trusted devices.
 
