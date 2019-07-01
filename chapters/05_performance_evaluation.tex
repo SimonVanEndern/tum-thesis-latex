@@ -36,7 +36,7 @@ Some few available reports about battery consumption also indicate a rather mode
 \section{Aggregation Results}\label{results}
 We computed the aggregation over several different timespans. We aggregated the average number of steps across all participants, the average time spent walking, running, in a vehicle or on a bicycle and collected a list of each individual's average number of steps. The results can be seen in Table \ref{results-running} - \ref{results-steps-listing}. The results from the experimental aggregation of trajectories will be discussed in Chapter \ref{trajectories}.
 
-\subsection{Validity of results}
+\subsection{Validity of Results}
 Excluding the value of 30.05.2019 where the collection of results started and the data of the fraction of the day before installation is not included, the average time spent walking computed in the aggregations ranges from 52 to 146 minutes per day. Fig. \ref{time-walking-diagram} shows the different average values for all computed aggregations. 
 
 \begin{figure}[h!]
@@ -209,7 +209,7 @@ Fig. \ref{steps-diagram} also highlights, that even with out small research popu
 
 Computing the average number of steps from the single collected values yields 3622 and shows that apparently the same people participated in this aggregation and the aggregation of average values. At the same time, the aggregation covering 01.6. - 04.06 shows that different people participated.
 
-\subsection{Inference on aggregated data}\label{inference}
+\subsection{Inference on Aggregated Data}\label{inference}
 Regarding the aggregations computing mean values across all participants, we do not see any possibility to infer information about the users who participated. Especially as not even the identifier of the user used by the server is published alongside with the aggregation. In addition, we showed that when repeating the same aggregation request, the user base changes and the value accordingly. Nevertheless, from the two different values for the same aggregation request, we cannot draw any inference. Also an overlapping in the aggregations e.g. 30.05.2019, 31.05.2019 and an aggregation covering both days as well as the aggregations covering the first two days and the last five days does not allow for inference in the case of mean values aggregated across all participants.
 The collection of individual mean values in Table \ref{results-steps-listing} shows that with a high probability the same participant with an average value of 8828 steps per day who participated in the request covering the first two days also participated in the request covering the whole timespan. Based on the information that days with a zero value of the step counter are excluded also locally from the aggregation, we can infer that this person's phone did not register any steps after the first two days, otherwise they value in the second aggregation would have changed. Similarly, we can infer that the user with 757 steps on average per day who participated in the requests covering the whole 6 day timespan and the aggregation covering only the last 5 days probably did not register steps on the first day.
 In summary, we can only infer information about the fact of some users who participated in one aggregation, did or did not participate in another aggregation. As this information is endogenous to our data-set, it can in no case be used to be linked to other data-sets in order to infer further information.

@@ -1,7 +1,7 @@
 % !TeX root = ../main.tex
 % Add the above to each chapter to make compiling the PDF easier in some editors.
 \chapter{Methodology}\label{chapter:method}
-\section{Overall aggregation approach}
+\section{Overall Aggregation Approach}
 In order to avoid having a central raw data set and to eliminate the risk of inference attacks on anonymized data, we propose a framework which collects and locally aggregates location data on end user devices (smartphones) through an application designed for this purpose. The raw data will stay on each device and will only be used to serve aggregation requests initiated by a central server. The aggregation requests have to be defined upfront. Apart from GPS data, we also take other movement data into account - the number of steps and the current activity e.g. walking. These can be used to enrich the pure GPS data. Hence, an example for an aggregation is the determination of the average number of steps per day accross all users participating in the respective aggregation. An examplary aggregation request sent to a smartphone is depicted in Fig. \ref{incoming-aggregation-request}. It specifies the timespan which should be covered by the aggregation, the type of aggregation and the current data combined in the ongoing aggregation.
 
 \begin{figure}[h!]
@@ -49,7 +49,7 @@ In order to protect the user's privacy and completely shield the raw data from t
 
  The aggregated results are planned to be available through a public route on the server. Nevertheless, we restrict access in our test run to our research team in order to protect the research participants' privacy in case there is a privacy risk we have not thought of. The aggregation requests themselves are initiated by our research team but can be initiated automatically on a regular basis in the future. The next section will detail the planned aggregations.
 
- \section{Aggregation schemes}\label{aggregation-schemes}per
+ \section{Aggregation Schemes}\label{aggregation-schemes}per
  Two types of aggregation requests are of special interest for our research. First, the aggregation of mean values and second, the aggregation of more advanced statistical values such as median or distribution function. The latter includes the possibility to calculate the former but requires the simultaneous availability of each single user's response. 
  The following list is an excerpt of aggregations that would be of interest and can be computed based on GPS location data in combination with the number of steps and the current activity of the respective person:
  \begin{enumerate}
@@ -64,7 +64,7 @@ In order to protect the user's privacy and completely shield the raw data from t
  \end{enumerate}
  For all aggregations, always both, the mean value and if possible, a complete list of single users' mean values in order to compute other statistical figures, are of interest.
 
- \section{Limiting the spatial area of an aggregation request}
+ \section{Limiting the Spatial Area of an Aggregation Request}
  The aggregation requests outlined in the former subsection only provide useful data if the area of the aggregation can be limited e.g. to the scope of a city. Otherwise, the resulting data would not allow for comparison. Furthermore, the scope of each aggregation would either be the whole user base or the limited number of participants in each aggregation would not necessarily be locally close to each other. The former might result in a huge amount of data being passed around, especially in the case of listing values, the latter would often make aggregations impossible because some aggregations like the average speed on roads require a certain number of participants providing data about the respective area. 
  In order to limit the area of an aggregation and avoid sending the aggregation request to every single user, leaving him with determining whether he can provide data about the respective, the initiator of those requests has to now the area, for which a user can provide data.
  We do not see this as a violation of the user's privacy due to the following reason: The exact location of the user e.g. the home or work location is not of interest at all. Rather the area for which the user can provide data is of interest. We propose to cluster location areas in a hierarchical structure similar to Mokbel et al. \parencite{casper} and determine the granularity of the location published to the server as follows:
